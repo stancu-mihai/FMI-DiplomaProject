@@ -15,9 +15,9 @@ export interface User extends DbObject {
     firstName: string;
     lastName: string;
     city: number;
-    country: number;
     phoneNo: string;
   };
+  role: number;
 
   comparePassword: comparePasswordFunction;
 }

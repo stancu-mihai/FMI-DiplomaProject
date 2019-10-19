@@ -22,12 +22,13 @@ block content
           option(value=1) Bucharest
           option(value=2) Cluj
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='country') Country
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='role') Role
       .col-sm-7
-        select#country.select.form-control.input-md(name='country')
+        select#role.select.form-control.input-md(name='role')
           option(value=0) -- Select --
-          option(value=1) Romania
-          option(value=2) Poland
+          option(value=1) Student representative
+          option(value=2) Professor
+          option(value=3) Secretary
     .form-group.row.justify-content-md-center
       label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Phone no.
       .col-sm-7

@@ -112,9 +112,9 @@ export class UserController extends RESTController<User> {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         city: req.body.city,
-        country: req.body.country,
         phoneNo: req.body.phoneNo,
       },
+      role: req.body.role,
 
       password: req.body.password,
       email: req.body.email,
@@ -162,11 +162,10 @@ export class UserController extends RESTController<User> {
     newUser.profile.firstName = req.body.firstName;
     newUser.profile.lastName = req.body.lastName;
     newUser.profile.city = req.body.city;
-    newUser.profile.country = req.body.country;
+    newUser.role = req.body.role;
     newUser.email = req.body.email;
     newUser.profile.phoneNo = req.body.phoneNo;
 
-    await this.updateEmail(oldUser, newUser);
     await this.repo.update(newUser);
 
     req.flash("success", { msg: "Profile information has been updated." });
@@ -228,46 +227,6 @@ export class UserController extends RESTController<User> {
           resolve();
         });
       });
-    });
-  }
-
-  public updateEmail(oldUser: User, newUser: User): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      // Check if email is unchanged
-      if (oldUser && (oldUser.email == newUser.email)) {
-        return resolve();
-      }
-      else {
-        try {
-          const professorRepo = db.repo<Professor>({ table: "Professor" });
-          const secretaryRepo = db.repo<Secretary>({ table: "Secretary" });
-          const studentRepRepo = db.repo<Professor>({ table: "StudentRep" });
-          const mailQuery: db.Query = db.query().byProperty("email", oldUser.email);
-          const professorsWithEmail = await professorRepo.list(mailQuery);
-          const secretariesWithEmail = await secretaryRepo.list(mailQuery);
-          const studentrepsWithEmail = await studentRepRepo.list(mailQuery);
-
-          if (professorsWithEmail.length == 1) {
-            await professorRepo.remove(mailQuery);
-            const newProfessor: Professor = {email: newUser.email};
-            await professorRepo.add(newProfessor);
-          }
-          if (secretariesWithEmail.length == 1) {
-            await secretaryRepo.remove(mailQuery);
-            const newSecretary: Secretary = {email: newUser.email};
-            await secretaryRepo.add(newSecretary);
-          }
-          if (studentrepsWithEmail.length == 1) {
-            await studentRepRepo.remove(mailQuery);
-            const newStudentRep: StudentRep = {email: newUser.email};
-            await studentRepRepo.add(newStudentRep);
-          }
-          return resolve();
-        }
-        catch (err) {
-          return reject(err);
-        }
-      }
     });
   }
 }
