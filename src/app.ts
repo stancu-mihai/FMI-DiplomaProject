@@ -18,11 +18,6 @@ const MongoStore = mongo(session);
 import { UserController } from "./controllers/user";
 import { User } from "./interfaces/User";
 
-import * as homeController from "./controllers/home";
-import * as apiController from "./controllers/api";
-import * as contactController from "./controllers/contact";
-
-
 // API keys and Passport configuration
 import * as passportConfig from "./config/passport";
 
@@ -85,20 +80,6 @@ app.use(
 );
 
 const userRepo = db.repo<User>({ table: "User" });
-const userController: UserController = new UserController(userRepo, app, passportConfig);
-
-/**
- * API examples routes.
- */
-app.get("/api", apiController.getApi);
-// app.get("/api/facebook", passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getFacebook);
-
-/**
- * OAuth authentication routes. (Sign in)
- */
-app.get("/auth/facebook", passport.authenticate("facebook", { scope: ["email", "public_profile"] }));
-app.get("/auth/facebook/callback", passport.authenticate("facebook", { failureRedirect: "/login" }), (req, res) => {
-    res.redirect(req.session.returnTo || "/");
-});
+/*const userController: UserController = */new UserController(userRepo, app, passportConfig);
 
 export default app;
