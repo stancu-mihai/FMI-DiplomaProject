@@ -1,5 +1,9 @@
-import * as db from "../others/db";
+import { User } from "./User";
+import { Subject } from "./Subject";
+import { TimeFrame } from "./TimeFrame";
 
-export interface Professor extends db.DbObject {
-    email: string;
+export interface Professor extends User {
+    worksWeekends: boolean;
+    canTeach: Subject[];
+    booked: TimeFrame[];
 }
