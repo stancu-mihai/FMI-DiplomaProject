@@ -7,9 +7,6 @@ import * as db from "../others/db";
 import passport from "passport";
 import { IVerifyOptions } from "passport-local";
 import bcrypt from "bcrypt-nodejs";
-import { Secretary } from "../interfaces/Secretary";
-import { Professor } from "../interfaces/Professor";
-import { StudentRep } from "../interfaces/StudentRep";
 import { UserRequest } from "../interfaces/UserRequest";
 
 export class UserController extends RESTController<User> {
