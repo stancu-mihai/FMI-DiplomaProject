@@ -12,36 +12,35 @@ block content
       .col-sm-7
         input.form-control(type='email', name='email', id='email', value=user.email)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Name
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') First name
       .col-sm-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name)
-    .form-group.row.justify-content-md-center.align-items-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold Gender
-      .col-sm-7
-        .form-check.form-check-inline
-          input#option-male.form-check-input(type='radio', checked=user.profile.gender==='male', name='gender', value='male', data-toggle='radio')
-          label.form-check-label(for="option-male") Male
-        .form-check.form-check-inline
-          input#option-female.form-check-input(type='radio', checked=user.profile.gender==='female', name='gender', value='female', data-toggle='radio')
-          label.form-check-label(for="option-female") Female
-        .form-check.form-check-inline
-          input#option-other.form-check-input(type='radio', checked=user.profile.gender==='other', name='gender', value='other', data-toggle='radio')
-          label.form-check-label(for="option-other") Other
+        input.form-control(type='text', name='firstName', id='firstName', value=user.profile.firstName)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='location') Location
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Last name
       .col-sm-7
-        input.form-control(type='text', name='location', id='location', value=user.profile.location)
+        input.form-control(type='text', name='lastName', id='last_name', value=user.profile.lastName)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='website') Website
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='city') City
       .col-sm-7
-        input.form-control(type='text', name='website', id='website', value=user.profile.website)
+        select.select.form-control.input-md(name='city', id='city')
+          option(value='0') -- Select --
+          option(value='1', selected= user.profile.city == 1) Bucharest
+          option(value='2', selected= user.profile.city == 2) Cluj
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold Gravatar
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='role') Role
       .col-sm-7
-        img(src=user.gravatar(), class='profile', width='100', height='100', alt=((user.profile.name || user.email || user.id)))
+        select.select.form-control.input-md(name='role', id='role')
+          option(value='0') -- Select --
+          option(value='1', selected= user.role == 1) Student representative
+          option(value='2', selected= user.role == 2) Professor
+          option(value='3', selected= user.role == 3) Secretary
+    .form-group.row.justify-content-md-center
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Phone no.
+      .col-sm-7
+        input.form-control(type='text', name='phoneNo', id='phoneNo', value=user.profile.phoneNo)
     .form-group.row.justify-content-md-center
       .col-sm-4
-        button.btn.btn.btn-primary(type='submit')
+        button.btn.btn.btn-primary(type='submit', id='updateProfile')
           i.fa.fa-pencil
           | Update Profile
 
@@ -67,8 +66,8 @@ block content
 
   .page-header
     h3 Delete Account
-    hr
-
+        hr
+    
   form.form-horizontal(action='/account/delete', method='POST')
     .form-group.row.justify-content-md-center
       p.offset-sm-3.col-sm-7 You can delete your account, but keep in mind this action is irreversible.
@@ -77,15 +76,4 @@ block content
         button.btn.btn-danger(type='submit')
           i.fa.fa-trash
           | Delete my account
-
-  .page-header
-    h3 Linked Accounts
-    hr
-  .form-horizontal
-    .form-group.row.justify-content-md-center
-      .offset-sm-3.col-sm-7
-        if user.facebook
-          p: a.text-danger(href='/account/unlink/facebook') Unlink your Facebook account
-        else
-          p: a(href='/auth/facebook') Link your Facebook account
 
