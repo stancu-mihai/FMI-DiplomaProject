@@ -68,7 +68,7 @@ export const isAuthenticatedSecretary = async (req: UserRequest, res: Response, 
   if (req.isAuthenticated()) {
     const query: db.Query = db.query().byProperty("email", req.user.email);
     const result = await secretaryRepo.list(query);
-    if (result.length == 1) {
+    if ((result.length == 1) && (result[1].role == 3)) {
       return next();
     }
   }
@@ -79,7 +79,7 @@ export const isAuthenticatedStudentRep = async (req: UserRequest, res: Response,
     if (req.isAuthenticated()) {
       const query: db.Query = db.query().byProperty("email", req.user.email);
       const result = await studentRepRepo.list(query);
-      if (result.length == 1) {
+      if ((result.length == 1) && (result[1].role == 1)) {
         return next();
       }
     }
@@ -90,7 +90,7 @@ export const isAuthenticatedProfessor = async (req: UserRequest, res: Response, 
   if (req.isAuthenticated()) {
     const query: db.Query = db.query().byProperty("email", req.user.email);
     const result = await professorRepo.list(query);
-    if (result.length == 1) {
+    if ((result.length == 1) && (result[1].role == 2)) {
       return next();
     }
   }
