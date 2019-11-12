@@ -11,8 +11,17 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       ul.nav.navbar-nav.mr-auto
         li.nav-item(class=(title === 'Home') ? 'active' : undefined)
           a.nav-link(href='/') Home
-        li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
-          a.nav-link(href='/contact') Contact
+        if user
+          case user.role
+            when '1'
+              li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
+                a.nav-link(href='/timetable?email=' + user.email) Timetable
+            when '2'
+              li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
+                a.nav-link(href='/timetable?email=' + user.email) Timetable
+            when '3'
+              li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
+                a.nav-link(href='/gentimetable') Timetable
       ul.nav.navbar-nav
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)
@@ -22,7 +31,13 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
         else
           li.nav-item.dropdown(class=(title === 'Account Management') ? 'active' : undefined)
             a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown')
-              span= user.email || user.id
+              case user.role
+                when '1'
+                  span= (user.profile.firstName + ' ' + user.profile.lastName + '(Student)')
+                when '2'
+                  span= (user.profile.firstName + ' ' + user.profile.lastName + '(Professor)')
+                when '3'
+                  span= (user.profile.firstName + ' ' + user.profile.lastName + '(Secretary)')
               i.caret
             ul.dropdown-menu
               li.nav-item
