@@ -12,7 +12,10 @@ import { UserRequest } from "../interfaces/UserRequest";
 export class UserController extends RESTController<User> {
   constructor(repo: db.Repository<User>, app: any, passportConfig: any) {
     super(repo, ["user_id"], []);
+    this.registerRoutes(app, passportConfig);
+  }
 
+  private registerRoutes(app: any, passportConfig: any) {
     app.get("/", this.getRootRoute);
     app.get("/login", this.getLogin);
     app.post("/login", this.postLogin);
