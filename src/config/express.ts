@@ -7,7 +7,7 @@ import path from "path";
 import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { MONGODB_URI, SESSION_SECRET } from "../util/secrets";
 import errorHandler from "errorhandler";
 import express from "express";
 import mongo from "connect-mongo";
@@ -15,7 +15,7 @@ import {Application} from "express";
 
 const MongoStore = mongo(session);
 
-export class AppConfig
+export class ExpressConfig
 {  
     private app: Application;
     constructor (app: Application) {

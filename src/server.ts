@@ -1,4 +1,4 @@
-import { AppConfig } from "./app-config";
+import { ExpressConfig } from "./config/express";
 import { UserController } from "./controllers/user";
 import { User } from "./interfaces/User";
 import * as db from "./others/db";
@@ -8,7 +8,7 @@ import express from "express";
 // Create app
 const app = express();
 // Config app
-new AppConfig(app);
+new ExpressConfig(app);
 // Create repositories
 const userRepo = db.repo<User>({ table: "User" });
 // Create controllers
