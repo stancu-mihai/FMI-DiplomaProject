@@ -1,6 +1,7 @@
 import { DbObject, Query, Repository } from "../others/db";
 import { DbObjectId } from "../others/db";
 import { ObjectID } from "mongodb";
+import * as db from "../others/db";
 
 export class MockRepository<T extends DbObject> implements Repository<T> {
   private data: T[];
@@ -11,6 +12,9 @@ export class MockRepository<T extends DbObject> implements Repository<T> {
   }
 
   private includedIn(small: any, big: any) {
+    if(!small) // query.all() means small is undefined
+      return true;
+
     const smallProps = Object.getOwnPropertyNames(small);
 
     for (let i = 0; i < smallProps.length; i++) {
@@ -20,7 +24,6 @@ export class MockRepository<T extends DbObject> implements Repository<T> {
         return false;
       }
     }
-
     return true;
   }
 
@@ -39,9 +42,12 @@ export class MockRepository<T extends DbObject> implements Repository<T> {
   public remove(query: Query): Promise<number> {
     return new Promise((fulfill: any, reject: any) => {
       try {
-        // Removes objects that match the query
-        this.data = this.data.filter((obj: any) => !this.includedIn(query.build(), obj));
-        fulfill(this.data);
+        // Remove objects that match the query
+        this.data.forEach((obj: T) => {
+          if(this.includedIn(query.build(), obj))
+            this.data.splice(this.data.indexOf(obj), 1);
+        });
+        fulfill();
       } catch (error) {
         reject(error);
       }
@@ -66,8 +72,12 @@ export class MockRepository<T extends DbObject> implements Repository<T> {
   public update(object: T): Promise<number> {
     return new Promise((fulfill: any, reject: any) => {
       try {
-        const query = { _id: new ObjectID(object._id.value) };
-        fulfill(this.data);
+        // Save the object, delete it by id then restore it
+        const tempObj = object;
+        const query = db.query().byId(object._id);
+        this.remove(query);
+        this.add(tempObj);
+        fulfill(0);
       } catch (error) {
         reject(error);
       }

@@ -6,7 +6,7 @@ export class MockQueryBuilder implements QueryBuilder {
   all(): Query {
     return {
       build: (): any => {
-          return null;
+          return undefined;
       }
     };
   }
