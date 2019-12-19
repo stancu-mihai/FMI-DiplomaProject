@@ -5,9 +5,10 @@ import * as db from "../others/db";
 
 export class MockRepository<T extends DbObject> implements Repository<T> {
   private data: T[];
+  private tableName: string;
   
   public constructor(className: string) {
-    //TODO: implement table (className)
+    this.tableName = className;
     this.data = [];
   }
 
@@ -20,7 +21,7 @@ export class MockRepository<T extends DbObject> implements Repository<T> {
     for (let i = 0; i < smallProps.length; i++) {
       const propValue: string = smallProps[i];
       if (  (big[propValue]) &&
-            JSON.stringify(big["_id"])!==JSON.stringify(small["_id"]) ) {
+            JSON.stringify(big[propValue])!==JSON.stringify(small[propValue]) ) {
         return false;
       }
     }
