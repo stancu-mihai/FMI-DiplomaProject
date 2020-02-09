@@ -2,83 +2,84 @@ import bcrypt from "bcrypt-nodejs";
 import passport from "passport";
 import passportLocal from "passport-local";
 import * as db from "../others/db";
-import * as mongoDbRepo from "../others/mongodb";
-import { User } from "../interfaces/User";
 import { Request, Response, NextFunction } from "express";
+import { User } from "../interfaces/User";
 
 interface UserRequest extends Request {
     user: User;
 }
 
-db.use(mongoDbRepo.init());
-const userRepo = db.repo<User>({ table: "User" });
-const secretaryRepo = db.repo<User>({ table: "Secretary" });
-const studentRepRepo = db.repo<User>({ table: "StudentRep" });
-const professorRepo = db.repo<User>({ table: "Professor" });
-const LocalStrategy = passportLocal.Strategy;
+export class PassportConfig
+{
+  private userRepo: db.Repository<User>;
+  constructor (userRepo: db.Repository<User>) {
+    this.userRepo = userRepo;
+    this.configApp();
+    return;
+  }
 
-passport.serializeUser<any, any>((user, done) => {
-  done(undefined, user);
-});
+  private configApp(){
+    const LocalStrategy = passportLocal.Strategy;
 
-passport.deserializeUser((obj, done) => {
-// TODO: Compare with the Microsoft Typescript Starter template
-  done(undefined, obj);
-});
-
-/**
- * Sign in using Email and Password.
- */
-passport.use(new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
-  // Find user by property
-  const query: db.Query = db.query().byProperty("email", email.toLowerCase());
-  const usersWithExactEmail = await userRepo.list(query);
-  const user = usersWithExactEmail[0];
-  try {
-    if (!user) {
-      return done(undefined, false, { message: `Email ${email} not found.` });
-    }
-
-    bcrypt.compare(password, user.password, function(err, res) {
-      if (res) {
-        // Passwords match
-        return done(undefined, user);
-      } else {
-        // Password don't match
-        done(undefined, false, { message: "Invalid email or password." });
-      }
+    passport.serializeUser<any, any>((user, done) => {
+      done(undefined, user);
     });
-  }
-  catch (error) {
-    return done(error);
-  }
-}));
 
-/**
- * Login Required middleware.
- */
-export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-};
+    passport.deserializeUser((obj, done) => {
+      done(undefined, obj);
+    });
 
-export const isAuthenticatedSecretary = async (req: UserRequest, res: Response, next: NextFunction) => {
-  if (req.isAuthenticated()) {
-    const query: db.Query = db.query().byProperty("email", req.user.email);
-    const result = await secretaryRepo.list(query);
-    if ((result.length == 1) && (result[1].role == 3)) {
+    /**
+     * Sign in using Email and Password.
+     */
+    passport.use(new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+      // Find user by property
+      const query: db.Query = db.query().byProperty("email", email.toLowerCase());
+      const usersWithExactEmail = await this.userRepo.list(query);
+      const user = usersWithExactEmail[0];
+      try {
+        if (!user) {
+          return done(undefined, false, { message: `Email ${email} not found.` });
+        }
+
+        bcrypt.compare(password, user.password, function(err, res) {
+          if (res) {
+            // Passwords match
+            return done(undefined, user);
+          } else {
+            // Password don't match
+            done(undefined, false, { message: "Invalid email or password." });
+          }
+        });
+      }
+      catch (error) {
+        return done(error);
+      }
+    }));
+  }
+
+  public isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+    if (req.isAuthenticated()) {
       return next();
     }
-  }
-  res.redirect("/");
-};
+    res.redirect("/login");
+  };
 
-export const isAuthenticatedStudentRep = async (req: UserRequest, res: Response, next: NextFunction) => {
+  public isAuthenticatedSecretary = async (req: UserRequest, res: Response, next: NextFunction) => {
     if (req.isAuthenticated()) {
       const query: db.Query = db.query().byProperty("email", req.user.email);
-      const result = await studentRepRepo.list(query);
+      const result = await this.userRepo.list(query);
+      if ((result.length == 1) && (result[1].role == 3)) {
+        return next();
+      }
+    }
+    res.redirect("/");
+  };
+
+  public isAuthenticatedStudentRep = async (req: UserRequest, res: Response, next: NextFunction) => {
+    if (req.isAuthenticated()) {
+      const query: db.Query = db.query().byProperty("email", req.user.email);
+      const result = await this.userRepo.list(query);
       if ((result.length == 1) && (result[1].role == 1)) {
         return next();
       }
@@ -86,13 +87,14 @@ export const isAuthenticatedStudentRep = async (req: UserRequest, res: Response,
     res.redirect("/");
   };
 
-export const isAuthenticatedProfessor = async (req: UserRequest, res: Response, next: NextFunction) => {
-  if (req.isAuthenticated()) {
-    const query: db.Query = db.query().byProperty("email", req.user.email);
-    const result = await professorRepo.list(query);
-    if ((result.length == 1) && (result[1].role == 2)) {
-      return next();
+  public isAuthenticatedProfessor = async (req: UserRequest, res: Response, next: NextFunction) => {
+    if (req.isAuthenticated()) {
+      const query: db.Query = db.query().byProperty("email", req.user.email);
+      const result = await this.userRepo.list(query);
+      if ((result.length == 1) && (result[1].role == 2)) {
+        return next();
+      }
     }
-  }
-  res.redirect("/");
-};
+    res.redirect("/");
+  };
+}

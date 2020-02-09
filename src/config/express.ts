@@ -25,7 +25,7 @@ export class ExpressConfig
         return;
     }
 
-    configApp() {
+    private configApp() {
         // Connect to MongoDB
         const mongoUrl = MONGODB_URI;
         mongoose.Promise = bluebird;
@@ -39,7 +39,7 @@ export class ExpressConfig
 
         // Express configuration
         this.app.set("port", process.env.PORT || 3000);
-        this.app.set("views", path.join(__dirname, "../views"));
+        this.app.set("views", path.join(__dirname, "../../views"));
         this.app.set("view engine", "pug");
         this.app.use(compression());
         this.app.use(bodyParser.json());
@@ -78,14 +78,14 @@ export class ExpressConfig
         });
 
         this.app.use(
-            express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
+            express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 })
         );
 
         // Error Handler. Provides full stack - remove for production
         this.app.use(errorHandler());
     }
 
-    startApp() {
+    private startApp() {
         // Start Express server.
         this.app.listen(this.app.get("port"), () => {
             console.log(
