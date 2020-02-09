@@ -8,14 +8,16 @@ import passport from "passport";
 import { IVerifyOptions } from "passport-local";
 import bcrypt from "bcrypt-nodejs";
 import { UserRequest } from "../interfaces/UserRequest";
+import { Application } from "express";
+import { PassportConfig } from "../config/passport";
 
 export class UserController extends RESTController<User> {
-  constructor(repo: db.Repository<User>, app: any, passportConfig: any) {
+  constructor(repo: db.Repository<User>, app: Application, passportConfig: PassportConfig) {
     super(repo, ["user_id"], []);
     this.registerRoutes(app, passportConfig);
   }
 
-  private registerRoutes(app: any, passportConfig: any) {
+  private registerRoutes(app: Application, passportConfig: PassportConfig) {
     app.get("/", this.getRootRoute);
     app.get("/login", this.getLogin);
     app.post("/login", this.postLogin);
