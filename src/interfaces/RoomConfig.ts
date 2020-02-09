@@ -1,6 +1,6 @@
 import * as db from "../others/db";
 
-export interface Needs extends db.DbObject {
+export interface RoomConfig extends db.DbObject {
     amphitheater: boolean;
     blackboard: boolean; 
     computers: boolean;

@@ -1,7 +1,7 @@
-import { Needs } from "./Needs";
+import { RoomConfig } from "./RoomConfig";
 import * as db from "../others/db";
 
 export interface Subject extends db.DbObject {
     name: string;
-    needs: Needs;
+    roomconfig: RoomConfig;
 }
