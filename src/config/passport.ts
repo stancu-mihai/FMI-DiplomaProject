@@ -69,7 +69,7 @@ export class PassportConfig
     if (req.isAuthenticated()) {
       const query: db.Query = db.query().byProperty("email", req.user.email);
       const result = await this.userRepo.list(query);
-      if ((result.length == 1) && (result[1].role == 3)) {
+      if ((result.length == 1) && (result[0].role == 3)) {
         return next();
       }
     }
@@ -80,7 +80,7 @@ export class PassportConfig
     if (req.isAuthenticated()) {
       const query: db.Query = db.query().byProperty("email", req.user.email);
       const result = await this.userRepo.list(query);
-      if ((result.length == 1) && (result[1].role == 1)) {
+      if ((result.length == 1) && (result[0].role == 1)) {
         return next();
       }
     }
@@ -91,7 +91,7 @@ export class PassportConfig
     if (req.isAuthenticated()) {
       const query: db.Query = db.query().byProperty("email", req.user.email);
       const result = await this.userRepo.list(query);
-      if ((result.length == 1) && (result[1].role == 2)) {
+      if ((result.length == 1) && (result[0].role == 2)) {
         return next();
       }
     }
