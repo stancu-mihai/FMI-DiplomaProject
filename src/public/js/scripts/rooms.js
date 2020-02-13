@@ -1,7 +1,5 @@
 $(function() {
     $("#rooms").jsGrid({
-        height: "auto",
-        shrinkToFit : false,
         filtering: true,
         inserting: true,
         editing: true,
@@ -42,19 +40,19 @@ $(function() {
           }
         },
         fields: [
-            { name: "name", type: "text", width: 75, title: "Name"},
-            { name: "location", type: "text", width: 75, title: "Location"},
-            { name: "capacity", type: "number", width: 50, title: "Capacity"},
-            { name: "projector", type: "checkbox", width: 50, title: "Projector"},
-            { name: "blackboard", type: "checkbox", width: 50, title: "Blackboard"},
-            { name: "smartboard", type: "checkbox", width: 50, title: "Smartboard"},
-            { name: "videoSurveillance", type: "checkbox", width: 50, title: "VideoSurveillance"},
-            { name: "physicsLab", type: "checkbox", width: 50, title: "PhysicsLab"},
-            { name: "chemistryLab", type: "checkbox", width: 50, title: "ChemistryLab"},
-            { name: "CSLab", type: "checkbox", width: 50, title: "CSLab"},
-            { name: "biologyLab", type: "checkbox", width: 50, title: "BiologyLab"},
-            { name: "basketball", type: "checkbox", width: 50, title: "Basketball"},
-            { name: "football", type: "checkbox", width: 50, title: "Football"},
+            { name: "name", type: "text", title: "Name"},
+            { name: "location", type: "text", title: "Location"},
+            { name: "capacity", type: "number", title: "Capacity"},
+            { name: "projector", type: "checkbox", title: "Projector"},
+            { name: "blackboard", type: "checkbox", title: "Black\nboard"},
+            { name: "smartboard", type: "checkbox", title: "Smart\nboard"},
+            { name: "videoSurveillance", type: "checkbox", title: "Video\nSurveillance"},
+            { name: "physicsLab", type: "checkbox", title: "Physics\nLab"},
+            { name: "chemistryLab", type: "checkbox", title: "Chemistry\nLab"},
+            { name: "CSLab", type: "checkbox", title: "CS\nLab"},
+            { name: "biologyLab", type: "checkbox", title: "Biology\nLab"},
+            { name: "basketball", type: "checkbox", title: "Basketball"},
+            { name: "football", type: "checkbox", title: "Football"},
             { type: "control" }
         ]
     });
