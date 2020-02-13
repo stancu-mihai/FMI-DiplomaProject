@@ -1,8 +1,10 @@
 ## Requires:
+
 - mongodb
 - node.js
 
 ## Install:
+
 - git clone ...
 - npm install
 - npm run build
@@ -15,6 +17,7 @@
 - npm run start
 
 ## Todo:
+
 - input room configs
 - input rooms
 - input groups
@@ -24,3 +27,22 @@
 - CICD
 - up to Heroku
 - proper readme
+
+## Description
+
+License application. Subject: timetable optimization problem.
+
+### Room data:
+- name: string;
+- location: string;
+- capacity: number;    
+- projector: boolean;
+- blackboard: boolean; 
+- smartboard: boolean; 
+- videoSurveillance: boolean;
+- physicsLab: boolean;
+- chemistryLab: boolean;
+- CSLab: boolean;
+- biologyLab: boolean;
+- basketball: boolean;
+- football: boolean;
