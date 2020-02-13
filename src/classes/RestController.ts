@@ -87,6 +87,13 @@ export class RESTController<T extends db.DbObject> {
     public async add(req: Request, res: Response) {
         try {
             const obj: T = this.jsonToObject(req.body);
+            // BugFix: "JSGrid checkboxes always checked"
+            for (const [key, value] of Object.entries(obj)) {
+                if(value === "true")
+                    (obj as any)[key] = true;
+                if(value === "false")
+                    (obj as any)[key] = false;
+            }
             await this.repo.add(obj);
             res.statusCode = 201;
             res.json(this.objectToJson(obj));
