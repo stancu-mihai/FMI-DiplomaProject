@@ -4,14 +4,14 @@ export interface Room extends db.DbObject {
     name: string;
     location: string;
     capacity: number;    
-    projector: number;
-    blackboard: number; 
-    smartboard: number; 
-    videoSurveillance: number;
-    physicsLab: number;
-    chemistryLab: number;
-    CSLab: number;
-    biologyLab: number;
-    basketball: number;
-    football: number;
+    projector: boolean;
+    blackboard: boolean; 
+    smartboard: boolean; 
+    videoSurveillance: boolean;
+    physicsLab: boolean;
+    chemistryLab: boolean;
+    CSLab: boolean;
+    biologyLab: boolean;
+    basketball: boolean;
+    football: boolean;
 }
