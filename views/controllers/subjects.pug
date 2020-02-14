@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  .page-header
+    h2 Subjects
+  form.form-horizontal(id='signup-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      .col-sm-12
+      div#subjects
+    script(type='text/javascript', src='/js/lib/jsgrid.min.js')
+    script(src='/js/scripts/subjects.js')
