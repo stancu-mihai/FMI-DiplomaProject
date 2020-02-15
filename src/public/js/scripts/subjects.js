@@ -1,5 +1,7 @@
 $(function() {
     $("#subjects").jsGrid({
+        width: null,
+        shrinkToFit: false,
         filtering: true,
         inserting: true,
         editing: true,
