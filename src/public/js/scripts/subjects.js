@@ -1,5 +1,5 @@
 $(function() {
-    $("#rooms").jsGrid({
+    $("#subjects").jsGrid({
         width: null,
         shrinkToFit: false,
         filtering: true,
@@ -10,11 +10,11 @@ $(function() {
         autoload: true,
         pageSize: 10,
         pageButtonCount: 5,
-        deleteConfirm: "Do you really want to delete room?",
+        deleteConfirm: "Do you really want to delete subject?",
         controller: {
           loadData: function(filter) {
             return $.ajax({
-              url: "/api/room",
+              url: "/api/subject",
               dataType: "json",
               data: filter
             });
@@ -22,29 +22,29 @@ $(function() {
           insertItem: function(item) {
             return $.ajax({
               type: "POST",
-              url: "/api/room",
+              url: "/api/subject",
               data: item
             });
           },
           updateItem: function(item) {
             return $.ajax({
               type: "PUT",
-              url: "/api/room",
+              url: "/api/subject",
               data: item
             });
           },
           deleteItem: function(item) {
             return $.ajax({
               type: "DELETE",
-              url: "/api/room",
+              url: "/api/subject",
               data: item
             });
           }
         },
         fields: [
             { name: "name", type: "text", title: "Name"},
-            { name: "location", type: "text", title: "Location"},
-            { name: "capacity", type: "number", title: "Capacity"},
+            { name: "credits", type: "number", title: "Credits"},
+            { name: "timeDuration", type: "number", title: "Duration"},
             { name: "projector", type: "checkbox", title: "Projector"},
             { name: "blackboard", type: "checkbox", title: "Black\nboard"},
             { name: "smartboard", type: "checkbox", title: "Smart\nboard"},
