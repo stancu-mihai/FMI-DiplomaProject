@@ -5,7 +5,7 @@
 
 ## Install:
 
-- git clone ...
+- git clone https://github.com/stancu-mihai/FMI-DiplomaProject.git
 - npm install
 - npm run build
 - .env file with:
@@ -18,10 +18,10 @@
 
 ## Todo:
 - input professors (requires subjects)
-- input groups
+- input groups (requires subjects and professors)
 - add menu UI for rooms, subjects, professors, groups
 - add algorithm
-- handle UI bug where subjects are empty and want to add one
+- add UI to visualize results https://fullcalendar.io/
 - remove "contact" controller
 - CICD
 - up to Heroku
@@ -37,6 +37,21 @@ License application. Subject: timetable optimization problem.
 - name: string;
 - location: string;
 - capacity: number;    
+- projector: boolean;
+- blackboard: boolean; 
+- smartboard: boolean; 
+- videoSurveillance: boolean;
+- physicsLab: boolean;
+- chemistryLab: boolean;
+- CSLab: boolean;
+- biologyLab: boolean;
+- basketball: boolean;
+- football: boolean;
+
+### Subject data:
+- name: string;
+- credits: number;
+- timeDuration: number;
 - projector: boolean;
 - blackboard: boolean; 
 - smartboard: boolean; 
