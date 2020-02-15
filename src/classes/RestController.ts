@@ -16,6 +16,7 @@ export class RESTController<T extends db.DbObject> {
         const retObj: T = Object.assign({}, jsonObject);
         if (jsonObject._id && !jsonObject._id.value)
             retObj._id = new db.DbObjectId(jsonObject._id);
+        this.handleBoolean(retObj);
         this.relations.forEach(relation => {
             if (jsonObject[relation] && !jsonObject[relation].value) {
                 const value = new db.DbObjectId(jsonObject[relation]);
@@ -27,6 +28,7 @@ export class RESTController<T extends db.DbObject> {
     }
     public objectToJson(object: T): any {
         const retObj: any = Object.assign({}, object);
+        this.handleBoolean(retObj);
         if (object._id)
             retObj._id = object._id.value;
         this.relations.forEach(relation => {
@@ -35,6 +37,16 @@ export class RESTController<T extends db.DbObject> {
                 retObj[relation] = relationId.value;
         });
         return retObj;
+    }
+
+    public handleBoolean(object: T): any {
+        // BugFix: "JSGrid checkboxes always checked"
+        for (const [key, value] of Object.entries(object)) {
+            if(value === "true")
+                (object as any)[key] = true;
+            if(value === "false")
+                (object as any)[key] = false;
+        }
     }
 
     public filterQuery(req: Request): db.Query {
@@ -76,7 +88,7 @@ export class RESTController<T extends db.DbObject> {
                 res.end();
             } else {
                 res.statusCode = 200;
-                res.json(req.body);
+                res.json(obj);
             }
         } catch (err) {
             console.error(err);
@@ -87,13 +99,6 @@ export class RESTController<T extends db.DbObject> {
     public async add(req: Request, res: Response) {
         try {
             const obj: T = this.jsonToObject(req.body);
-            // BugFix: "JSGrid checkboxes always checked"
-            for (const [key, value] of Object.entries(obj)) {
-                if(value === "true")
-                    (obj as any)[key] = true;
-                if(value === "false")
-                    (obj as any)[key] = false;
-            }
             await this.repo.add(obj);
             res.statusCode = 201;
             res.json(this.objectToJson(obj));
