@@ -2,9 +2,11 @@ import { ExpressConfig } from "./config/express";
 import { UserController } from "./controllers/user";
 import { RoomController } from "./controllers/room";
 import { SubjectController } from "./controllers/subject";
+import { ProfSubjRelController } from "./controllers/profSubjRel";
 import { User } from "./interfaces/User";
 import { Room } from "./interfaces/Room";
 import { Subject } from "./interfaces/Subject";
+import { ProfSubjRel } from "./interfaces/ProfSubjRel";
 import * as db from "./others/db";
 import { PassportConfig } from "./config/passport";
 import express from "express";
@@ -20,9 +22,11 @@ db.use(mongoDbRepo.init());
 const userRepo = db.repo<User>({ table: "User" });
 const roomRepo = db.repo<Room>({ table: "Room" });
 const subjectRepo = db.repo<Subject>({ table: "Subject" });
+const profSubjRelRepo = db.repo<ProfSubjRel>({ table: "ProfSubjRel" });
 // Config Passport
 const passportConfig = new PassportConfig(userRepo);
 // Create controllers
 new UserController(userRepo, app, passportConfig);
 new RoomController(roomRepo, app, passportConfig);
 new SubjectController(subjectRepo, app, passportConfig);
+new ProfSubjRelController(profSubjRelRepo, app, passportConfig);
