@@ -13,7 +13,7 @@ import { PassportConfig } from "../config/passport";
 
 export class UserController extends RESTController<User> {
   constructor(repo: db.Repository<User>, app: Application, passportConfig: PassportConfig) {
-    super(repo, ["user_id"], []);
+    super(repo, ["role"], []);
     this.registerRoutes(app, passportConfig);
   }
 
@@ -28,6 +28,7 @@ export class UserController extends RESTController<User> {
     app.post("/account/profile", passportConfig.isAuthenticated, this.postUpdateProfile);
     app.post("/account/password", passportConfig.isAuthenticated, this.postUpdatePassword);
     app.post("/account/delete", passportConfig.isAuthenticated, this.postDeleteAccount);
+    app.get("/api/user", passportConfig.isAuthenticatedSecretary, this.get.bind(this));
   }
 
   public getRootRoute = (req: Request, res: Response) => {
