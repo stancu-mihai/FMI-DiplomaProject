@@ -32,9 +32,10 @@
 ## Description
 
 License application. Subject: timetable optimization problem.
-The list of rooms is provided. Each room has some features (no of seats, some have projector, some blackboard, etc.).
-The list of subjects is provided. Each subject has some features (credits, no of hours per week) and needs (projector, blackboard).
-The relations between subjects and professors is provided. It is n:n (many to many) relation.
+- The list of rooms is provided. Each room has some features (no of seats, some have projector, some blackboard, etc.).
+- The list of subjects is provided. Each subject has some features (credits, no of hours per week) and needs (projector, blackboard).
+- The relations between subjects and professors is provided. It is n:n (many to many) relation.
+- The groups of students are provided. Each group has subjects assigned.
 
 ## Database description
 
@@ -82,3 +83,8 @@ The relations between subjects and professors is provided. It is n:n (many to ma
 ### ProfSubjRel data:
 - professorId: User;
 - subjectId: Subject;
+
+### StudentGroup data:
+- name: string;
+- semesters: number;
+- studentRep: User;
