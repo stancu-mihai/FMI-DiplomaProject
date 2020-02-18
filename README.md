@@ -17,15 +17,15 @@
 - npm run start
 
 ## Todo:
-- input groups (requires subjects and professors)
 - add menu UI for rooms, subjects, professors, groups
+- add project title
 - add algorithm
 - add UI to visualize results https://fullcalendar.io/
 - remove "contact" controller
 - CICD
-- up to Heroku
+- upload to Heroku
 - proper readme
-- Remove true/false workaround from RestController.add
+## Todo long term:
 - add schema validation to RestController
 - make search work for multiple fields at once
 
@@ -36,6 +36,7 @@ License application. Subject: timetable optimization problem.
 - The list of subjects is provided. Each subject has some features (credits, no of hours per week) and needs (projector, blackboard).
 - The relations between subjects and professors is provided. It is n:n (many to many) relation.
 - The groups of students are provided. Each group has subjects assigned.
+- The relations between subjects and student groups is provided. It is 1:n (one to many) relation.
 
 ## Database description
 
@@ -88,3 +89,8 @@ License application. Subject: timetable optimization problem.
 - name: string;
 - semesters: number;
 - studentRep: User;
+
+### StudentGroup data:
+- studentGroupId: StudentGroup;
+- subjectId: Subject;
+- semester: number;
