@@ -4,11 +4,13 @@ import { RoomController } from "./controllers/room";
 import { SubjectController } from "./controllers/subject";
 import { ProfSubjRelController } from "./controllers/profSubjRel";
 import { StudentGroupController } from "./controllers/StudentGroup";
+import { StudSubjRelController } from "./controllers/studSubjRel";
 import { User } from "./interfaces/User";
 import { Room } from "./interfaces/Room";
 import { Subject } from "./interfaces/Subject";
 import { ProfSubjRel } from "./interfaces/ProfSubjRel";
 import { StudentGroup } from "./interfaces/StudentGroup";
+import { StudSubjRel } from "./interfaces/StudSubjRel";
 import * as db from "./others/db";
 import { PassportConfig } from "./config/passport";
 import express from "express";
@@ -26,6 +28,7 @@ const roomRepo = db.repo<Room>({ table: "Room" });
 const subjectRepo = db.repo<Subject>({ table: "Subject" });
 const profSubjRelRepo = db.repo<ProfSubjRel>({ table: "ProfSubjRel" });
 const studentGroupRepo = db.repo<StudentGroup>({ table: "StudentGroup" });
+const studSubjRelRepo = db.repo<StudSubjRel>({ table: "StudSubjRel" });
 // Config Passport
 const passportConfig = new PassportConfig(userRepo);
 // Create controllers
@@ -34,3 +37,4 @@ new RoomController(roomRepo, app, passportConfig);
 new SubjectController(subjectRepo, app, passportConfig);
 new ProfSubjRelController(profSubjRelRepo, app, passportConfig);
 new StudentGroupController(studentGroupRepo, app, passportConfig);
+new StudSubjRelController(studSubjRelRepo, app, passportConfig);
