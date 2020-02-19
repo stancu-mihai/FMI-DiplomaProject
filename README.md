@@ -37,6 +37,7 @@ License application. Subject: timetable optimization problem.
 - The relations between subjects and professors is provided. It is n:n (many to many) relation.
 - The groups of students are provided. Each group has subjects assigned.
 - The relations between subjects and student groups is provided. It is 1:n (one to many) relation.
+- The timetable itself will be a list of bookings. Some bookings are external to this application (professors or rooms are unavailable in certain timeframes)
 
 ## Database description
 
@@ -94,3 +95,16 @@ License application. Subject: timetable optimization problem.
 - studentGroupId: StudentGroup;
 - subjectId: Subject;
 - semester: number;
+
+### Booking data:
+- subjectId: Subject;
+- professorId: User;
+- studentGroupId: StudentGroup;
+- semester: number;
+- date: Date;
+- startHour: number;
+- endHour: number;
+- isExternal: boolean;
+
+## Limitations
+- Can't use fractions of an hour (14:30 or 14:15 are unavailable for both start and end times)
