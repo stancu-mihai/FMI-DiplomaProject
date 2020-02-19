@@ -12,6 +12,7 @@ html(lang='')
     link(rel='stylesheet', href='/css/main.css')
     link(type='text/css', rel='stylesheet', href='/js/lib/jsgrid.min.css')
     link(type='text/css', rel='stylesheet', href='/js/lib/jsgrid-theme.min.css')
+    link(type='text/css', rel='stylesheet', href='/js/lib/jquery-ui.min.css')
 
   body
     include partials/header
@@ -19,6 +20,7 @@ html(lang='')
     .container-fluid.pl-sm-0.pr-sm-0.pl-lg-3.pr-lg-3
       include partials/flash
       script(src='/js/lib/jquery-3.4.1.min.js')
+      script(src='/js/lib/jquery-ui.min.js')
       script(src='/js/lib/bootstrap.min.js')
       block content
 
