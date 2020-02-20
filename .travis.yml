@@ -2,18 +2,18 @@ language: node_js
 sudo: required
 node_js: 12.16.1
 services:
-- docker
-- mongodb
+    - docker
+    - mongodb
 before_deploy:
-- npm install
-- npm run build
-- npm run test
+    - npm install
+    - npm run build
+    - npm run test
 deploy:
-  provider: heroku
-  skip_cleanup: true
-  api_key:
-    secure: P+HcfskOdFKwvfZE4uS2oJ4+8wsKQkZ3MNALBffUOe7+CvR5uPuinIfqY7LRM7ni7olltxFjrUJBG/3tBWvXPyzrMET4sZr4Tu07TSZM9AYnkQfRIy426B30tPOK5CSCGppU0EyOcuz/TGB/UZ7t0EoSFHhZXJxNs+m28TmnbZemxrcPAoW1x/UbHvRhIc+Sqnud3Xy/+wD4gsJRIBqOQyx27Z6nVqA6YKqFx1maPjqFHIpNjG2uaZS9HxCjkapJern5dYpA8iPTmW3qJ5zYbWfHeluM43/0vqvidyxu7+Go2IHQJt1DyMsEu+D/0O4un3Da1IdZn+p6CNmK3ykIkMjuDxR8Z1KB+mdFavLHuY3LQoDJek9yCYJEDoM0Ge+B7nPnZ/DniEzRJDBE/HdkI/XWv+RgRlX71VYirTACiOJp1+xRNQI1nDs5wCW/xb+vdvwZarft6nE37gqMjfO/DdbLVJmPRgQmpj6oErHCGvVuOgUpsO2XXSzBf18YYWk8wpSgSYwL4YjhyLryuXK3p67ka3jrLsBAHviWk+7sHfkJmYlhSo/KvSXIKc1sAWUWwkyZKb0vtN5RIIrBJjFG1FUxzpP7/cfVsB/GuFcuEB+hmlGI1xgrn3grMizWqNx3j7rjscnqIz7EbQDURqejM7z4LLa4r+6cN1/MMONnqzI=
-  app: stancu-mihai
-  on:
-    repo: stancu-mihai/FMI-DiplomaProject
-    branch: master
+    provider: heroku
+    skip_cleanup: true
+    api_key:
+        secure: R3LPOa2LEukGYe6ddQPjPBJUIt05OW2RDv/ndFM43KdKK/7U22KjmmHztg6xQ5zdacvvzn+AntpPATg1n1dVQ6MWRVQYPkJwSO3B4pUDZw0aMd589NrQ8y9uY3u3M+lvVL20afZgc/pdY0NwoHE2q6MXyjb+z5RUB/+fKgH9g6/0xI+kCKI9VDtagq/Mc7xJrPS2vAMj59OwHaIC0BrNJ6BctXqK8YtrWQiccPScWHN7Ttq1v3ywQaKMOt/Jkj2sOK5oQwgRa5B5ZGrkHOq0AcaUGr9zqb5H3I9VmVDDxSHZ3JAApzHEMxccQs0CtAIWSnZIxmWEtESdXuyFC0RWShu504Lk3J0z6gF7wtIzgZtdnZjleNDUcWERcXolQ5WRrsUUABjKer6Plq+v7ccOe7lhhHAinXVs16P0LJWQgMeyUpM8G4aVzgl0IEutPGM21SjJYlOFs7A+41RRAyAqafhBQtjP/odTqcbr44Q3x8dO7ZFRgFgmhgNsvwLebIDoC6eltMWv9eowLg8l4yAI2AGcLsunvFqAA0DrBMqsJPPTuCWzXXNP4w+DBsGvJIVB1SZNX9uaRhA2R1buGaqtKB08SxMaGVt0JsL3rSqEqh65VycuEnmwn7repa1o04e+TBlr1ofN4ToKq3vvQEmq4oG1U6MmaisFcHehRQLKcPI=
+    app: stancu-mihai
+    on:
+        repo: stancu-mihai/FMI-DiplomaProject
+        branch: master
