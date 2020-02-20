@@ -1,4 +1,4 @@
-import { DbObject } from "./DBObject";
+import { DbObject } from "./DbObject";
 import { Repository } from "./Repository";
 import { QueryBuilder } from "./QueryBuilder";
 
