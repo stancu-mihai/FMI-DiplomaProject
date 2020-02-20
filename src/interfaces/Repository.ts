@@ -1,4 +1,4 @@
-import { DbObject } from "./DbObject";
+import { DbObject } from "./DBObject";
 import { Query } from "./Query";
 
 export interface Repository<T extends DbObject> {

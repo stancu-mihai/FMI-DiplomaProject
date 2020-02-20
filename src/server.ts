@@ -3,7 +3,7 @@ import { UserController } from "./controllers/user";
 import { RoomController } from "./controllers/room";
 import { SubjectController } from "./controllers/subject";
 import { ProfSubjRelController } from "./controllers/profSubjRel";
-import { StudentGroupController } from "./controllers/StudentGroup";
+import { StudentGroupController } from "./controllers/studentGroup";
 import { StudSubjRelController } from "./controllers/studSubjRel";
 import { BookingController } from "./controllers/booking";
 import { User } from "./interfaces/User";

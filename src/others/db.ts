@@ -1,4 +1,4 @@
-import { DbObjectId } from "../classes/DbObjectId";
+import { DbObjectId } from "../classes/DBObjectId";
 import { DbObject } from "../interfaces/DbObject";
 import { Query } from "../interfaces/Query";
 import { QueryBuilder } from "../interfaces/QueryBuilder";
