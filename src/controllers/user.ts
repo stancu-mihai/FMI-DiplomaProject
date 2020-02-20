@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { check, sanitize, validationResult } from "express-validator";
 import "../config/passport";
-import { RESTController } from "../classes/RESTController";
+import { RESTController } from "../classes/RESTController"; 
 import { User } from "../interfaces/User";
 import * as db from "../others/db";
 import passport from "passport";
