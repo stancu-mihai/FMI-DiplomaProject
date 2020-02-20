@@ -8,7 +8,7 @@ export class MongoDBRepository<T extends DbObject> implements Repository<T> {
     private url: string;
     public constructor(className: string) {
         this.tableName = className;
-        this.url = process.env.MONGODB_PATH;
+        this.url = process.env.MONGODB_URI;
     }
 
     public add(obj: T): Promise<void> {

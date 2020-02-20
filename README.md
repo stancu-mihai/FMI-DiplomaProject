@@ -11,8 +11,6 @@
 - .env file with:
   -  NODE_ENV=
   -  MONGODB_URI=
-  -  MONGODB_PATH=
-  -  MONGODB_URI_LOCAL=
   -  SESSION_SECRET=...
 - npm run start
 
