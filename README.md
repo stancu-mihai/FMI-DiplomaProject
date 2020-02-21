@@ -15,14 +15,9 @@
 - npm run start
 
 ## Todo:
-- add menu UI for rooms, subjects, professors, groups
-- add project title
 - add algorithm
 - add UI to visualize results https://fullcalendar.io/
 - remove "contact" controller
-- CICD
-- upload to Heroku
-- proper readme
 ## Todo long term:
 - add schema validation to RestController
 - make search work for multiple fields at once

@@ -2,7 +2,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   .container
     a.navbar-brand(href='/')
       i.fa.fa-cube
-      | Project name
+      | License app
     button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
       span.navbar-toggler-icon
 
@@ -20,8 +20,18 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
               li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
                 a.nav-link(href='/timetable?email=' + user.email) Timetable
             when '3'
-              li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
-                a.nav-link(href='/gentimetable') Timetable
+              li.nav-item(class=(title === 'Rooms') ? 'active' : undefined)
+                a.nav-link(href='/rooms') Rooms
+              li.nav-item(class=(title === 'Subjects') ? 'active' : undefined)
+                a.nav-link(href='/Subjects') Subjects
+              li.nav-item(class=(title === 'Groups') ? 'active' : undefined)
+                a.nav-link(href='/studentgroups') Groups
+              li.nav-item(class=(title === 'ProfSubjRel') ? 'active' : undefined)
+                a.nav-link(href='/profsubjrels') ProfSubjRel
+              li.nav-item(class=(title === 'StudSubjRel') ? 'active' : undefined)
+                a.nav-link(href='/studsubjrels') StudSubjRel
+              li.nav-item(class=(title === 'Generate') ? 'active' : undefined)
+                a.nav-link(href='/generate') Generate
       ul.nav.navbar-nav
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)

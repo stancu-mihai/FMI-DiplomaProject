@@ -1,27 +1,30 @@
 extends layout
 
 block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
+  h1 Stancu Mihai's license app
+  p.lead License application. Subject: timetable optimization problem. Input:
+    ul
+      li Rooms
+      li Subjects
+      li Students
+      li Relations
   hr
   .row
     .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
+      h2 Rooms
+      p The list of rooms is provided. Each room has some features (no of seats, some have projector, some blackboard, etc.).
     .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
+      h2 Subjects
+      p The list of subjects is provided. Each subject has some features (credits, no of hours per week) and needs (projector, blackboard).
     .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
+      h2 Students
+      p The groups of students are provided. Each group has subjects assigned.
     .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-secondary(href='#', role='button') View details »
+      h2 Professor - Subject relation
+      p The relations between subjects and professors is provided. It is n:n (many to many) relation.
+    .col-sm-6
+      h2 Student group - Subject relation
+      p The relations between subjects and student groups is provided. It is 1:n (one to many) relation.
+    .col-sm-6
+      h2 Timetable
+      p The timetable itself will be a list of bookings. Some bookings are external to this application (professors or rooms are unavailable in certain timeframes)A boilerplate for Node.js web applications.
