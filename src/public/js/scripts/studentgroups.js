@@ -48,7 +48,9 @@ $(function () {
                 },
                 fields: [
                     { name: "name", type: "text", title: "Name" },
+                    { name: "count", type: "number", title: "Count" },
                     { name: "semesters", type: "number", title: "Semesters" },
+                    { name: "weekendOnly", type: "checkbox", title: "Only Weekend" },
                     { name: "studentRep", type: "select", items: studentReps, valueField: "_id", textField: "email", title: "Student rep." },
                     { type: "control" }
                 ]

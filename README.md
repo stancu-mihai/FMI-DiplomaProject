@@ -15,7 +15,6 @@
 - npm run start
 
 ## Todo:
-- Groups - add "count" and "isWeekendOnly"
 - add algorithm
 - add UI to visualize results https://fullcalendar.io/
 - remove "contact" controller
