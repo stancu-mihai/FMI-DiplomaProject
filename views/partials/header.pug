@@ -48,6 +48,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
                   span= (user.profile.firstName + ' ' + user.profile.lastName + '(Professor)')
                 when '3'
                   span= (user.profile.firstName + ' ' + user.profile.lastName + '(Secretary)')
+                default 
+                  span= (user.profile.firstName + ' ' + user.profile.lastName)
               i.caret
             ul.dropdown-menu
               li.nav-item

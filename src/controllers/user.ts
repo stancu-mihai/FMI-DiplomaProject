@@ -117,11 +117,11 @@ export class UserController extends RESTController<User> {
         city: +req.body.city,
         phoneNo: req.body.phoneNo,
       },
-      role: +req.body.role,
-      grade: +req.body.grade,
+      role: req.body.role,
+      grade: req.body.grade,
       worksSS: req.body.worksSS == "on"? true: false,
       worksMtoF: req.body.worksMtoF == "on"? true: false,
-      prefStartHour: +req.body.prefStartHour,
+      prefStartHour: req.body.prefStartHour,
 
       password: req.body.password,
       email: req.body.email,
@@ -169,13 +169,13 @@ export class UserController extends RESTController<User> {
     newUser.profile.firstName = req.body.firstName;
     newUser.profile.lastName = req.body.lastName;
     newUser.profile.city = req.body.city;
-    newUser.role = +req.body.role;
+    newUser.role = req.body.role;
     newUser.email = req.body.email;
     newUser.profile.phoneNo = req.body.phoneNo;
-    newUser.grade = +req.body.grade,
+    newUser.grade = req.body.grade,
     newUser.worksMtoF = req.body.worksMtoF == "on"? true: false,
     newUser.worksSS = req.body.worksSS == "on"? true: false,
-    newUser.prefStartHour = +req.body.prefStartHour,
+    newUser.prefStartHour = req.body.prefStartHour,
 
     await this.repo.update(newUser);
 
