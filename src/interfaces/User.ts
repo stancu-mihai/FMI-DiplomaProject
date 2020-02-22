@@ -18,6 +18,10 @@ export interface User extends DbObject {
     phoneNo: string;
   };
   role: number;
+  grade: number;
+  worksSS: boolean;
+  worksMtoF: boolean;
+  prefStartHour: number;
 
   comparePassword: comparePasswordFunction;
 }

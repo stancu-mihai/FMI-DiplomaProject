@@ -15,9 +15,11 @@
 - npm run start
 
 ## Todo:
+- Groups - add "count" and "isWeekendOnly"
 - add algorithm
 - add UI to visualize results https://fullcalendar.io/
 - remove "contact" controller
+- Add more cities
 ## Todo long term:
 - add schema validation to RestController
 - make search work for multiple fields at once
