@@ -91,13 +91,14 @@ License application. Subject: timetable optimization problem.
 - semester: number;
 
 ### Booking data:
+- studentGroupId: StudentGroup;
 - subjectId: Subject;
 - professorId: User;
-- studentGroupId: StudentGroup;
+- roomId: Room;
 - semester: number;
-- date: Date;
+- weekDay: number;
 - startHour: number;
-- endHour: number;
+- duration: number;
 - isExternal: boolean;
 
 ## Limitations
