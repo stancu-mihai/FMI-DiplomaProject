@@ -67,19 +67,20 @@ $(function () {
                                         { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Professor" },
                                         { name: "roomId", type: "select", items: rooms, valueField: "_id", textField: "name", title: "Room" },
                                         {
-                                            name: "Weekday",
+                                            name: "weekDay",
                                             type: "select",
                                             items: [
-                                                { Name: "Mon", Id: 0 },
-                                                { Name: "Tue", Id: 1 },
-                                                { Name: "Wed", Id: 2 },
-                                                { Name: "Thu", Id: 3 },
-                                                { Name: "Fri", Id: 4 },
-                                                { Name: "Sat", Id: 5 },
-                                                { Name: "Sun", Id: 6 }
+                                                { Name: "Mon", Id: "0" },
+                                                { Name: "Tue", Id: "1" },
+                                                { Name: "Wed", Id: "2" },
+                                                { Name: "Thu", Id: "3" },
+                                                { Name: "Fri", Id: "4" },
+                                                { Name: "Sat", Id: "5" },
+                                                { Name: "Sun", Id: "6" }
                                             ],
                                             valueField: "Id",
-                                            textField: "Name"
+                                            textField: "Name",
+                                            title: "Weekday"
                                         },
                                         { name: "startHour", type: "number", title: "Start time" },
                                         { name: "duration", type: "number", title: "Duration" },
