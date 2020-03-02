@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Timetable
+    hr
+    each valueTT, indexTT in timetable
+      each valueGroup, indexGroup in valueTT
+        h4 Group #{indexGroup}
+        each valueSemester, indexSemester in valueGroup
+          h5 Semester #{+indexSemester}
+          table.calendar.table.table-bordered
+            thead
+              tr
+                th &nbsp
+                th Monday
+                th Tuesday
+                th Wednesday
+                th Thursday
+                th Friday
+                th Saturday
+                th Sunday
+            tbody
+              each valueStartHour, indexStartHour in valueSemester
+                each valueWeekday, indexWeekday in valueStartHour
+                  tr
+                    td #{indexWeekday}:00
+                    each valueBlock, indexBlock in valueWeekday
+                      each valueEntry, indexEntry in valueBlock
+                        if valueEntry[0]
+                          td.has-events(rowspan=valueEntry[0].duration)
+                            div.row-fluid
+                              span.title #{valueEntry[0].subject}
+                              p
+                              span.lecturer #{valueEntry[0].professor}
+                              p
+                              span.location #{valueEntry[0].room}
+                        else
+                          td.no-events(rowspan="1")
