@@ -17,7 +17,7 @@ interface Block {
   room: string;
 }
 interface WeekDay {
-  [key: number]: Block[];
+  [key: number]: Block;
 }
 interface StartHour {
   [key: number]: WeekDay[];
@@ -69,17 +69,16 @@ export class TimetableController extends RESTController<Booking> {
               +item.semester === semester &&
               +item.startHour === startHour &&
               +item.weekDay === weekDay);
-              if(!weekDayDict[weekDay])
-              weekDayDict[weekDay] = [];
+            if(!weekDayDict[weekDay])
+              weekDayDict[weekDay] = undefined;
             if (tempBooking) {
               const prof = users.find(item => item._id.value === tempBooking.professorId.value);
-              const block: Block = {
+              weekDayDict[weekDay] = {
                 duration: +tempBooking.duration,
                 subject: subjects.find(item => item._id.value === tempBooking.subjectId.value).name,
                 professor: prof.profile.firstName + " " + prof.profile.lastName,
                 room: rooms.find(item => item._id.value === tempBooking.roomId.value).name
-              };
-              weekDayDict[weekDay].push(block);
+              };;
             }
           }
           if(!startHourDict[startHour])

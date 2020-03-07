@@ -3,6 +3,7 @@ extends ../layout
 block content
   .page-header
     h3 Timetable
+    h5 #{JSON.stringify(timetable)}
     hr
     each valueTT, indexTT in timetable
       each valueGroup, indexGroup in valueTT
@@ -26,14 +27,14 @@ block content
                   tr
                     td #{indexWeekday}:00
                     each valueBlock, indexBlock in valueWeekday
-                      each valueEntry, indexEntry in valueBlock
-                        if valueEntry[0]
-                          td.has-events(rowspan=valueEntry[0].duration)
+                      each block, indexEntry in valueBlock
+                        if block
+                          td.has-events(rowspan=block.duration)
                             div.row-fluid
-                              span.title #{valueEntry[0].subject}
+                              span.title #{block.subject}
                               p
-                              span.lecturer #{valueEntry[0].professor}
+                              span.lecturer #{block.professor}
                               p
-                              span.location #{valueEntry[0].room}
+                              span.location #{block.room}
                         else
                           td.no-events(rowspan="1")
