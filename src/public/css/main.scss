@@ -80,15 +80,6 @@ table.calendar > tbody > tr > td {
   height: 20px;
 }
 
-table.calendar > tbody > tr > td > div {
-  /* //padding: 8px; */
-  height: 40px;
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: middle;
-  float: left;
-}
-
 table.calendar > tbody > tr > td.has-events {
   color: white;
   cursor: pointer;
