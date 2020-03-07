@@ -80,6 +80,10 @@ table.calendar > tbody > tr > td {
   height: 20px;
 }
 
+table.calendar > tbody > tr > td > div {
+  height: 100%;
+}
+
 table.calendar > tbody > tr > td.has-events {
   color: white;
   cursor: pointer;
