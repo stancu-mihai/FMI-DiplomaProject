@@ -3,37 +3,56 @@ extends ../layout
 block content
   .page-header
     h3 Timetable
+    //- h5 #{JSON.stringify(timetable)}
     hr
-    each valueTT, indexTT in timetable
-      each valueGroup, indexGroup in valueTT
-        h4 Group #{indexGroup}
-        each valueSemester, indexSemester in valueGroup
-          h5 Semester #{+indexSemester}
-          table.calendar.table.table-bordered
-            thead
+    each contentGroup, nameGroup in timetable
+      h4 #{nameGroup}
+      each contentSemester, nameSemester in contentGroup
+        h5 Semester #{+nameSemester}
+        table.calendar.table.table-bordered
+          thead
+            tr
+              th &nbsp
+              th Monday
+              th Tuesday
+              th Wednesday
+              th Thursday
+              th Friday
+              th Saturday
+              th Sunday
+          tbody
+            each startHour in [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
               tr
-                th &nbsp
-                th Monday
-                th Tuesday
-                th Wednesday
-                th Thursday
-                th Friday
-                th Saturday
-                th Sunday
-            tbody
-              each valueStartHour, indexStartHour in valueSemester
-                each valueWeekday, indexWeekday in valueStartHour
-                  tr
-                    td #{indexWeekday}:00
-                    each valueBlock, indexBlock in valueWeekday
-                      each valueEntry, indexEntry in valueBlock
-                        if valueEntry[0]
-                          td.has-events(rowspan=valueEntry[0].duration)
-                            div.row-fluid
-                              span.title #{valueEntry[0].subject}
-                              p
-                              span.lecturer #{valueEntry[0].professor}
-                              p
-                              span.location #{valueEntry[0].room}
+                td #{startHour}:00
+                each weekDay in [0, 1, 2, 3, 4, 5, 6]
+                  //- If there is a block at this hour, in this weekday, display it
+                  if contentSemester[startHour] && contentSemester[startHour][weekDay]
+                    td.has-events(rowspan=contentSemester[startHour][weekDay].duration)
+                      div.row-fluid
+                        span.title #{contentSemester[startHour][weekDay].subject}
+                        p
+                        span.lecturer #{contentSemester[startHour][weekDay].professor}
+                        p
+                        span.location #{contentSemester[startHour][weekDay].room}
+                  else
+                    //- h6 We are at hour #{+startHour} weekday #{+weekDay}
+                    //- Are we in a course that started 1 hour ago? If so, don't add an empty cell
+                    if contentSemester[+startHour-1] 
+                      if contentSemester[+startHour-1][+weekDay] 
+                        if contentSemester[+startHour-1][+weekDay].duration > 1
+                          //- h6 1 hour ago TTT #{+startHour-1} #{+weekDay} #{contentSemester[+startHour-1][+weekDay].duration}
                         else
                           td.no-events(rowspan="1")
+                      else
+                        td.no-events(rowspan="1")
+                    //- Are we in a course that started 2 hours ago? If so, don't add an empty cell
+                    else if contentSemester[+startHour-2] 
+                      if contentSemester[+startHour-2][+weekDay] 
+                        if contentSemester[+startHour-2][+weekDay].duration > 2
+                          //- h6 2 hour ago TTT #{+startHour-2} #{+weekDay} #{contentSemester[+startHour-2][+weekDay].duration}
+                        else
+                          td.no-events(rowspan="1")
+                      else
+                        td.no-events(rowspan="1")
+                    else 
+                      td.no-events(rowspan="1")

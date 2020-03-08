@@ -81,12 +81,7 @@ table.calendar > tbody > tr > td {
 }
 
 table.calendar > tbody > tr > td > div {
-  /* //padding: 8px; */
-  height: 40px;
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: middle;
-  float: left;
+  height: 100%;
 }
 
 table.calendar > tbody > tr > td.has-events {
