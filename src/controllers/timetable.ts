@@ -20,13 +20,13 @@ interface WeekDay {
   [key: number]: Block;
 }
 interface StartHour {
-  [key: number]: WeekDay[];
+  [key: number]: WeekDay;
 }
 interface Semester {
-  [key: number]: StartHour[];
+  [key: number]: StartHour;
 }
 interface Group {
-  [key: string]: Semester[];
+  [key: string]: Semester;
 }
 
 export class TimetableController extends RESTController<Booking> {
@@ -50,7 +50,7 @@ export class TimetableController extends RESTController<Booking> {
 
     // For each student group
     const groupDict: Group = {};
-    studentGroupRels.forEach((studentGroup: StudentGroup) => { // ERROR NEED UNIQUE HERE!
+    studentGroupRels.forEach((studentGroup: StudentGroup) => {
       const groupName = studentGroup.name;
       // Find number of semesters for the group given
       const semesters = +studentGroup.semesters;
@@ -69,8 +69,6 @@ export class TimetableController extends RESTController<Booking> {
               +item.semester === semester &&
               +item.startHour === startHour &&
               +item.weekDay === weekDay);
-            if(!weekDayDict[weekDay])
-              weekDayDict[weekDay] = undefined;
             if (tempBooking) {
               const prof = users.find(item => item._id.value === tempBooking.professorId.value);
               weekDayDict[weekDay] = {
@@ -78,20 +76,14 @@ export class TimetableController extends RESTController<Booking> {
                 subject: subjects.find(item => item._id.value === tempBooking.subjectId.value).name,
                 professor: prof.profile.firstName + " " + prof.profile.lastName,
                 room: rooms.find(item => item._id.value === tempBooking.roomId.value).name
-              };;
+              };
+              startHourDict[startHour] = weekDayDict;
+              semesterDict[semester] = startHourDict;
+              groupDict[groupName] = semesterDict;
             }
           }
-          if(!startHourDict[startHour])
-            startHourDict[startHour] = [];
-          startHourDict[startHour].push(weekDayDict);
         }
-        if(!semesterDict[semester])
-          semesterDict[semester] = [];
-        semesterDict[semester].push(startHourDict);
       }
-      if(!groupDict[groupName])
-        groupDict[groupName] = [];
-      groupDict[groupName].push(semesterDict);
     });
 
     res.render("controllers/timetable", {
