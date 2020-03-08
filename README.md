@@ -15,8 +15,13 @@
 - npm run start
 
 ## Todo:
+- DB Change: add proffessor start hour preferences for each day
+- DB Change: each student group should be able to have a different proffessor
+- DB Change: add series that contains student groups (courses are held with series aka with all groups)
+- switch to romanian
+- should be able to manually edit resulting bookings
 - add algorithm
-- add UI to visualize results https://fullcalendar.io/
+- rename title
 - remove "contact" controller
 - Add more cities
 ## Todo long term:
