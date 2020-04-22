@@ -48,18 +48,6 @@ block content
           option(value='3', selected= user.grade == 3) Conferentiar
           option(value='4', selected= user.grade == 4) Profesor
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='worksSS') Works Sat, Sun
-      .col-sm-7
-        input.form-control(type='checkbox', name='worksSS', id='worksSS', checked=user.worksSS)
-    .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='worksMtoF') Works Mon-Fri
-      .col-sm-7
-        input.form-control(type='checkbox', name='worksMtoF', id='worksMtoF', checked=user.worksMtoF)
-    .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='prefStartHour') Preferred start
-      .col-sm-7
-        input.form-control(type='text', name='prefStartHour', id='prefStartHour', value=user.prefStartHour)
-    .form-group.row.justify-content-md-center
       .col-sm-4
         button.btn.btn.btn-primary(type='submit', id='updateProfile')
           i.fa.fa-pencil
