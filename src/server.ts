@@ -7,6 +7,7 @@ import { StudentGroupController } from "./controllers/studentGroup";
 import { StudSubjRelController } from "./controllers/studSubjRel";
 import { BookingController } from "./controllers/booking";
 import { TimetableController } from "./controllers/timetable";
+import { PrefHourController } from "./controllers/prefhour";
 import { User } from "./interfaces/User";
 import { Room } from "./interfaces/Room";
 import { Subject } from "./interfaces/Subject";
@@ -14,6 +15,7 @@ import { ProfSubjRel } from "./interfaces/ProfSubjRel";
 import { StudentGroup } from "./interfaces/StudentGroup";
 import { StudSubjRel } from "./interfaces/StudSubjRel";
 import { Booking } from "./interfaces/Booking";
+import { PrefHour } from "./interfaces/PrefHour";
 import * as db from "./others/db";
 import { PassportConfig } from "./config/passport";
 import express from "express";
@@ -33,6 +35,7 @@ const profSubjRelRepo = db.repo<ProfSubjRel>({ table: "ProfSubjRel" });
 const studentGroupRepo = db.repo<StudentGroup>({ table: "StudentGroup" });
 const studSubjRelRepo = db.repo<StudSubjRel>({ table: "StudSubjRel" });
 const bookingRepo = db.repo<Booking>({ table: "Booking" });
+const prefHourRepo = db.repo<PrefHour>({ table: "PrefHour" });
 // Config Passport
 const passportConfig = new PassportConfig(userRepo);
 // Create controllers
@@ -44,3 +47,4 @@ new StudentGroupController(studentGroupRepo, app, passportConfig);
 new StudSubjRelController(studSubjRelRepo, app, passportConfig);
 new BookingController(bookingRepo, app, passportConfig);
 new TimetableController(bookingRepo, app, passportConfig);
+new PrefHourController(prefHourRepo, app, passportConfig);
