@@ -19,9 +19,4 @@ export interface User extends DbObject {
   };
   role: number;
   grade: number;
-  worksSS: boolean;
-  worksMtoF: boolean;
-  prefStartHour: number;
-
-  comparePassword: comparePasswordFunction;
 }

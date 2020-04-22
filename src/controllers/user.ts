@@ -119,15 +119,11 @@ export class UserController extends RESTController<User> {
       },
       role: req.body.role,
       grade: req.body.grade,
-      worksSS: req.body.worksSS == "on"? true: false,
-      worksMtoF: req.body.worksMtoF == "on"? true: false,
-      prefStartHour: req.body.prefStartHour,
 
       password: req.body.password,
       email: req.body.email,
       passwordResetToken: undefined,
       passwordResetExpires: undefined,
-      comparePassword: undefined
     };
 
     await this.updatePassword(undefined, newUser);
@@ -173,9 +169,6 @@ export class UserController extends RESTController<User> {
     newUser.email = req.body.email;
     newUser.profile.phoneNo = req.body.phoneNo;
     newUser.grade = req.body.grade,
-    newUser.worksMtoF = req.body.worksMtoF == "on"? true: false,
-    newUser.worksSS = req.body.worksSS == "on"? true: false,
-    newUser.prefStartHour = req.body.prefStartHour,
 
     await this.repo.update(newUser);
 
