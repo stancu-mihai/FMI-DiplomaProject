@@ -15,11 +15,14 @@
 - npm run start
 
 ## Todo:
-- DB Change: each student group should be able to have a different proffessor
+
+
+- add algorithm (find less intersected timeframe, propose from available professors)
+- DB Change: each student group should be able to have a different professor
 - DB Change: add series that contains student groups (courses are held with series aka with all groups)
 - switch to romanian
 - should be able to manually edit resulting bookings
-- add algorithm (find less intersected timeframe, propose from available professors)
+- Bugfix: Update an item in JQuery, then delete it => Crash due to .value.value
 - rename title
 - remove "contact" controller
 - Add more cities
