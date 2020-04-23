@@ -9,8 +9,6 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     .collapse.navbar-collapse
       .dropdown-divider
       ul.nav.navbar-nav.mr-auto
-        li.nav-item(class=(title === 'Home') ? 'active' : undefined)
-          a.nav-link(href='/') Home
         if user
           case user.role
             when '1'
@@ -20,6 +18,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
               li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
                 a.nav-link(href='/timetable?email=' + user.email) Timetable
             when '3'
+              li.nav-item(class=(title === 'Series') ? 'active' : undefined)
+                a.nav-link(href='/series') Series
               li.nav-item(class=(title === 'Rooms') ? 'active' : undefined)
                 a.nav-link(href='/rooms') Rooms
               li.nav-item(class=(title === 'Subjects') ? 'active' : undefined)
