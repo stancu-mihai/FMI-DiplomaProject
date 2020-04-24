@@ -34,10 +34,6 @@ interface Group {
 }
 
 export class TimetableController extends RESTController<Booking> {
-  userBookings: number[][];
-  groupBookings: number[][];
-  roomBookings: number[][];
-
   users: User[];
   series: Series[];
   studentGroups: StudentGroup[];
@@ -88,31 +84,21 @@ export class TimetableController extends RESTController<Booking> {
     studSubjRelsRes.forEach((studSubjRel: StudSubjRel) => { this.studSubjRels.push(studSubjRel); });
   }
 
-  initEmptyMatrix() {
-    // create an empty 7x24 boolean matrix containing indexes of db entries
-    // this will be used for booking rooms/professors/groups
-    const emptyMatrix: number[][] = [];
-    for (let weekDay = 0; weekDay < 7; weekDay++) {
-      const day = [];
-      for (let hour = 0; hour < 24; hour++) {
-        // initially nothing is booked
-        day.push(-1);
-      }
-      emptyMatrix.push(day);
-    }
-    return emptyMatrix;
-  }
-
-  generate(userBookings: number[][], groupBookings: number[][], roomBookings: number[][]) {
-    userBookings[0][0]=0;
-    groupBookings[0][0]=0;
-    roomBookings[0][0]=0;
+  generate(bookings: Booking[]) {
+    // If all StudSubjRel's are booked, solution is found
+    if (this.profSubjRels.length == bookings.length)
+      return bookings;
   }
 
   async getGenerate() {
     await this.loadDbsInMemory();
-    const emptyMatrix = this.initEmptyMatrix();
-    this.generate(emptyMatrix, emptyMatrix, emptyMatrix);
+    // Generate the bookings for the timetable
+    const result = this.generate([]);
+    // Bookings are only in memory, must be written to db
+    const bookingRepo = db.repo<Booking>({table: "Booking"});
+    result.forEach(async booking => {
+      await bookingRepo.add(booking);
+    });
   }
 
   async getTimetable(req: Request, res: Response) {
