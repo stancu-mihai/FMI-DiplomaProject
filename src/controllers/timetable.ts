@@ -9,6 +9,10 @@ import { User } from "../interfaces/User";
 import { Room } from "../interfaces/Room";
 import { Subject } from "../interfaces/Subject";
 import { StudentGroup } from "../interfaces/StudentGroup";
+import { Series } from "../interfaces/Series";
+import { PrefHour } from "../interfaces/PrefHour";
+import { ProfSubjRel } from "../interfaces/ProfSubjRel";
+import { StudSubjRel } from "../interfaces/StudSubjRel";
 
 interface Block {
   duration: number;
@@ -30,12 +34,88 @@ interface Group {
 }
 
 export class TimetableController extends RESTController<Booking> {
+  userBookings: number[][];
+  groupBookings: number[][];
+  roomBookings: number[][];
+
+  users: User[];
+  series: Series[];
+  studentGroups: StudentGroup[];
+  rooms: Room[];
+  subjects: Subject[];
+  prefHours: PrefHour[];
+  profSubjRels: ProfSubjRel[];
+  studSubjRels: StudSubjRel[];
   constructor(repo: db.Repository<Booking>, app: Application, passportConfig: PassportConfig) {
     super(repo, [], []);
-    app.get("/timetable", passportConfig.isAuthenticated, this.getRoute.bind(this));
+    app.get("/timetable", passportConfig.isAuthenticated, this.getTimetable.bind(this));
+    app.get("/generate", passportConfig.isAuthenticated, this.getGenerate.bind(this));
   }
 
-  async getRoute(req: Request, res: Response) {
+  // Load whole contents from all repos into class members
+  async loadDbsInMemory() {
+    // Load whole contents from all repos into class members
+    const userRepo = db.repo<User>({ table: "User" });
+    const usersRes = await userRepo.list(db.query().all());
+    usersRes.forEach((user: User) => { this.users.push(user);  });
+
+    const seriesRepo = db.repo<Series>({ table: "Series" });
+    const seriesRes = await seriesRepo.list(db.query().all());
+    seriesRes.forEach((serie: Series) => { this.series.push(serie); });
+
+    const studentGroupRepo = db.repo<StudentGroup>({ table: "StudentGroup" });
+    const studentGroupsRes = await studentGroupRepo.list(db.query().all());
+    studentGroupsRes.forEach((group: StudentGroup) => { this.studentGroups.push(group); });
+
+    const roomRepo = db.repo<Room>({ table: "Room" });
+    const roomsRes = await roomRepo.list(db.query().all());
+    roomsRes.forEach((room: Room) => { this.rooms.push(room); });
+
+    const subjectRepo = db.repo<Subject>({ table: "Subject" });
+    const subjectsRes = await subjectRepo.list(db.query().all());
+    subjectsRes.forEach((subject: Subject) => { this.subjects.push(subject); });
+
+    const prefHourRepo = db.repo<PrefHour>({ table: "PrefHour" });
+    const prefHoursRes = await prefHourRepo.list(db.query().all());
+    prefHoursRes.forEach((prefHour: PrefHour) => { this.prefHours.push(prefHour); });
+
+    const profSubjRelRepo = db.repo<ProfSubjRel>({ table: "ProfSubjRel" });
+    const profSubjRelsRes = await profSubjRelRepo.list(db.query().all());
+    profSubjRelsRes.forEach((profSubjRel: ProfSubjRel) => { this.profSubjRels.push(profSubjRel); });
+
+    const studSubjRelRepo = db.repo<StudSubjRel>({ table: "StudSubjRel" });
+    const studSubjRelsRes = await studSubjRelRepo.list(db.query().all());
+    studSubjRelsRes.forEach((studSubjRel: StudSubjRel) => { this.studSubjRels.push(studSubjRel); });
+  }
+
+  initEmptyMatrix() {
+    // create an empty 7x24 boolean matrix containing indexes of db entries
+    // this will be used for booking rooms/professors/groups
+    const emptyMatrix: number[][] = [];
+    for (let weekDay = 0; weekDay < 7; weekDay++) {
+      const day = [];
+      for (let hour = 0; hour < 24; hour++) {
+        // initially nothing is booked
+        day.push(-1);
+      }
+      emptyMatrix.push(day);
+    }
+    return emptyMatrix;
+  }
+
+  generate(userBookings: number[][], groupBookings: number[][], roomBookings: number[][]) {
+    userBookings[0][0]=0;
+    groupBookings[0][0]=0;
+    roomBookings[0][0]=0;
+  }
+
+  async getGenerate() {
+    await this.loadDbsInMemory();
+    const emptyMatrix = this.initEmptyMatrix();
+    this.generate(emptyMatrix, emptyMatrix, emptyMatrix);
+  }
+
+  async getTimetable(req: Request, res: Response) {
     const bookings: Booking[] = await this.repo.list(db.query().all());
 
     // Load whole contents from all other repos
