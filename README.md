@@ -16,7 +16,6 @@
 
 ## Todo:
 - add algorithm (find less intersected timeframe, propose from available professors)
-- ProfSubjRel - REMOVE IT!
 - Booking - delete external
 
 - DB Change: each student group should be able to have a different professor
@@ -83,10 +82,6 @@ License application. Subject: timetable optimization problem.
 - biologyLab: boolean;
 - basketball: boolean;
 - football: boolean;
-
-### ProfSubjRel data:
-- professorId: User;
-- subjectId: Subject;
 
 ### StudentGroup data:
 - name: string;
