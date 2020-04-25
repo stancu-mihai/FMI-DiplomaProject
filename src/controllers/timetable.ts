@@ -34,6 +34,7 @@ interface Group {
 }
 
 export class TimetableController extends RESTController<Booking> {
+  studSubjBookings: boolean[];
   users: User[];
   series: Series[];
   studentGroups: StudentGroup[];
@@ -42,6 +43,8 @@ export class TimetableController extends RESTController<Booking> {
   prefHours: PrefHour[];
   profSubjRels: ProfSubjRel[];
   studSubjRels: StudSubjRel[];
+  bookings: Booking[];
+
   constructor(repo: db.Repository<Booking>, app: Application, passportConfig: PassportConfig) {
     super(repo, [], []);
     app.get("/timetable", passportConfig.isAuthenticated, this.getTimetable.bind(this));
@@ -84,19 +87,40 @@ export class TimetableController extends RESTController<Booking> {
     studSubjRelsRes.forEach((studSubjRel: StudSubjRel) => { this.studSubjRels.push(studSubjRel); });
   }
 
-  generate(bookings: Booking[]) {
-    // If all StudSubjRel's are booked, solution is found
-    if (this.profSubjRels.length == bookings.length)
-      return bookings;
+  tryToBook(index: number): boolean {
+    let booking;
+    //booking.studentGroupId=
+    //booking.subjectId=
+    //booking.professorId=
+    //booking.roomId=
+    //booking.semester=
+    //booking.weekDay=
+    //booking.startHour=
+    //booking.duration=
+    //booking.isExternal=
+    return booking;
+  }
+
+  generate(): boolean {
+    // Find index of first unbooked studSubjBooking
+    const index = this.studSubjBookings.findIndex(elem=>elem === true);
+    if(index != -1) {
+      this.tryToBook(index);
+    }
+    else {// If all StudSubjRel's are booked, solution is found
+      return true;
+    }
   }
 
   async getGenerate() {
     await this.loadDbsInMemory();
+    // Array to mark all studSubjRels as unbooked
+    this.studSubjRels.forEach(() => this.studSubjBookings.push(false));
     // Generate the bookings for the timetable
-    const result = this.generate([]);
+    this.generate();
     // Bookings are only in memory, must be written to db
     const bookingRepo = db.repo<Booking>({table: "Booking"});
-    result.forEach(async booking => {
+    this.bookings.forEach(async booking => {
       await bookingRepo.add(booking);
     });
   }
