@@ -27,12 +27,13 @@
 ## Description
 
 License application. Subject: timetable optimization problem.
+- The series and groups of students are provided. Each group has subjects assigned. Each series contains several groups.
 - The list of rooms is provided. Each room has some features (no of seats, some have projector, some blackboard, etc.).
-- The list of subjects is provided. Each subject has some features (credits, no of hours per week) and needs (projector, blackboard).
-- The relations between subjects and professors is provided. It is n:n (many to many) relation.
-- The groups of students are provided. Each group has subjects assigned.
-- The relations between subjects and student groups is provided. It is 1:n (one to many) relation.
-- The timetable itself will be a list of bookings. Some bookings are external to this application (professors or rooms are unavailable in certain timeframes)
+- The list of subjects is provided. 
+- For each group, for each semester, a list of subjects are provided as input. Each subject has a professor assigned and some features (duration, no of hours per week) and needs (projector, blackboard).
+- The professors have favorite times for their courses.
+- Generate menu will populate the list of Bookings
+- Timetable will show the list of bookings in a more user-friendly way.
 
 ## Database description
 
@@ -54,38 +55,35 @@ License application. Subject: timetable optimization problem.
 - projector: boolean;
 - blackboard: boolean; 
 - smartboard: boolean; 
-- videoSurveillance: boolean;
-- physicsLab: boolean;
-- chemistryLab: boolean;
-- CSLab: boolean;
-- biologyLab: boolean;
-- basketball: boolean;
-- football: boolean;
+- computers: boolean;
 
 ### Subject data:
 - name: string;
-- credits: number;
-- timeDuration: number;
-- projector: boolean;
-- blackboard: boolean; 
-- smartboard: boolean; 
-- videoSurveillance: boolean;
-- physicsLab: boolean;
-- chemistryLab: boolean;
-- CSLab: boolean;
-- biologyLab: boolean;
-- basketball: boolean;
-- football: boolean;
+
+### Series data:
+- name: string;
 
 ### StudentGroup data:
 - name: string;
-- semesters: number;
-- studentRep: User;
+- seriesId: Series;
+- count: number;
 
-### StudentGroup data:
+### StudSubjRel data:
 - studentGroupId: StudentGroup;
 - subjectId: Subject;
 - semester: number;
+- professorId: User;
+- weeklyHours: number;
+- projector: boolean;
+- blackboard: boolean; 
+- smartboard: boolean; 
+- computers: boolean;
+
+### PrefHours data:
+- professorId: User;
+- weekDay: number;
+- startHour: number;
+- endHour: number;
 
 ### Booking data:
 - studentGroupId: StudentGroup;
@@ -96,7 +94,7 @@ License application. Subject: timetable optimization problem.
 - weekDay: number;
 - startHour: number;
 - duration: number;
-- isExternal: boolean;
+
 
 ## Limitations
 - Can't use fractions of an hour (14:30 or 14:15 are unavailable for both start and end times)
