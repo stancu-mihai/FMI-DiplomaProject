@@ -4,7 +4,4 @@ export interface StudentGroup extends db.DbObject {
     name: string;
     seriesId: db.DbObjectId;
     count: number;
-    semesters: number;
-    studentRep: db.DbObjectId;
-    weekendOnly: boolean;
 }

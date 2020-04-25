@@ -53,11 +53,8 @@ $(function () {
                         },
                         fields: [
                             { name: "name", type: "text", title: "Name" },
-                            { name: "count", type: "number", title: "Count" },
-                            { name: "semesters", type: "number", title: "Semesters" },
-                            { name: "weekendOnly", type: "checkbox", title: "Only Weekend" },
-                            { name: "studentRep", type: "select", items: studentReps, valueField: "_id", textField: "email", title: "Student rep." },
                             { name: "seriesId", type: "select", items: series, valueField: "_id", textField: "name", title: "Series" },
+                            { name: "count", type: "number", title: "Count" },
                             { type: "control" }
                         ]
                     });

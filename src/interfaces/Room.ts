@@ -7,11 +7,5 @@ export interface Room extends db.DbObject {
     projector: boolean;
     blackboard: boolean; 
     smartboard: boolean; 
-    videoSurveillance: boolean;
-    physicsLab: boolean;
-    chemistryLab: boolean;
-    CSLab: boolean;
-    biologyLab: boolean;
-    basketball: boolean;
-    football: boolean;
+    computers: boolean;
 }
