@@ -19,7 +19,6 @@
 - switch to romanian
 - Bugfix: Update an item in JQuery, then delete it => Crash due to .value.value
 - rename title
-- remove "contact" controller
 - Add more cities
 ## Todo long term:
 - add schema validation to RestController
