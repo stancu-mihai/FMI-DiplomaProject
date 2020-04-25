@@ -9,5 +9,4 @@ export interface Booking extends db.DbObject {
     weekDay: number;
     startHour: number;
     duration: number;
-    isExternal: boolean;
 }
