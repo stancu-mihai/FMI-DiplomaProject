@@ -43,18 +43,6 @@ $(function() {
         },
         fields: [
             { name: "name", type: "text", title: "Name"},
-            { name: "credits", type: "number", title: "Credits"},
-            { name: "timeDuration", type: "number", title: "Duration"},
-            { name: "projector", type: "checkbox", title: "Projector"},
-            { name: "blackboard", type: "checkbox", title: "Black\nboard"},
-            { name: "smartboard", type: "checkbox", title: "Smart\nboard"},
-            { name: "videoSurveillance", type: "checkbox", title: "Video\nSurveillance"},
-            { name: "physicsLab", type: "checkbox", title: "Physics\nLab"},
-            { name: "chemistryLab", type: "checkbox", title: "Chemistry\nLab"},
-            { name: "CSLab", type: "checkbox", title: "CS\nLab"},
-            { name: "biologyLab", type: "checkbox", title: "Biology\nLab"},
-            { name: "basketball", type: "checkbox", title: "Basketball"},
-            { name: "football", type: "checkbox", title: "Football"},
             { type: "control" }
         ]
     });
