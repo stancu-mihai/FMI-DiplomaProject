@@ -16,7 +16,6 @@
 
 ## Todo:
 - add algorithm (find less intersected timeframe, propose from available professors)
-- Rooms: remove physics, chemistry, biology, Basketball and Football
 - Subjects: move duration to StudSubjRel, delete all other fields but not name
 - Student groups: remove student rep, semesters and only weekend
 - ProfSubjRel - REMOVE IT!
