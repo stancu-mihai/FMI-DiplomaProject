@@ -46,15 +46,9 @@ $(function() {
             { name: "location", type: "text", title: "Location"},
             { name: "capacity", type: "number", title: "Capacity"},
             { name: "projector", type: "checkbox", title: "Projector"},
-            { name: "blackboard", type: "checkbox", title: "Black\nboard"},
-            { name: "smartboard", type: "checkbox", title: "Smart\nboard"},
-            { name: "videoSurveillance", type: "checkbox", title: "Video\nSurveillance"},
-            { name: "physicsLab", type: "checkbox", title: "Physics\nLab"},
-            { name: "chemistryLab", type: "checkbox", title: "Chemistry\nLab"},
-            { name: "CSLab", type: "checkbox", title: "CS\nLab"},
-            { name: "biologyLab", type: "checkbox", title: "Biology\nLab"},
-            { name: "basketball", type: "checkbox", title: "Basketball"},
-            { name: "football", type: "checkbox", title: "Football"},
+            { name: "blackboard", type: "checkbox", title: "Blackboard"},
+            { name: "smartboard", type: "checkbox", title: "Smartboard"},
+            { name: "computers", type: "checkbox", title: "Computers"},
             { type: "control" }
         ]
     });

@@ -84,7 +84,6 @@ $(function () {
                                         },
                                         { name: "startHour", type: "number", title: "Start time" },
                                         { name: "duration", type: "number", title: "Duration" },
-                                        { name: "isExternal", type: "checkbox", title: "External" },
                                         { type: "control" }
                                     ]
                                 });

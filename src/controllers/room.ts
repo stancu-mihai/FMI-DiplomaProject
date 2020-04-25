@@ -15,13 +15,7 @@ export class RoomController extends RESTController<Room> {
       "projector",
       "blackboard",
       "smartboard",
-      "videoSurveillance",
-      "physicsLab",
-      "chemistryLab",
-      "CSLab",
-      "biologyLab",
-      "basketball",
-      "football"], []);
+      "computers"], []);
     app.get("/rooms", passportConfig.isAuthenticatedSecretary, this.getRoute);
     app.get("/api/room", passportConfig.isAuthenticated, this.get.bind(this));
     app.post("/api/room", passportConfig.isAuthenticatedSecretary, this.add.bind(this));

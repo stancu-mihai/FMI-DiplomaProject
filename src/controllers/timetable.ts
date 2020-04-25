@@ -142,11 +142,9 @@ export class TimetableController extends RESTController<Booking> {
     const groupDict: Group = {};
     studentGroupRels.forEach((studentGroup: StudentGroup) => {
       const groupName = studentGroup.name;
-      // Find number of semesters for the group given
-      const semesters = +studentGroup.semesters;
       // For each semester save to dict
       const semesterDict: Semester = {};
-      for (let semester = 1; semester < semesters + 1; semester++) {
+      for (let semester = 1; semester < 3; semester++) {
         // For each starting hour save to dict
         const startHourDict: StartHour = {};
         for (let startHour = 8; startHour < 21; startHour++) {
