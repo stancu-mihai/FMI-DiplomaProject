@@ -33,15 +33,15 @@ interface Group {
 }
 
 export class TimetableController extends RESTController<Booking> {
-  studSubjBookings: boolean[];
-  users: User[];
-  series: Series[];
-  studentGroups: StudentGroup[];
-  rooms: Room[];
-  subjects: Subject[];
-  prefHours: PrefHour[];
-  studSubjRels: StudSubjRel[];
-  bookings: Booking[];
+  studSubjBookings: boolean[] = [];
+  users: User[] = [];
+  series: Series[] = [];
+  studentGroups: StudentGroup[] = [];
+  rooms: Room[] = [];
+  subjects: Subject[] = [];
+  prefHours: PrefHour[] = [];
+  studSubjRels: StudSubjRel[] = [];
+  bookings: Booking[] = [];
 
   constructor(repo: db.Repository<Booking>, app: Application, passportConfig: PassportConfig) {
     super(repo, [], []);
@@ -54,7 +54,7 @@ export class TimetableController extends RESTController<Booking> {
     // Load whole contents from all repos into class members
     const userRepo = db.repo<User>({ table: "User" });
     const usersRes = await userRepo.list(db.query().all());
-    usersRes.forEach((user: User) => { this.users.push(user);  });
+    usersRes.forEach((user: User) => { this.users.push(user); });
 
     const seriesRepo = db.repo<Series>({ table: "Series" });
     const seriesRes = await seriesRepo.list(db.query().all());
@@ -82,23 +82,101 @@ export class TimetableController extends RESTController<Booking> {
   }
 
   tryToBook(index: number): boolean {
-    let booking;
-    //booking.studentGroupId=
-    //booking.subjectId=
-    //booking.professorId=
-    //booking.roomId=
-    //booking.semester=
-    //booking.weekDay=
-    //booking.startHour=
-    //booking.duration=
-    //booking.isExternal=
-    return booking;
+    const item = this.studSubjRels[index];
+    
+    // When does the professor want to have classes?
+    const reqProfessorId = item.professorId;
+    const profPreferredHours = this.prefHours.filter((prefHour) => {
+      // Return all professors with the correct id
+      prefHour.professorId == reqProfessorId;
+    });
+
+    // When is the professor unavailable (already booked)?
+    const profUnavailability = this.bookings.filter((booking) => {
+      booking.professorId == reqProfessorId;
+    });
+
+    // What are the suitable rooms?
+    const reqGroupId = item.studentGroupId;
+    const group = this.studentGroups.filter((studentGroup) => {
+      // Return all professors with the correct id
+      studentGroup._id == reqGroupId;
+    });
+    if (group.length > 1) throw ("Duplicate group id!");
+    const groupSize = group[0].count;
+    const suitableRooms = this.rooms.filter((room) => {
+      // Return all rooms with at least the required features
+      (item.blackboard <= room.blackboard) &&
+        (item.smartboard <= room.smartboard) &&
+        (item.projector <= room.projector) &&
+        (item.computers <= room.computers) &&
+        (groupSize <= room.capacity);
+    });
+
+    // When are the suitable rooms unavailable (already booked)?
+    const roomUnavailability = this.bookings.filter((booking) => {
+      suitableRooms.find((room) => {
+        room._id == booking.roomId;
+      });
+    });
+
+    // When is the student group unavailable (already booked)?
+    const groupUnavailability = this.bookings.filter((booking) => {
+      booking.studentGroupId == reqGroupId;
+    });
+
+    const result = false;
+    // For Monday to Friday
+    for (let day = 0; day < 5; day++) {
+      // For each hour
+      for (let hour = 8; hour < 18; hour++) {
+        // Does the professor want to have classes (is booking within the interval)?
+        const cond1 = profPreferredHours.some((prefHour) => {
+                           hour >= prefHour.startHour &&
+                           hour <= prefHour.endHour &&
+          hour+item.weeklyHours >= prefHour.startHour &&
+          hour+item.weeklyHours <= prefHour.endHour;
+        });
+        if(!cond1) 
+          continue;
+        // Is the professor unavailable?
+        const cond2 = profUnavailability.filter((booking) => {
+          booking.startHour >= hour &&
+          booking.startHour + booking.duration >= hour &&
+          booking.startHour >= hour + item.weeklyHours &&
+          booking.startHour + booking.duration >= hour + item.weeklyHours;
+        });
+        if(!cond2) 
+          continue;
+        // Is the room unavailable?
+        const cond3 = roomUnavailability.filter((booking) => {
+          booking.startHour >= hour &&
+          booking.startHour + booking.duration >= hour &&
+          booking.startHour >= hour + item.weeklyHours &&
+          booking.startHour + booking.duration >= hour + item.weeklyHours;
+        });
+        if(!cond3) 
+          continue;
+        // Is the group unavailable?
+        const cond4 = groupUnavailability.filter((booking) => {
+          booking.startHour >= hour &&
+          booking.startHour + booking.duration >= hour &&
+          booking.startHour >= hour + item.weeklyHours &&
+          booking.startHour + booking.duration >= hour + item.weeklyHours;
+        });
+        if(!cond4) 
+          continue;
+        return true;
+      }
+    }
+
+    return result;
   }
 
   generate(): boolean {
     // Find index of first unbooked studSubjBooking
-    const index = this.studSubjBookings.findIndex(elem=>elem === true);
-    if(index != -1) {
+    const index = this.studSubjBookings.findIndex(elem => elem === false);
+    if (index != -1) {
       this.tryToBook(index);
     }
     else {// If all StudSubjRel's are booked, solution is found
@@ -113,7 +191,7 @@ export class TimetableController extends RESTController<Booking> {
     // Generate the bookings for the timetable
     this.generate();
     // Bookings are only in memory, must be written to db
-    const bookingRepo = db.repo<Booking>({table: "Booking"});
+    const bookingRepo = db.repo<Booking>({ table: "Booking" });
     this.bookings.forEach(async booking => {
       await bookingRepo.add(booking);
     });
