@@ -11,7 +11,6 @@ import { Subject } from "../interfaces/Subject";
 import { StudentGroup } from "../interfaces/StudentGroup";
 import { Series } from "../interfaces/Series";
 import { PrefHour } from "../interfaces/PrefHour";
-import { ProfSubjRel } from "../interfaces/ProfSubjRel";
 import { StudSubjRel } from "../interfaces/StudSubjRel";
 
 interface Block {
@@ -41,7 +40,6 @@ export class TimetableController extends RESTController<Booking> {
   rooms: Room[];
   subjects: Subject[];
   prefHours: PrefHour[];
-  profSubjRels: ProfSubjRel[];
   studSubjRels: StudSubjRel[];
   bookings: Booking[];
 
@@ -77,10 +75,6 @@ export class TimetableController extends RESTController<Booking> {
     const prefHourRepo = db.repo<PrefHour>({ table: "PrefHour" });
     const prefHoursRes = await prefHourRepo.list(db.query().all());
     prefHoursRes.forEach((prefHour: PrefHour) => { this.prefHours.push(prefHour); });
-
-    const profSubjRelRepo = db.repo<ProfSubjRel>({ table: "ProfSubjRel" });
-    const profSubjRelsRes = await profSubjRelRepo.list(db.query().all());
-    profSubjRelsRes.forEach((profSubjRel: ProfSubjRel) => { this.profSubjRels.push(profSubjRel); });
 
     const studSubjRelRepo = db.repo<StudSubjRel>({ table: "StudSubjRel" });
     const studSubjRelsRes = await studSubjRelRepo.list(db.query().all());
