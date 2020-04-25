@@ -17,7 +17,6 @@
 ## Todo:
 - add algorithm (find less intersected timeframe, propose from available professors)
 - ProfSubjRel - REMOVE IT!
-- StudentSubj - Add professor, features from rooms, add duration
 - Booking - delete external
 
 - DB Change: each student group should be able to have a different professor

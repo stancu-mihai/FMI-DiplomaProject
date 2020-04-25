@@ -8,7 +8,7 @@ import { PassportConfig } from "../config/passport";
 
 export class StudSubjRelController extends RESTController<StudSubjRel> {
   constructor(repo: db.Repository<StudSubjRel>, app: Application, passportConfig: PassportConfig) {
-    super(repo, ["semester"], ["studentGroupId", "subjectId"]);
+    super(repo, ["semester"], ["studentGroupId", "subjectId", "professorId"]);
     app.get("/studsubjrels", passportConfig.isAuthenticatedSecretary, this.getRoute);
     app.get("/api/studsubjrel", passportConfig.isAuthenticated, this.get.bind(this));
     app.post("/api/studsubjrel", passportConfig.isAuthenticatedSecretary, this.add.bind(this));
