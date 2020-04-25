@@ -16,9 +16,9 @@
 
 ## Todo:
 - add algorithm (find less intersected timeframe, propose from available professors)
-- Student groups: remove student rep, semesters and only weekend
 - ProfSubjRel - REMOVE IT!
 - StudentSubj - Add professor, features from rooms, add duration
+- Booking - delete external
 
 - DB Change: each student group should be able to have a different professor
 - DB Change: add series that contains student groups (courses are held with series aka with all groups)
