@@ -83,94 +83,99 @@ export class TimetableController extends RESTController<Booking> {
 
   tryToBook(index: number): boolean {
     const item = this.studSubjRels[index];
-    
-    // When does the professor want to have classes?
-    const reqProfessorId = item.professorId;
-    const profPreferredHours = this.prefHours.filter((prefHour) => {
-      // Return all professors with the correct id
-      prefHour.professorId == reqProfessorId;
-    });
+    const res = false;
 
-    // When is the professor unavailable (already booked)?
-    const profUnavailability = this.bookings.filter((booking) => {
-      booking.professorId == reqProfessorId;
-    });
+    // A good reflex would be to capture the availability before this loop
+    // But how to store the availability for a list of rooms?
 
-    // What are the suitable rooms?
-    const reqGroupId = item.studentGroupId;
-    const group = this.studentGroups.filter((studentGroup) => {
-      // Return all professors with the correct id
-      studentGroup._id == reqGroupId;
-    });
-    if (group.length > 1) throw ("Duplicate group id!");
-    const groupSize = group[0].count;
-    const suitableRooms = this.rooms.filter((room) => {
-      // Return all rooms with at least the required features
-      (item.blackboard <= room.blackboard) &&
-        (item.smartboard <= room.smartboard) &&
-        (item.projector <= room.projector) &&
-        (item.computers <= room.computers) &&
-        (groupSize <= room.capacity);
-    });
-
-    // When are the suitable rooms unavailable (already booked)?
-    const roomUnavailability = this.bookings.filter((booking) => {
-      suitableRooms.find((room) => {
-        room._id == booking.roomId;
-      });
-    });
-
-    // When is the student group unavailable (already booked)?
-    const groupUnavailability = this.bookings.filter((booking) => {
-      booking.studentGroupId == reqGroupId;
-    });
-
-    const result = false;
     // For Monday to Friday
     for (let day = 0; day < 5; day++) {
       // For each hour
       for (let hour = 8; hour < 18; hour++) {
-        // Does the professor want to have classes (is booking within the interval)?
-        const cond1 = profPreferredHours.some((prefHour) => {
-                           hour >= prefHour.startHour &&
-                           hour <= prefHour.endHour &&
-          hour+item.weeklyHours >= prefHour.startHour &&
-          hour+item.weeklyHours <= prefHour.endHour;
-        });
-        if(!cond1) 
+        // First we check if this day and this hour is within the preferences of the professor assigned to this item
+        const reqProfessorId = item.professorId;
+        const profAgreesInterval = this.prefHours.find(prefHour => 
+          prefHour.professorId.value === reqProfessorId.value && // prof matches id
+          // Next we check if the desired interval is within the preferred ones
+          day == prefHour.weekDay && // same day of the week
+          hour >= prefHour.startHour && // our start hour is >= pref start Hour
+          hour <= prefHour.endHour &&   // our start hour is <= pref end Hour
+          hour+item.weeklyHours >= prefHour.startHour && // our end hour is >= pref start Hour
+          hour+item.weeklyHours <= prefHour.endHour);    // our end hour is <= pref end Hour
+        if(!profAgreesInterval) 
           continue;
-        // Is the professor unavailable?
-        const cond2 = profUnavailability.filter((booking) => {
-          booking.startHour >= hour &&
-          booking.startHour + booking.duration >= hour &&
-          booking.startHour >= hour + item.weeklyHours &&
-          booking.startHour + booking.duration >= hour + item.weeklyHours;
-        });
-        if(!cond2) 
+
+        // Secondly we check if the professor is already booked
+        const profIsNotBooked = this.bookings.find(booking => 
+          booking.professorId.value == reqProfessorId.value && // prof matches id
+          // Next we check if the desired interval is NOT within the booked ones
+          !
+          (item.semester == booking.semester &&
+          day == booking.weekDay && // same day of the week
+          hour >= booking.startHour && // our start hour is >= booked start Hour
+          hour <= booking.startHour + booking.duration &&   // our start hour is <= booked end Hour
+          hour+item.weeklyHours >= booking.startHour && // our end hour is >= booked start Hour
+          hour+item.weeklyHours <= booking.startHour + booking.duration));    // our end hour is <= booked end Hour
+        if(profIsNotBooked) 
           continue;
-        // Is the room unavailable?
-        const cond3 = roomUnavailability.filter((booking) => {
-          booking.startHour >= hour &&
-          booking.startHour + booking.duration >= hour &&
-          booking.startHour >= hour + item.weeklyHours &&
-          booking.startHour + booking.duration >= hour + item.weeklyHours;
-        });
-        if(!cond3) 
+
+        // Thirdly we check if the student group is already booked
+        const reqGroupId = item.studentGroupId;
+        const groupIsNotBooked = this.bookings.find(booking => 
+          booking.studentGroupId.value == reqGroupId.value && // group matches id
+          // Next we check if the desired interval is NOT within the booked ones
+          !
+          (item.semester == booking.semester &&
+          day == booking.weekDay && // same day of the week
+          hour >= booking.startHour && // our start hour is >= booked start Hour
+          hour <= booking.startHour + booking.duration &&   // our start hour is <= booked end Hour
+          hour+item.weeklyHours >= booking.startHour && // our end hour is >= booked start Hour
+          hour+item.weeklyHours <= booking.startHour + booking.duration));    // our end hour is <= booked end Hour
+        if(groupIsNotBooked) 
           continue;
-        // Is the group unavailable?
-        const cond4 = groupUnavailability.filter((booking) => {
-          booking.startHour >= hour &&
-          booking.startHour + booking.duration >= hour &&
-          booking.startHour >= hour + item.weeklyHours &&
-          booking.startHour + booking.duration >= hour + item.weeklyHours;
+
+        // We need the size of the group
+        const groupSize = this.studentGroups.find(studentGroup => studentGroup._id.value == reqGroupId.value).count;
+        
+        // Now we get the list of suitable rooms
+        const suitableRooms = this.rooms.filter(room => 
+          // Return all rooms with at least the required features
+          item.blackboard <= room.blackboard &&
+          item.smartboard <= room.smartboard &&
+          item.projector <= room.projector &&
+          item.computers <= room.computers &&
+          groupSize <= room.capacity);
+
+        // Next we find check each room if is already booked
+        suitableRooms.forEach(suitableRoom => {
+          const roomIsNotBooked = this.bookings.find(booking => 
+            booking.roomId.value == suitableRoom._id.value && // group matches id
+            // Next we check if the desired interval is NOT within the booked ones
+            !
+            (item.semester == booking.semester &&
+            day == booking.weekDay && // same day of the week
+            hour >= booking.startHour && // our start hour is >= booked start Hour
+            hour <= booking.startHour + booking.duration &&   // our start hour is <= booked end Hour
+            hour+item.weeklyHours >= booking.startHour && // our end hour is >= booked start Hour
+            hour+item.weeklyHours <= booking.startHour + booking.duration));    // our end hour is <= booked end Hour
+
+            if(roomIsNotBooked) { // found available suitable room
+              // book it, return true
+              let booking: Booking;
+              booking.professorId = new db.DbObjectId(item.professorId.value);
+              booking.studentGroupId = new db.DbObjectId(item.professorId.value);
+              booking.roomId = new db.DbObjectId(roomIsNotBooked._id.value);
+              booking.duration = item.weeklyHours;
+              booking.subjectId = new db.DbObjectId(item.subjectId.value);
+              booking.startHour = hour;
+              booking.weekDay = day;
+              booking.semester = item.semester;
+            }
         });
-        if(!cond4) 
-          continue;
-        return true;
+
+        return res;
       }
     }
-
-    return result;
   }
 
   generate(): boolean {
