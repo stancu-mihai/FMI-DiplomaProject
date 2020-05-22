@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  .page-header
+    h2 Generate
+        if result
+            h5 No errors occured while generating. Access link below for result:
+            a.nav-link(href='/bookings') Bookings
+            h5 Log:
+            each entry in log
+              p #{entry}
+        else
+            h5 Errors occured. Check input data.
