@@ -16,7 +16,10 @@
 
 ## Todo:
 - add algorithm (find less intersected timeframe, propose from available professors)
+- prioritize professors by grade
 - switch to romanian
+- make homescreen more friendly
+
 - Bugfix: Update an item in JQuery, then delete it => Crash due to .value.value
 - rename title
 - Add more cities
