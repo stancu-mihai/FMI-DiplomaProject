@@ -113,7 +113,7 @@ export class BookingController extends RESTController<Booking> {
 
         // Secondly we check if the professor is already booked
         const profIsBooked = this.bookings.find(booking =>
-          booking.professorId == reqProfessorId.value && // prof matches id
+          booking.professorId.value == reqProfessorId.value && // prof matches id
           +item.semester === +booking.semester && // same semester
           +day === +booking.weekDay && // same day of the week
           // Count overlapping hours. If overlap, booking already exists.
@@ -129,7 +129,7 @@ export class BookingController extends RESTController<Booking> {
         // Thirdly we check if the student group is already booked
         const reqGroupId = item.studentGroupId;
         const groupIsBooked = this.bookings.find(booking =>
-          booking.studentGroupId == reqGroupId.value && // group matches id
+          booking.studentGroupId.value == reqGroupId.value && // group matches id
           +item.semester === +booking.semester && // same semester
           +day === +booking.weekDay && // same day of the week
           // Count overlapping hours. If overlap, booking already exists.
@@ -156,7 +156,7 @@ export class BookingController extends RESTController<Booking> {
         // Next we find check each room if is already booked
         for (const suitableRoom of suitableRooms) {
           const roomIsBooked = this.bookings.find(booking =>
-            booking.roomId == suitableRoom._id.value && // group matches id
+            booking.roomId.value === suitableRoom._id.value && // group matches id
             +item.semester == +booking.semester && // same semester
             +day === +booking.weekDay && // same day of the week
             // Count overlapping hours. If overlap, booking already exists.
@@ -166,11 +166,11 @@ export class BookingController extends RESTController<Booking> {
             this.log.push("   Room " + suitableRoom.name + " suitable and available");
             // book it, return true
             const booking: Booking = {
-              professorId: item.professorId.value,
-              studentGroupId: item.studentGroupId.value,
-              roomId: suitableRoom._id.value,
+              professorId: new db.DbObjectId(item.professorId.value),
+              studentGroupId: new db.DbObjectId(item.studentGroupId.value),
+              roomId: new db.DbObjectId(suitableRoom._id.value),
               duration: item.weeklyHours,
-              subjectId: item.subjectId.value,
+              subjectId: new db.DbObjectId(item.subjectId.value),
               startHour: JSON.stringify(hour),
               weekDay: JSON.stringify(day),
               semester: item.semester

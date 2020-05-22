@@ -67,17 +67,17 @@ export class TimetableController extends RESTController<Booking> {
           for (let weekDay = 0; weekDay < 7; weekDay++) {
             // Get bookings for group, semester, startHour, weekDay
             const tempBooking = bookings.find(item =>
-              item.studentGroupId === studentGroup._id.value &&
+              item.studentGroupId.value === studentGroup._id.value &&
               +item.semester === semester &&
               +item.startHour === startHour &&
               +item.weekDay === weekDay);
             if (tempBooking) {
-              const prof = users.find(item => item._id.value === tempBooking.professorId);
+              const prof = users.find(item => item._id.value === tempBooking.professorId.value);
               weekDayDict[weekDay] = {
                 duration: +tempBooking.duration,
-                subject: subjects.find(item => item._id.value === tempBooking.subjectId).name,
+                subject: subjects.find(item => item._id.value === tempBooking.subjectId.value).name,
                 professor: prof.profile.firstName + " " + prof.profile.lastName,
-                room: rooms.find(item => item._id.value === tempBooking.roomId).name
+                room: rooms.find(item => item._id.value === tempBooking.roomId.value).name
               };
               startHourDict[startHour] = weekDayDict;
               semesterDict[semester] = startHourDict;

@@ -1,10 +1,10 @@
 import * as db from "../others/db";
 
 export interface Booking extends db.DbObject {
-    studentGroupId: string;
-    subjectId: string;
-    professorId: string;
-    roomId: string;
+    studentGroupId: db.DbObjectId;
+    subjectId: db.DbObjectId;
+    professorId: db.DbObjectId;
+    roomId: db.DbObjectId;
     semester: number;
     weekDay: string;
     startHour: string;
