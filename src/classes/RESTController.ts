@@ -13,10 +13,12 @@ export class RESTController<T extends db.DbObject> {
     }
 
     public jsonToObject(jsonObject: any): T {
+        // replace ._id with ._id.value for the object itself
         const retObj: T = Object.assign({}, jsonObject);
         if (jsonObject._id && !jsonObject._id.value)
             retObj._id = new db.DbObjectId(jsonObject._id);
         this.handleBoolean(retObj);
+        // replace ._id with ._id.value for the object's relations
         this.relations.forEach(relation => {
             if (jsonObject[relation] && !jsonObject[relation].value) {
                 const value = new db.DbObjectId(jsonObject[relation]);
@@ -29,8 +31,10 @@ export class RESTController<T extends db.DbObject> {
     public objectToJson(object: T): any {
         const retObj: any = Object.assign({}, object);
         this.handleBoolean(retObj);
+        // replace ._id.value with ._id for the object itself
         if (object._id)
             retObj._id = object._id.value;
+        // replace ._id.value with ._id for the object's relations
         this.relations.forEach(relation => {
             const relationId = (object as any)[relation];
             if (relationId)

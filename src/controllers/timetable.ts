@@ -9,6 +9,9 @@ import { User } from "../interfaces/User";
 import { Room } from "../interfaces/Room";
 import { Subject } from "../interfaces/Subject";
 import { StudentGroup } from "../interfaces/StudentGroup";
+import { Series } from "../interfaces/Series";
+import { PrefHour } from "../interfaces/PrefHour";
+import { StudSubjRel } from "../interfaces/StudSubjRel";
 
 interface Block {
   duration: number;
@@ -32,10 +35,11 @@ interface Group {
 export class TimetableController extends RESTController<Booking> {
   constructor(repo: db.Repository<Booking>, app: Application, passportConfig: PassportConfig) {
     super(repo, [], []);
-    app.get("/timetable", passportConfig.isAuthenticated, this.getRoute.bind(this));
+    app.get("/timetable", passportConfig.isAuthenticated, this.getTimetable.bind(this));
   }
 
-  async getRoute(req: Request, res: Response) {
+
+  async getTimetable(req: Request, res: Response) {
     const bookings: Booking[] = await this.repo.list(db.query().all());
 
     // Load whole contents from all other repos

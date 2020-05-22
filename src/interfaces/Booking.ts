@@ -6,7 +6,7 @@ export interface Booking extends db.DbObject {
     professorId: db.DbObjectId;
     roomId: db.DbObjectId;
     semester: number;
-    weekDay: number;
-    startHour: number;
+    weekDay: string;
+    startHour: string;
     duration: number;
 }
