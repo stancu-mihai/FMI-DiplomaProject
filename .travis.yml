@@ -7,7 +7,7 @@ services:
 before_deploy:
     - npm install
     - npm run build
-#   - npm run test  (Disabled due to unknown error on Travis build (process.exit called with "1"))
+    - npm run test  (Disabled due to unknown error on Travis build (process.exit called with "1"))
 deploy:
     provider: heroku
     skip_cleanup: true
