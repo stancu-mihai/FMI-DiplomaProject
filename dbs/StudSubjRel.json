@@ -1,0 +1,343 @@
+[{
+  "_id": {
+    "$oid": "5e52bad476e8410023ff9908"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce1ba0fca80023740907"
+  },
+  "subjectId": {
+    "$oid": "5ea2ec72c7835e0023db1a4e"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5e52baeb76e8410023ff9909"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce1ba0fca80023740907"
+  },
+  "subjectId": {
+    "$oid": "5ea2ed4ac7835e0023db1a51"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b43c76e8410023ff98e2"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "3"
+},{
+  "_id": {
+    "$oid": "5e52baf276e8410023ff990a"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce1ba0fca80023740907"
+  },
+  "subjectId": {
+    "$oid": "5ea2ee24c7835e0023db1a53"
+  },
+  "semester": "1",
+  "blackboard": true,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b46976e8410023ff98e3"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "3"
+},{
+  "_id": {
+    "$oid": "5e52baf876e8410023ff990b"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce1ba0fca80023740907"
+  },
+  "subjectId": {
+    "$oid": "5ea2ee99c7835e0023db1a55"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b49176e8410023ff98e4"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5e52bafd76e8410023ff990c"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce1ba0fca80023740907"
+  },
+  "subjectId": {
+    "$oid": "5ea2f4efc7835e0023db1a5a"
+  },
+  "semester": "1",
+  "blackboard": true,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5e52bb0c76e8410023ff990d"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce1ba0fca80023740907"
+  },
+  "subjectId": {
+    "$oid": "5ea2f410c7835e0023db1a58"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": true,
+  "professorId": {
+    "$oid": "5e52b4bf76e8410023ff98e5"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53c24a075af0023308516"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce38a0fca80023740908"
+  },
+  "subjectId": {
+    "$oid": "5ea2ec72c7835e0023db1a4e"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53c3ba075af0023308517"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce38a0fca80023740908"
+  },
+  "subjectId": {
+    "$oid": "5ea2ed4ac7835e0023db1a51"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b43c76e8410023ff98e2"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "3"
+},{
+  "_id": {
+    "$oid": "5ea53c48a075af0023308518"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce38a0fca80023740908"
+  },
+  "subjectId": {
+    "$oid": "5ea2ee24c7835e0023db1a53"
+  },
+  "semester": "1",
+  "blackboard": true,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b46976e8410023ff98e3"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "3"
+},{
+  "_id": {
+    "$oid": "5ea53c57a075af0023308519"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce38a0fca80023740908"
+  },
+  "subjectId": {
+    "$oid": "5ea2ee99c7835e0023db1a55"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b49176e8410023ff98e4"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53c75a075af002330851a"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce38a0fca80023740908"
+  },
+  "subjectId": {
+    "$oid": "5ea2f4efc7835e0023db1a5a"
+  },
+  "semester": "1",
+  "blackboard": true,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53c86a075af002330851b"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce38a0fca80023740908"
+  },
+  "subjectId": {
+    "$oid": "5ea2f410c7835e0023db1a58"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b4bf76e8410023ff98e5"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53ce3a075af002330851c"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce56a0fca80023740909"
+  },
+  "subjectId": {
+    "$oid": "5ea2ec72c7835e0023db1a4e"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53d06a075af002330851d"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce56a0fca80023740909"
+  },
+  "subjectId": {
+    "$oid": "5ea2ed4ac7835e0023db1a51"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b43c76e8410023ff98e2"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "3"
+},{
+  "_id": {
+    "$oid": "5ea53d14a075af002330851e"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce56a0fca80023740909"
+  },
+  "subjectId": {
+    "$oid": "5ea2ee24c7835e0023db1a53"
+  },
+  "semester": "1",
+  "blackboard": true,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b46976e8410023ff98e3"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "3"
+},{
+  "_id": {
+    "$oid": "5ea53d22a075af002330851f"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce56a0fca80023740909"
+  },
+  "subjectId": {
+    "$oid": "5ea2ee99c7835e0023db1a55"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b49176e8410023ff98e4"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53d32a075af0023308520"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce56a0fca80023740909"
+  },
+  "subjectId": {
+    "$oid": "5ea2f4efc7835e0023db1a5a"
+  },
+  "semester": "1",
+  "blackboard": true,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "projector": false,
+  "smartboard": false,
+  "weeklyHours": "2"
+},{
+  "_id": {
+    "$oid": "5ea53d46a075af0023308521"
+  },
+  "studentGroupId": {
+    "$oid": "5ea2ce56a0fca80023740909"
+  },
+  "subjectId": {
+    "$oid": "5ea2f410c7835e0023db1a58"
+  },
+  "semester": "1",
+  "blackboard": false,
+  "computers": false,
+  "professorId": {
+    "$oid": "5e52b4bf76e8410023ff98e5"
+  },
+  "projector": true,
+  "smartboard": false,
+  "weeklyHours": "2"
+}]

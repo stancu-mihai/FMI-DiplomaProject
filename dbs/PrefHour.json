@@ -1,0 +1,191 @@
+[{
+  "_id": {
+    "$oid": "5ec8faf8787d91297c962293"
+  },
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "weekDay": "0",
+  "startHour": "14",
+  "endHour": "18"
+},{
+  "_id": {
+    "$oid": "5ec8fb02787d91297c962294"
+  },
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "weekDay": "1",
+  "endHour": "14",
+  "startHour": "10"
+},{
+  "_id": {
+    "$oid": "5ec900bd787d91297c962295"
+  },
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "weekDay": "2",
+  "startHour": "10",
+  "endHour": "16"
+},{
+  "_id": {
+    "$oid": "5ec9011d787d91297c962296"
+  },
+  "professorId": {
+    "$oid": "5e52b40176e8410023ff98e1"
+  },
+  "weekDay": "3",
+  "startHour": "8",
+  "endHour": "12"
+},{
+  "_id": {
+    "$oid": "5ec90133787d91297c962297"
+  },
+  "professorId": {
+    "$oid": "5e52b43c76e8410023ff98e2"
+  },
+  "weekDay": "0",
+  "startHour": "8",
+  "endHour": "14"
+},{
+  "_id": {
+    "$oid": "5ec90141787d91297c962298"
+  },
+  "professorId": {
+    "$oid": "5e52b43c76e8410023ff98e2"
+  },
+  "weekDay": "1",
+  "startHour": "12",
+  "endHour": "16"
+},{
+  "_id": {
+    "$oid": "5ec90151787d91297c962299"
+  },
+  "professorId": {
+    "$oid": "5e52b43c76e8410023ff98e2"
+  },
+  "weekDay": "2",
+  "startHour": "8",
+  "endHour": "12"
+},{
+  "_id": {
+    "$oid": "5ec901a3787d91297c96229a"
+  },
+  "professorId": {
+    "$oid": "5e52b43c76e8410023ff98e2"
+  },
+  "weekDay": "3",
+  "startHour": "10",
+  "endHour": "14"
+},{
+  "_id": {
+    "$oid": "5ec90219787d91297c96229b"
+  },
+  "professorId": {
+    "$oid": "5e52b46976e8410023ff98e3"
+  },
+  "weekDay": "1",
+  "startHour": "14",
+  "endHour": "18"
+},{
+  "_id": {
+    "$oid": "5ec9022a787d91297c96229c"
+  },
+  "professorId": {
+    "$oid": "5e52b46976e8410023ff98e3"
+  },
+  "weekDay": "2",
+  "startHour": "8",
+  "endHour": "14"
+},{
+  "_id": {
+    "$oid": "5ec90250787d91297c96229d"
+  },
+  "professorId": {
+    "$oid": "5e52b46976e8410023ff98e3"
+  },
+  "weekDay": "3",
+  "startHour": "10",
+  "endHour": "14"
+},{
+  "_id": {
+    "$oid": "5ec90262787d91297c96229e"
+  },
+  "professorId": {
+    "$oid": "5e52b46976e8410023ff98e3"
+  },
+  "weekDay": "4",
+  "startHour": "12",
+  "endHour": "18"
+},{
+  "_id": {
+    "$oid": "5ec902bf787d91297c96229f"
+  },
+  "professorId": {
+    "$oid": "5e52b49176e8410023ff98e4"
+  },
+  "weekDay": "0",
+  "startHour": "8",
+  "endHour": "14"
+},{
+  "_id": {
+    "$oid": "5ec902cc787d91297c9622a0"
+  },
+  "professorId": {
+    "$oid": "5e52b49176e8410023ff98e4"
+  },
+  "weekDay": "1",
+  "startHour": "12",
+  "endHour": "16"
+},{
+  "_id": {
+    "$oid": "5ec902f4787d91297c9622a1"
+  },
+  "professorId": {
+    "$oid": "5e52b49176e8410023ff98e4"
+  },
+  "weekDay": "3",
+  "startHour": "10",
+  "endHour": "16"
+},{
+  "_id": {
+    "$oid": "5ec90316787d91297c9622a2"
+  },
+  "professorId": {
+    "$oid": "5e52b49176e8410023ff98e4"
+  },
+  "weekDay": "4",
+  "startHour": "8",
+  "endHour": "12"
+},{
+  "_id": {
+    "$oid": "5ec90339787d91297c9622a3"
+  },
+  "professorId": {
+    "$oid": "5e52b4bf76e8410023ff98e5"
+  },
+  "weekDay": "2",
+  "endHour": "14",
+  "startHour": "10"
+},{
+  "_id": {
+    "$oid": "5ec90374787d91297c9622a4"
+  },
+  "professorId": {
+    "$oid": "5e52b4bf76e8410023ff98e5"
+  },
+  "weekDay": "3",
+  "startHour": "8",
+  "endHour": "14"
+},{
+  "_id": {
+    "$oid": "5ec9038b787d91297c9622a5"
+  },
+  "professorId": {
+    "$oid": "5e52b4bf76e8410023ff98e5"
+  },
+  "weekDay": "4",
+  "startHour": "12",
+  "endHour": "18"
+}]

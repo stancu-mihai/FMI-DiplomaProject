@@ -1,0 +1,9 @@
+{"_id":{"$oid":"5e52ba7876e8410023ff98ff"},"professorId":{"$oid":"5e52b40176e8410023ff98e1"},"subjectId":"5e52b8ea76e8410023ff98f7"}
+{"_id":{"$oid":"5e52ba7e76e8410023ff9900"},"professorId":{"$oid":"5e52b40176e8410023ff98e1"},"subjectId":"5e52b8ec76e8410023ff98f8"}
+{"_id":{"$oid":"5e52ba8376e8410023ff9901"},"professorId":{"$oid":"5e52b43c76e8410023ff98e2"},"subjectId":"5e52b93176e8410023ff98f9"}
+{"_id":{"$oid":"5e52ba8876e8410023ff9902"},"professorId":{"$oid":"5e52b46976e8410023ff98e3"},"subjectId":"5e52b95676e8410023ff98fa"}
+{"_id":{"$oid":"5e52ba8f76e8410023ff9903"},"professorId":{"$oid":"5e52b49176e8410023ff98e4"},"subjectId":"5e52b95e76e8410023ff98fb"}
+{"_id":{"$oid":"5e52ba9b76e8410023ff9904"},"professorId":{"$oid":"5e52b4bf76e8410023ff98e5"},"subjectId":"5e52b99576e8410023ff98fc"}
+{"_id":{"$oid":"5e52baab76e8410023ff9905"},"professorId":{"$oid":"5e52b51b76e8410023ff98e6"},"subjectId":"5e52b8ea76e8410023ff98f7"}
+{"_id":{"$oid":"5e52baaf76e8410023ff9906"},"professorId":{"$oid":"5e52b53c76e8410023ff98e7"},"subjectId":"5e52b8ec76e8410023ff98f8"}
+{"_id":{"$oid":"5e52bac176e8410023ff9907"},"professorId":{"$oid":"5e52b57e76e8410023ff98e8"},"subjectId":"5e52b99576e8410023ff98fc"}
