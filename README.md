@@ -18,6 +18,7 @@
 - add algorithm (find less intersected timeframe, propose from available professors)
 - prioritize professors by grade
 - courses should be for series, seminar for groups
+- verification endpoint
 - switch to romanian
 - make homescreen more friendly
 
