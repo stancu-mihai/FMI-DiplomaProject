@@ -1,6 +1,6 @@
 import { DbObject, DbObjectId } from "../others/db";
 
-export interface StudSubjRel extends DbObject {
+export interface Seminar extends DbObject {
     studentGroupId: DbObjectId;
     subjectId: DbObjectId;
     semester: number;

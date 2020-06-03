@@ -2,11 +2,11 @@ extends ../layout
 
 block content
   .page-header
-    h2 Student group subject relations
+    h2 Seminars
   form.form-horizontal(id='signup-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       .col-sm-12
-      div#studsubjrels
+      div#seminars
     script(type='text/javascript', src='/js/lib/jsgrid.min.js')
-    script(src='/js/scripts/studsubjrels.js')
+    script(src='/js/scripts/seminars.js')

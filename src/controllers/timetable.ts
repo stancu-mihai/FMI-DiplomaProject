@@ -11,7 +11,7 @@ import { Subject } from "../interfaces/Subject";
 import { StudentGroup } from "../interfaces/StudentGroup";
 import { Series } from "../interfaces/Series";
 import { PrefHour } from "../interfaces/PrefHour";
-import { StudSubjRel } from "../interfaces/StudSubjRel";
+import { Seminar } from "../interfaces/Seminar";
 
 interface Block {
   duration: number;
