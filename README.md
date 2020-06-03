@@ -73,6 +73,17 @@ License application. Subject: timetable optimization problem.
 - seriesId: Series;
 - count: number;
 
+### Course data:
+- seriesId: StudentGroup;
+- subjectId: Subject;
+- semester: number;
+- professorId: User;
+- weeklyHours: number;
+- projector: boolean;
+- blackboard: boolean; 
+- smartboard: boolean; 
+- computers: boolean;
+
 ### Seminar data:
 - studentGroupId: StudentGroup;
 - subjectId: Subject;
