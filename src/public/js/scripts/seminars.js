@@ -13,7 +13,7 @@ $(function () {
                         type: "GET",
                         url: "/api/studentgroup"
                     }).done(function (studentGroups) {
-                        $("#studsubjrels").jsGrid({
+                        $("#seminars").jsGrid({
                             width: null,
                             shrinkToFit: false,
                             filtering: true,
@@ -28,7 +28,7 @@ $(function () {
                             controller: {
                                 loadData: function (filter) {
                                     return $.ajax({
-                                        url: "/api/studsubjrel",
+                                        url: "/api/seminar",
                                         dataType: "json",
                                         data: filter
                                     });
@@ -36,21 +36,21 @@ $(function () {
                                 insertItem: function (item) {
                                     return $.ajax({
                                         type: "POST",
-                                        url: "/api/studsubjrel",
+                                        url: "/api/seminar",
                                         data: item
                                     });
                                 },
                                 updateItem: function (item) {
                                     return $.ajax({
                                         type: "PUT",
-                                        url: "/api/studsubjrel",
+                                        url: "/api/seminar",
                                         data: item
                                     });
                                 },
                                 deleteItem: function (item) {
                                     return $.ajax({
                                         type: "DELETE",
-                                        url: "/api/studsubjrel",
+                                        url: "/api/seminar",
                                         data: item
                                     });
                                 }

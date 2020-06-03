@@ -11,17 +11,17 @@ import { StudentGroup } from "../interfaces/StudentGroup";
 import { Room } from "../interfaces/Room";
 import { Subject } from "../interfaces/Subject";
 import { PrefHour } from "../interfaces/PrefHour";
-import { StudSubjRel } from "../interfaces/StudSubjRel";
+import { Seminar } from "../interfaces/Seminar";
 
 export class BookingController extends RESTController<Booking> {
-  studSubjBookings: boolean[] = [];
+  seminarBookings: boolean[] = [];
   users: User[] = [];
   series: Series[] = [];
   studentGroups: StudentGroup[] = [];
   rooms: Room[] = [];
   subjects: Subject[] = [];
   prefHours: PrefHour[] = [];
-  studSubjRels: StudSubjRel[] = [];
+  seminars: Seminar[] = [];
   bookings: Booking[] = [];
   log: string[] = [];
   constructor(repo: db.Repository<Booking>, app: Application, passportConfig: PassportConfig) {
@@ -67,9 +67,9 @@ export class BookingController extends RESTController<Booking> {
     const prefHoursRes = await prefHourRepo.list(db.query().all());
     prefHoursRes.forEach((prefHour: PrefHour) => { this.prefHours.push(prefHour); });
 
-    const studSubjRelRepo = db.repo<StudSubjRel>({ table: "StudSubjRel" });
-    const studSubjRelsRes = await studSubjRelRepo.list(db.query().all());
-    studSubjRelsRes.forEach((studSubjRel: StudSubjRel) => { this.studSubjRels.push(studSubjRel); });
+    const seminarRepo = db.repo<Seminar>({ table: "Seminar" });
+    const seminarRes = await seminarRepo.list(db.query().all());
+    seminarRes.forEach((seminar: Seminar) => { this.seminars.push(seminar); });
   }
 
   async removeAllBookings() {
@@ -77,7 +77,7 @@ export class BookingController extends RESTController<Booking> {
   }
 
   tryToBook(index: number): boolean {
-    const item = this.studSubjRels[index];
+    const item = this.seminars[index];
     const res = false;
 
     // A good reflex would be to capture the availability before this loop
@@ -189,7 +189,7 @@ export class BookingController extends RESTController<Booking> {
         }
         if (exit) {
           // Mark this index booked
-          this.studSubjBookings[index] = true;
+          this.seminarBookings[index] = true;
           return true;
         }
       }
@@ -199,13 +199,13 @@ export class BookingController extends RESTController<Booking> {
 
   generate(): boolean {
     let result = true;
-    for (let i = 0; i < this.studSubjBookings.length; i++) {
-      // Find index of first unbooked studSubjBooking
-      const index = this.studSubjBookings.findIndex(elem => elem === false);
+    for (let i = 0; i < this.seminarBookings.length; i++) {
+      // Find index of first unbooked seminar
+      const index = this.seminarBookings.findIndex(elem => elem === false);
       if (index != -1) {
         result = result && this.tryToBook(index);
       }
-      else {// If all StudSubjRel's are booked, solution is found
+      else {// If all seminars are booked, solution is found
         return true;
       }
     }
@@ -217,9 +217,9 @@ export class BookingController extends RESTController<Booking> {
     await this.loadDbsInMemory();
     // Remove all existing bookings
     await this.removeAllBookings();
-    // Array to mark all studSubjRels as unbooked
-    if(this.studSubjBookings.length == 0)
-      this.studSubjRels.forEach(() => this.studSubjBookings.push(false));
+    // Array to mark all seminars as unbooked
+    if(this.seminarBookings.length == 0)
+      this.seminars.forEach(() => this.seminarBookings.push(false));
     // Generate the bookings for the timetable
     const result = this.generate();
     // Bookings are only in memory, must be written to db
