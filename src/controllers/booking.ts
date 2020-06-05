@@ -11,9 +11,11 @@ import { StudentGroup } from "../interfaces/StudentGroup";
 import { Room } from "../interfaces/Room";
 import { Subject } from "../interfaces/Subject";
 import { PrefHour } from "../interfaces/PrefHour";
+import { Course } from "../interfaces/Course";
 import { Seminar } from "../interfaces/Seminar";
 
 export class BookingController extends RESTController<Booking> {
+  courseBookings: boolean[] = [];
   seminarBookings: boolean[] = [];
   users: User[] = [];
   series: Series[] = [];
@@ -21,6 +23,7 @@ export class BookingController extends RESTController<Booking> {
   rooms: Room[] = [];
   subjects: Subject[] = [];
   prefHours: PrefHour[] = [];
+  courses: Course[] = [];
   seminars: Seminar[] = [];
   bookings: Booking[] = [];
   log: string[] = [];
@@ -67,6 +70,10 @@ export class BookingController extends RESTController<Booking> {
     const prefHoursRes = await prefHourRepo.list(db.query().all());
     prefHoursRes.forEach((prefHour: PrefHour) => { this.prefHours.push(prefHour); });
 
+    const courseRepo = db.repo<Course>({ table: "Course" });
+    const courseRes = await courseRepo.list(db.query().all());
+    courseRes.forEach((course: Course) => { this.courses.push(course); });
+
     const seminarRepo = db.repo<Seminar>({ table: "Seminar" });
     const seminarRes = await seminarRepo.list(db.query().all());
     seminarRes.forEach((seminar: Seminar) => { this.seminars.push(seminar); });
@@ -76,8 +83,10 @@ export class BookingController extends RESTController<Booking> {
     await this.repo.remove(db.query().all());
   }
 
-  tryToBook(index: number): boolean {
-    const item = this.seminars[index];
+  tryToBook(index: number, isCourse: boolean): boolean {
+    const courseToBook = this.courses[index];
+    const seminarToBook = this.seminars[index];
+    const item = isCourse ? courseToBook : seminarToBook;
     const res = false;
 
     // A good reflex would be to capture the availability before this loop
@@ -126,24 +135,40 @@ export class BookingController extends RESTController<Booking> {
         else
           this.log.push("   Professor is not booked");
 
-        // Thirdly we check if the student group is already booked
-        const reqGroupId = item.studentGroupId;
-        const groupIsBooked = this.bookings.find(booking =>
-          booking.studentGroupId.value == reqGroupId.value && // group matches id
-          +item.semester === +booking.semester && // same semester
-          +day === +booking.weekDay && // same day of the week
-          // Count overlapping hours. If overlap, booking already exists.
-          Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
-        if (groupIsBooked)
-        {
-          this.log.push("X  Group is already booked");
-          continue;
-        }
+        // Find the list with the groups that we are trying to book for this item
+        let groupsToBook: StudentGroup[] = [];
+        if (isCourse)
+          groupsToBook = this.studentGroups.filter(studentGroup => studentGroup.seriesId.value == courseToBook.seriesId.value);
         else
-          this.log.push("   Group is not booked");
+          groupsToBook.push(this.studentGroups.find(studentGroup => studentGroup._id.value == seminarToBook.studentGroupId.value));
 
-        // We need the size of the group
-        const groupSize = this.studentGroups.find(studentGroup => studentGroup._id.value == reqGroupId.value).count;
+        let atLeastOneGroupBooked = false;
+        // Thirdly we check if the student group(s) is (are) already booked
+        for (const groupToBook of groupsToBook)
+        {
+          const groupIsBooked = this.bookings.find(booking =>
+            booking.studentGroupId.value == groupToBook._id.value && // group matches id
+            +item.semester === +booking.semester && // same semester
+            +day === +booking.weekDay && // same day of the week
+            // Count overlapping hours. If overlap, booking already exists.
+            Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
+          if (groupIsBooked)
+          {
+            this.log.push("X  Group " + groupToBook.name + " is already booked");
+            atLeastOneGroupBooked = true;
+            break;
+          }
+          else
+            this.log.push("   Group " + groupToBook.name + " is not booked");
+        }
+        if(atLeastOneGroupBooked)
+          continue;
+
+        // Find the required capacity for the room (size of group for semester or size of series for course)
+        let reqCapacity = 0;
+        for (const groupToBook of groupsToBook)
+          reqCapacity += +groupToBook.count;
+
         // Now we get the list of suitable rooms
         const suitableRooms = this.rooms.filter(room =>
           // Return all rooms with at least the required features
@@ -151,7 +176,10 @@ export class BookingController extends RESTController<Booking> {
           item.smartboard <= room.smartboard &&
           item.projector <= room.projector &&
           item.computers <= room.computers &&
-          +groupSize <= +room.capacity);
+          reqCapacity <= +room.capacity);
+        
+        if (suitableRooms.length == 0)
+          this.log.push("X  No suitable rooms!");
 
         // Next we find check each room if is already booked
         for (const suitableRoom of suitableRooms) {
@@ -164,20 +192,21 @@ export class BookingController extends RESTController<Booking> {
 
           if (!roomIsBooked) { // found available suitable room
             this.log.push("   Room " + suitableRoom.name + " suitable and available");
-            // book it, return true
-            const booking: Booking = {
-              professorId: new db.DbObjectId(item.professorId.value),
-              studentGroupId: new db.DbObjectId(item.studentGroupId.value),
-              roomId: new db.DbObjectId(suitableRoom._id.value),
-              duration: item.weeklyHours,
-              subjectId: new db.DbObjectId(item.subjectId.value),
-              startHour: JSON.stringify(hour),
-              weekDay: JSON.stringify(day),
-              semester: item.semester
-            };
-            this.bookings.push(booking);
-            this.log.push("Booked for day " + day + " and hour " + hour);
-
+            // book it for each group, return true
+            for (const groupToBook of groupsToBook) {
+              const booking: Booking = {
+                professorId: new db.DbObjectId(item.professorId.value),
+                studentGroupId: new db.DbObjectId(groupToBook._id.value),
+                roomId: new db.DbObjectId(suitableRoom._id.value),
+                duration: item.weeklyHours,
+                subjectId: new db.DbObjectId(item.subjectId.value),
+                startHour: JSON.stringify(hour),
+                weekDay: JSON.stringify(day),
+                semester: item.semester
+              };
+              this.bookings.push(booking);
+              this.log.push("Booked for day " + day + " and hour " + hour + " and group " + groupToBook.name);
+            }
             exit = true;
           }
           else
@@ -189,7 +218,10 @@ export class BookingController extends RESTController<Booking> {
         }
         if (exit) {
           // Mark this index booked
-          this.seminarBookings[index] = true;
+          if(isCourse)
+            this.courseBookings[index] = true;
+          else
+            this.seminarBookings[index] = true;
           return true;
         }
       }
@@ -199,11 +231,17 @@ export class BookingController extends RESTController<Booking> {
 
   generate(): boolean {
     let result = true;
+    for (let i = 0; i < this.courseBookings.length; i++) {
+      // Find index of first unbooked course
+      const index = this.courseBookings.findIndex(elem => elem === false);
+      if (index != -1) 
+        result = result && this.tryToBook(index, true);
+    }
     for (let i = 0; i < this.seminarBookings.length; i++) {
       // Find index of first unbooked seminar
       const index = this.seminarBookings.findIndex(elem => elem === false);
       if (index != -1) {
-        result = result && this.tryToBook(index);
+        result = result && this.tryToBook(index, false);
       }
       else {// If all seminars are booked, solution is found
         return true;
@@ -217,6 +255,9 @@ export class BookingController extends RESTController<Booking> {
     await this.loadDbsInMemory();
     // Remove all existing bookings
     await this.removeAllBookings();
+    // Array to mark all courses as unbooked
+    if(this.courseBookings.length == 0)
+    this.courses.forEach(() => this.courseBookings.push(false));
     // Array to mark all seminars as unbooked
     if(this.seminarBookings.length == 0)
       this.seminars.forEach(() => this.seminarBookings.push(false));
