@@ -15,10 +15,9 @@
 - npm run start
 
 ## Todo:
-- add algorithm (find less intersected timeframe, propose from available professors)
 - prioritize professors by grade
-- courses should be for series, seminar for groups
 - verification endpoint
+- add algorithm (find less intersected timeframe, propose from available professors)
 - switch to romanian
 - make homescreen more friendly
 
