@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  .page-header
+    h2 Verify
+        if result
+            h5 No errors found in bookings.
+        else
+            h5 Conflicts found. Check log.
+        h5 Log:
+        each entry in log
+            p #{entry}

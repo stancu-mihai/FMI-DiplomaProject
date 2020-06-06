@@ -34,7 +34,8 @@ export class BookingController extends RESTController<Booking> {
   courses: ExtendedCourse[] = [];
   seminars: ExtendedSeminar[] = [];
   bookings: Booking[] = [];
-  log: string[] = [];
+  bookingLog: string[] = [];
+  verifyLog: string[] = [];
   constructor(repo: db.Repository<Booking>, app: Application, passportConfig: PassportConfig) {
     super(repo, ["subjectId", "professorId", "studentGroupId"], ["studentGroupId", "subjectId", "professorId", "roomId"]);
     app.get("/bookings", passportConfig.isAuthenticatedSecretary, this.getRoute);
@@ -43,6 +44,7 @@ export class BookingController extends RESTController<Booking> {
     app.put("/api/booking", passportConfig.isAuthenticatedSecretary, this.update.bind(this));
     app.delete("/api/booking", passportConfig.isAuthenticatedSecretary, this.del.bind(this)); 
     app.get("/generate", passportConfig.isAuthenticated, this.getGenerate.bind(this));
+    app.get("/verify", passportConfig.isAuthenticated, this.getVerify.bind(this));
   }
 
   getRoute (req: Request, res: Response) {
@@ -116,7 +118,7 @@ export class BookingController extends RESTController<Booking> {
     for (let day = 0; day < 5; day++) {
       // For each hour
       for (let hour = 8; hour < 18; hour++) {
-        this.log.push("   Trying to book " + 
+        this.bookingLog.push("   Trying to book " + 
         JSON.stringify(this.subjects.find(subj => subj._id.value === item.subjectId.value).name)
         + " prof " + 
         JSON.stringify(this.users.find(user => user._id.value === item.professorId.value).email)
@@ -135,11 +137,11 @@ export class BookingController extends RESTController<Booking> {
           +hour +  +item.weeklyHours <= +prefHour.endHour);    // our end hour is <= pref end Hour
         if (!profAgreesInterval)
         {
-          this.log.push("X  Professor does not favor this interval");
+          this.bookingLog.push("X  Professor does not favor this interval");
           continue;
         }
         else 
-          this.log.push("   Professor favors this interval");
+          this.bookingLog.push("   Professor favors this interval");
 
         // Secondly we check if the professor is already booked
         const profIsBooked = this.bookings.find(booking =>
@@ -150,11 +152,11 @@ export class BookingController extends RESTController<Booking> {
           Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
         if (profIsBooked)
         {
-          this.log.push("X  Professor is already booked");
+          this.bookingLog.push("X  Professor is already booked");
           continue;
         }
         else
-          this.log.push("   Professor is not booked");
+          this.bookingLog.push("   Professor is not booked");
 
         // Find the list with the groups that we are trying to book for this item
         let groupsToBook: StudentGroup[] = [];
@@ -175,12 +177,12 @@ export class BookingController extends RESTController<Booking> {
             Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
           if (groupIsBooked)
           {
-            this.log.push("X  Group " + groupToBook.name + " is already booked");
+            this.bookingLog.push("X  Group " + groupToBook.name + " is already booked");
             atLeastOneGroupBooked = true;
             break;
           }
           else
-            this.log.push("   Group " + groupToBook.name + " is not booked");
+            this.bookingLog.push("   Group " + groupToBook.name + " is not booked");
         }
         if(atLeastOneGroupBooked)
           continue;
@@ -200,7 +202,7 @@ export class BookingController extends RESTController<Booking> {
           reqCapacity <= +room.capacity);
         
         if (suitableRooms.length == 0)
-          this.log.push("X  No suitable rooms!");
+          this.bookingLog.push("X  No suitable rooms!");
 
         // Next we find check each room if is already booked
         for (const suitableRoom of suitableRooms) {
@@ -212,7 +214,7 @@ export class BookingController extends RESTController<Booking> {
             Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
 
           if (!roomIsBooked) { // found available suitable room
-            this.log.push("   Room " + suitableRoom.name + " suitable and available");
+            this.bookingLog.push("   Room " + suitableRoom.name + " suitable and available");
             // book it for each group, return true
             for (const groupToBook of groupsToBook) {
               const booking: Booking = {
@@ -226,13 +228,13 @@ export class BookingController extends RESTController<Booking> {
                 semester: item.semester
               };
               this.bookings.push(booking);
-              this.log.push("Booked for day " + day + " and hour " + hour + " and group " + groupToBook.name);
+              this.bookingLog.push("Booked for day " + day + " and hour " + hour + " and group " + groupToBook.name);
             }
             exit = true;
           }
           else
           {
-            this.log.push("X  Room " + suitableRoom.name + " suitable but unavailable");
+            this.bookingLog.push("X  Room " + suitableRoom.name + " suitable but unavailable");
           }
           if (exit)
             break; // exit suitableRoom foreach
@@ -291,7 +293,112 @@ export class BookingController extends RESTController<Booking> {
     res.render("controllers/generate", {
       title: "Generate",
       result: result,
-      log: this.log
+      log: this.bookingLog
+    });
+  }
+
+  async getVerify(req: Request, res: Response) {
+    this.bookings = [];
+    this.users = [];
+    this.subjects = [];
+    this.rooms = [];
+    this.studentGroups = [];
+    // Load booking db to memory
+    const bookingRepo = db.repo<Booking>({ table: "Booking" });
+    const bookingRes = await bookingRepo.list(db.query().all());
+    bookingRes.forEach((booking: Booking) => { this.bookings.push(booking); });
+    // Load user db to memory
+    const userRepo = db.repo<User>({ table: "User" });
+    const userRes = await userRepo.list(db.query().all());
+    userRes.forEach((user: User) => { this.users.push(user); });
+    // Load subject db to memory
+    const subjectRepo = db.repo<Subject>({ table: "Subject" });
+    const subjectRes = await subjectRepo.list(db.query().all());
+    subjectRes.forEach((subject: Subject) => { this.subjects.push(subject); });
+    // Load room db to memory
+    const roomRepo = db.repo<Room>({ table: "Room" });
+    const roomRes = await roomRepo.list(db.query().all());
+    roomRes.forEach((room: Room) => { this.rooms.push(room); });
+    // Load groups db to memory
+    const groupRepo = db.repo<StudentGroup>({ table: "StudentGroup" });
+    const groupRes = await groupRepo.list(db.query().all());
+    groupRes.forEach((group: StudentGroup) => { this.studentGroups.push(group); });
+
+    let result = true;
+
+    for (const booking of this.bookings) {
+       // Does this booking's professor conflict with other booking?
+       const professorConflict = this.bookings.filter(otherBooking =>
+        booking.professorId.value == otherBooking.professorId.value && // prof matches id
+        +booking.semester === +otherBooking.semester && // same semester
+        +booking.weekDay === +otherBooking.weekDay && // same day of the week
+        (booking.roomId.value !== otherBooking.roomId.value ||        // is only conflict if rooms or subjects are different 
+         booking.subjectId.value !== otherBooking.subjectId.value) && //(same professor can use same room for multiple groups, for courses)
+        // Count overlapping hours. 
+        Math.min(+otherBooking.startHour + +otherBooking.duration - +booking.startHour, +booking.startHour + +booking.duration - +otherBooking.startHour) >0 );
+        if (professorConflict.length > 0 ) {
+          result = false;
+          this.verifyLog.push("Professors with overlapping bookings:");
+          professorConflict.forEach( conflict => {
+            const profEmail = this.users.find(user => user._id.value === conflict.professorId.value).email;
+            const subjName = this.subjects.find(subj => subj._id.value === conflict.subjectId.value).name;
+            const roomName = this.rooms.find(room => room._id.value === conflict.roomId.value).name;
+            const groupName = this.studentGroups.find(group => group._id.value ===  conflict.studentGroupId.value).name;
+            this.verifyLog.push(profEmail + " / " + subjName + " / " + roomName + " / " + groupName + " / sem " + conflict.semester + 
+            " / day " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
+          });
+        }
+
+      // Does this booking's group conflict with other booking?
+       const groupConflict = this.bookings.filter(otherBooking =>
+        booking.studentGroupId.value == otherBooking.studentGroupId.value && // group matches id
+        +booking.semester === +otherBooking.semester && // same semester
+        +booking.weekDay === +otherBooking.weekDay && // same day of the week
+        (booking.roomId.value != otherBooking.roomId.value ||        // is only conflict if rooms or subjects or professors are different 
+          booking.subjectId.value != otherBooking.subjectId.value ||
+          booking.professorId.value != otherBooking.professorId.value) && 
+        // Count overlapping hours. 
+        Math.min(+otherBooking.startHour + +otherBooking.duration - +booking.startHour, +booking.startHour + +booking.duration - +otherBooking.startHour) >0 );
+        if (groupConflict.length > 0 ) {
+          result = false;
+          this.verifyLog.push("Groups with overlapping bookings:");
+          groupConflict.forEach( conflict => {
+            const profEmail = this.users.find(user => user._id.value === conflict.professorId.value).email;
+            const subjName = this.subjects.find(subj => subj._id.value === conflict.subjectId.value).name;
+            const roomName = this.rooms.find(room => room._id.value === conflict.roomId.value).name;
+            const groupName = this.studentGroups.find(group => group._id.value ===  conflict.studentGroupId.value).name;
+            this.verifyLog.push(profEmail + " / " + subjName + " / " + roomName + " / " + groupName + " / sem " + conflict.semester + 
+            " / day " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
+          });
+        }
+
+      // Does this booking's room conflict with other booking?
+      const roomConflict = this.bookings.filter(otherBooking =>
+        booking.roomId.value == otherBooking.roomId.value && // room matches id
+        +booking.semester === +otherBooking.semester && // same semester
+        +booking.weekDay === +otherBooking.weekDay && // same day of the week
+        (booking.professorId.value !== otherBooking.professorId.value ||  // is only conflict if professors or subjects are different 
+         booking.subjectId.value !== otherBooking.subjectId.value) &&     //(same professor can use same room for multiple groups, for courses)
+        // Count overlapping hours. 
+        Math.min(+otherBooking.startHour + +otherBooking.duration - +booking.startHour, +booking.startHour + +booking.duration - +otherBooking.startHour) >0 );
+        if (roomConflict.length > 0 ) {
+          result = false;
+          this.verifyLog.push("Rooms with overlapping bookings:");
+          roomConflict.forEach( conflict => {
+            const profEmail = this.users.find(user => user._id.value === conflict.professorId.value).email;
+            const subjName = this.subjects.find(subj => subj._id.value === conflict.subjectId.value).name;
+            const roomName = this.rooms.find(room => room._id.value === conflict.roomId.value).name;
+            const groupName = this.studentGroups.find(group => group._id.value ===  conflict.studentGroupId.value).name;
+            this.verifyLog.push(profEmail + " / " + subjName + " / " + roomName + " / " + groupName + " / sem " + conflict.semester + 
+            " / day " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
+          });
+        }
+    }
+
+    res.render("controllers/verify", {
+      title: "Generate",
+      result: result,
+      log: this.verifyLog
     });
   }
 }

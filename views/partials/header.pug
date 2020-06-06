@@ -36,7 +36,9 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
                 a.nav-link(href='/generate') Generate
               li.nav-item(class=(title === 'Bookings') ? 'active' : undefined)
                 a.nav-link(href='/bookings') Bookings
-              li.nav-item(class=(title === 'Bookings') ? 'active' : undefined)
+              li.nav-item(class=(title === 'Verify') ? 'active' : undefined)
+                a.nav-link(href='/verify') Verify
+              li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
                 a.nav-link(href='/timetable') Timetable
       ul.nav.navbar-nav
         if !user
