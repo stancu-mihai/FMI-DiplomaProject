@@ -15,7 +15,6 @@
 - npm run start
 
 ## Todo:
-- prioritize professors by grade
 - verification endpoint
 - add algorithm (find less intersected timeframe, propose from available professors)
 - switch to romanian
