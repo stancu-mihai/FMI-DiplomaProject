@@ -14,6 +14,14 @@ import { PrefHour } from "../interfaces/PrefHour";
 import { Course } from "../interfaces/Course";
 import { Seminar } from "../interfaces/Seminar";
 
+interface ExtendedCourse extends Course {
+  grade?: number;
+}
+
+interface ExtendedSeminar extends Seminar {
+  grade?: number;
+}
+
 export class BookingController extends RESTController<Booking> {
   courseBookings: boolean[] = [];
   seminarBookings: boolean[] = [];
@@ -23,8 +31,8 @@ export class BookingController extends RESTController<Booking> {
   rooms: Room[] = [];
   subjects: Subject[] = [];
   prefHours: PrefHour[] = [];
-  courses: Course[] = [];
-  seminars: Seminar[] = [];
+  courses: ExtendedCourse[] = [];
+  seminars: ExtendedSeminar[] = [];
   bookings: Booking[] = [];
   log: string[] = [];
   constructor(repo: db.Repository<Booking>, app: Application, passportConfig: PassportConfig) {
@@ -72,11 +80,23 @@ export class BookingController extends RESTController<Booking> {
 
     const courseRepo = db.repo<Course>({ table: "Course" });
     const courseRes = await courseRepo.list(db.query().all());
-    courseRes.forEach((course: Course) => { this.courses.push(course); });
+    courseRes.forEach((course: Course) => { 
+      const extCourse: ExtendedCourse = course;
+      extCourse.grade = +this.users.find(user => user._id.value == course.professorId.value).grade;
+      this.courses.push(extCourse); 
+    });
+    // Sorts courses by grade, descending
+    this.courses.sort((a,b) => {return b.grade - a.grade;});
 
     const seminarRepo = db.repo<Seminar>({ table: "Seminar" });
     const seminarRes = await seminarRepo.list(db.query().all());
-    seminarRes.forEach((seminar: Seminar) => { this.seminars.push(seminar); });
+    seminarRes.forEach((seminar: Seminar) => { 
+      const extCourse: ExtendedSeminar = seminar;
+      extCourse.grade = +this.users.find(user => user._id.value == seminar.professorId.value).grade;
+      this.seminars.push(extCourse); 
+    });
+    // Sorts seminars by grade, descending
+    this.seminars.sort((a,b) => {return b.grade - a.grade;});
   }
 
   async removeAllBookings() {
@@ -100,6 +120,7 @@ export class BookingController extends RESTController<Booking> {
         JSON.stringify(this.subjects.find(subj => subj._id.value === item.subjectId.value).name)
         + " prof " + 
         JSON.stringify(this.users.find(user => user._id.value === item.professorId.value).email)
+        + " grade " + item.grade
         + " for day " + day + " and hour " + hour);
         let exit = false;
         // First we check if this day and this hour is within the preferences of the professor assigned to this item
