@@ -15,14 +15,13 @@
 - npm run start
 
 ## Todo:
-- verification endpoint
-- add algorithm (find less intersected timeframe, propose from available professors)
 - switch to romanian
 - make homescreen more friendly
-
-- Bugfix: Update an item in JQuery, then delete it => Crash due to .value.value
 - rename title
 - Add more cities
+
+- Bugfix: Update an item in JQuery, then delete it => Crash due to .value.value
+
 ## Todo long term:
 - add schema validation to RestController
 - make search work for multiple fields at once
