@@ -24,7 +24,21 @@ $(function () {
                             autoload: true,
                             pageSize: 10,
                             pageButtonCount: 5,
-                            deleteConfirm: "Do you really want to delete student group subject relation?",
+                            pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
+                            pagePrevText: "Anterioara",
+                            pageNextText: "Urmatoarea",
+                            pageFirstText: "Prima",
+                            pageLastText: "Ultima",
+                            searchModeButtonTooltip: "Comută la căutare", 
+                            insertModeButtonTooltip: "Comută la inserare", 
+                            editButtonTooltip: "Modifică",                      
+                            deleteButtonTooltip: "Sterge",                  
+                            searchButtonTooltip: "Caută",                  
+                            clearFilterButtonTooltip: "Sterge filtru",       
+                            insertButtonTooltip: "Inserează",                  
+                            updateButtonTooltip: "Actualizează",                  
+                            cancelEditButtonTooltip: "Anulează modificare", 
+                            deleteConfirm: "Chiar doriți ștergerea cursului?",
                             controller: {
                                 loadData: function (filter) {
                                     return $.ajax({
@@ -56,15 +70,15 @@ $(function () {
                                 }
                             },
                             fields: [
-                                { name: "seriesId", type: "select", items: series, valueField: "_id", textField: "name", title: "Series" },
-                                { name: "subjectId", type: "select", items: subjects, valueField: "_id", textField: "name", title: "Subject" },
-                                { name: "semester", type: "number", title: "Semester" },
-                                { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Professor" },
-                                { name: "weeklyHours", type: "number", title: "Hours/wk" },
-                                { name: "projector", type: "checkbox", title: "Projector" },
-                                { name: "blackboard", type: "checkbox", title: "Blackboard" },
-                                { name: "smartboard", type: "checkbox", title: "Smartboard" },
-                                { name: "computers", type: "checkbox", title: "Computers" },
+                                { name: "seriesId", type: "select", items: series, valueField: "_id", textField: "name", title: "Serie" },
+                                { name: "subjectId", type: "select", items: subjects, valueField: "_id", textField: "name", title: "Materie" },
+                                { name: "semester", type: "number", title: "Semestru" },
+                                { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Profesor" },
+                                { name: "weeklyHours", type: "number", title: "Ore/săpt" },
+                                { name: "projector", type: "checkbox", title: "Proiector" },
+                                { name: "blackboard", type: "checkbox", title: "Tabla" },
+                                { name: "smartboard", type: "checkbox", title: "Tabla smart" },
+                                { name: "computers", type: "checkbox", title: "PC-uri" },
                                 { type: "control" }
                             ]
                         });

@@ -15,11 +15,7 @@
 - npm run start
 
 ## Todo:
-- switch to romanian
-- make homescreen more friendly
-- rename title
-- Add more cities
-
+- Bugfix: Press generate or verify twice has unexpected behaviour
 - Bugfix: Update an item in JQuery, then delete it => Crash due to .value.value
 
 ## Todo long term:

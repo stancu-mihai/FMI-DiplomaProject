@@ -2,11 +2,11 @@ extends ../layout
 
 block content
   .page-header
-    h2 Verify
+    h2 Verificare
         if result
-            h5 No errors found in bookings.
+            h5 Nu au fost găsite conflicte in rezervări.
         else
-            h5 Conflicts found. Check log.
-        h5 Log:
+            h5 Au fost găsite conflicte. Verificați raportul.
+        h5 Raport:
         each entry in log
             p #{entry}

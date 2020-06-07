@@ -2,60 +2,63 @@ extends ../layout
 
 block content
   .page-header
-    h3 Sign up
+    h3 Înregistrare
     hr
   form.form-horizontal(id='signup-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') First name
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Prenume
       .col-sm-7
-        input.form-control(type='text', name='firstName', id='firstName', placeholder='First name', autofocus, required)
+        input.form-control(type='text', name='firstName', id='firstName', placeholder='Popescu', autofocus, required)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Last name
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Nume
       .col-sm-7
-        input.form-control(type='text', name='lastName', id='lastName', placeholder='Last name', autofocus, required)
+        input.form-control(type='text', name='lastName', id='lastName', placeholder='Ion', autofocus, required)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='city') City
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='city') Oraș
       .col-sm-7
         select#city.select.form-control.input-md(name='city')
-          option(value=0) -- Select --
-          option(value=1) Bucharest
-          option(value=2) Cluj
+          option(value=0) -- Selectați --
+          option(value=1) București
+          option(value=2) Brașov
+          option(value=3) Cluj
+          option(value=4) Iași
+          option(value=5) Timișoara
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='role') Role
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='role') Rol
       .col-sm-7
         select#role.select.form-control.input-md(name='role')
-          option(value=0) -- Select --
-          option(value=1) Student representative
-          option(value=2) Professor
-          option(value=3) Secretary
+          option(value=0) -- Selectați --
+          option(value=1) Student
+          option(value=2) Profesor
+          option(value=3) Secretar
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Phone no.
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Nr. telefon
       .col-sm-7
-        input.form-control(type='text', name='phoneNo', id='phoneNo', placeholder='Phone', autofocus, required)
+        input.form-control(type='text', name='phoneNo', id='phoneNo', placeholder='0712345678', autofocus, required)
     .form-group.row.justify-content-md-center
       label.col-sm-3.col-form-label.text-right.font-weight-bold(for='email') Email
       .col-sm-7
-        input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
+        input.form-control(type='email', name='email', id='email', placeholder='popescu.ion@companie.ro', autofocus, required)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='password') Password
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='password') Parolă
       .col-sm-7
-        input.form-control(type='password', name='password', id='password', placeholder='Password', required)
+        input.form-control(type='password', name='password', id='password', placeholder='Tastați parola aici', required)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='confirmPassword') Confirm Password
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='confirmPassword') Confirmare parolă
       .col-sm-7
-        input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', required)
+        input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Tastați parola din nou', required)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='grade') Grade
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='grade') Grad profesor
       .col-sm-7
         select#grade.select.form-control.input-md(name='grade')
-          option(value=0) -- Select --
+          option(value=0) -- Selectați --
           option(value=1) Assistent
           option(value=2) Lector
-          option(value=3) Conferentiar
+          option(value=3) Conferențiar
           option(value=4) Profesor
     .form-group.row.justify-content-md-center
       .offset-sm-3.col-sm-7
         button.btn.btn-success(type='submit')
           i.fa.fa-user-plus
-          | Signup
+          | Înregistrare

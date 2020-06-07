@@ -14,7 +14,21 @@ $(function () {
             autoload: true,
             pageSize: 10,
             pageButtonCount: 5,
-            deleteConfirm: "Do you really want to delete preferred hour?",
+            pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
+            pagePrevText: "Anterioara",
+            pageNextText: "Urmatoarea",
+            pageFirstText: "Prima",
+            pageLastText: "Ultima",
+            searchModeButtonTooltip: "Comută la căutare", 
+            insertModeButtonTooltip: "Comută la inserare", 
+            editButtonTooltip: "Modifică",                      
+            deleteButtonTooltip: "Sterge",                  
+            searchButtonTooltip: "Caută",                  
+            clearFilterButtonTooltip: "Sterge filtru",       
+            insertButtonTooltip: "Inserează",                  
+            updateButtonTooltip: "Actualizează",                  
+            cancelEditButtonTooltip: "Anulează modificare", 
+            deleteConfirm: "Chiar doriți ștergerea orei preferate?",
             controller: {
                 loadData: function (filter) {
                     return $.ajax({
@@ -46,25 +60,25 @@ $(function () {
                 }
             },
             fields: [
-                { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Professor" },
+                { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Profesor" },
                 {
                     name: "weekDay",
                     type: "select",
                     items: [
-                        { Name: "Mon", Id: "0" },
-                        { Name: "Tue", Id: "1" },
-                        { Name: "Wed", Id: "2" },
-                        { Name: "Thu", Id: "3" },
-                        { Name: "Fri", Id: "4" },
-                        { Name: "Sat", Id: "5" },
-                        { Name: "Sun", Id: "6" }
+                        { Name: "Luni", Id: "0" },
+                        { Name: "Marți", Id: "1" },
+                        { Name: "Miercuri", Id: "2" },
+                        { Name: "Joi", Id: "3" },
+                        { Name: "Vineri", Id: "4" },
+                        { Name: "Sâmbătă", Id: "5" },
+                        { Name: "Duminică", Id: "6" }
                     ],
                     valueField: "Id",
                     textField: "Name",
-                    title: "Weekday"
+                    title: "Ziua"
                 },
-                { name: "startHour", type: "number", title: "Start time" },
-                { name: "endHour", type: "number", title: "End time" },
+                { name: "startHour", type: "number", title: "Oră început" },
+                { name: "endHour", type: "number", title: "Oră sfârșit" },
                 { type: "control" }
             ]
         });

@@ -172,13 +172,13 @@ export class UserController extends RESTController<User> {
 
     await this.repo.update(newUser);
 
-    req.flash("success", { msg: "Profile information has been updated." });
+    req.flash("success", { msg: "Profilul a fost actualizat." });
     res.redirect("/account");
   };
 
   public postUpdatePassword = async (req: UserRequest, res: Response, next: NextFunction) => {
-    check("password", "Password must be at least 4 characters long").isLength({ min: 4 });
-    check("confirmPassword", "Passwords do not match").equals(req.body.password);
+    check("password", "Parola trebuie sa aibă minim 4 caractere").isLength({ min: 4 });
+    check("confirmPassword", "Parolele nu se potrivesc").equals(req.body.password);
 
     const errors = validationResult(req);
 
@@ -198,7 +198,7 @@ export class UserController extends RESTController<User> {
     await this.updatePassword(oldUser, newUser);
     await this.repo.update(newUser);
 
-    req.flash("success", { msg: "Password has been changed." });
+    req.flash("success", { msg: "Parola a fost schimbată." });
     res.redirect("/account");
   };
 
@@ -208,7 +208,7 @@ export class UserController extends RESTController<User> {
     await this.repo.remove(query);
 
     req.logout();
-    req.flash("info", { msg: "Your account has been deleted." });
+    req.flash("info", { msg: "Contul a fost sters." });
     res.redirect("/");
   }
 

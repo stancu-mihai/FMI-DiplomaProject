@@ -20,7 +20,21 @@ $(function () {
                         autoload: true,
                         pageSize: 10,
                         pageButtonCount: 5,
-                        deleteConfirm: "Do you really want to delete student group?",
+                        pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
+                        pagePrevText: "Anterioara",
+                        pageNextText: "Urmatoarea",
+                        pageFirstText: "Prima",
+                        pageLastText: "Ultima",
+                        searchModeButtonTooltip: "Comută la căutare", 
+                        insertModeButtonTooltip: "Comută la inserare", 
+                        editButtonTooltip: "Modifică",                      
+                        deleteButtonTooltip: "Sterge",                  
+                        searchButtonTooltip: "Caută",                  
+                        clearFilterButtonTooltip: "Sterge filtru",       
+                        insertButtonTooltip: "Inserează",                  
+                        updateButtonTooltip: "Actualizează",                  
+                        cancelEditButtonTooltip: "Anulează modificare", 
+                        deleteConfirm: "Chiar doriți ștergerea grupei?",
                         controller: {
                             loadData: function (filter) {
                                 return $.ajax({
@@ -52,9 +66,9 @@ $(function () {
                             }
                         },
                         fields: [
-                            { name: "name", type: "text", title: "Name" },
-                            { name: "seriesId", type: "select", items: series, valueField: "_id", textField: "name", title: "Series" },
-                            { name: "count", type: "number", title: "Count" },
+                            { name: "name", type: "text", title: "Nume" },
+                            { name: "seriesId", type: "select", items: series, valueField: "_id", textField: "name", title: "Serie" },
+                            { name: "count", type: "number", title: "Persoane" },
                             { type: "control" }
                         ]
                     });

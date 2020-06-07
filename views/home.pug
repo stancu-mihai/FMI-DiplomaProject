@@ -1,30 +1,61 @@
 extends layout
 
 block content
-  h1 Stancu Mihai's license app
-  p.lead License application. Subject: timetable optimization problem. Input:
+  h2 Lucrare de licența
+  h4 Titlu 
+  h6 Utilizarea platformei cloud Heroku pentru optimizarea  orarului formațiunilor de studiu în învățământul superior.
+  h4 Absolvent
+  h6 Stancu Mihai, anul 3 FMI ID
+  h4 Descriere
+  h6 Aplicația cuprinde următoarele pagini:
     ul
-      li Rooms
-      li Subjects
-      li Students
-      li Relations
-  hr
-  .row
-    .col-sm-6
-      h2 Rooms
-      p The list of rooms is provided. Each room has some features (no of seats, some have projector, some blackboard, etc.).
-    .col-sm-6
-      h2 Subjects
-      p The list of subjects is provided. Each subject has some features (credits, no of hours per week) and needs (projector, blackboard).
-    .col-sm-6
-      h2 Students
-      p The groups of students are provided. Each group has subjects assigned.
-    .col-sm-6
-      h2 Professor - Subject relation
-      p The relations between subjects and professors is provided. It is n:n (many to many) relation.
-    .col-sm-6
-      h2 Student group - Subject relation
-      p The relations between subjects and student groups is provided. It is 1:n (one to many) relation.
-    .col-sm-6
-      h2 Timetable
-      p The timetable itself will be a list of bookings. Some bookings are external to this application (professors or rooms are unavailable in certain timeframes)A boilerplate for Node.js web applications.
+      li Înregistrare - înregistrarea noilor utilizatori
+        ul
+          li Noul utilizator va completa numele, orașul, rolul, nr. telefon, email, și parola
+          li Rolul poate fi: student, profesor, secretar
+          li În cazul profesorilor, se va completa și gradul acestuia
+      li Logare - logarea utilizatorilor existenți
+        ul
+          li Utilizatorul va folosi mail-ul și parola pentru logare
+          li Odată logat, numele utilizatorului va apărea în colțul din dreapta sus
+          li Paginile disponibile diferă in funcție de rolul utilizatorului
+          li Profesori deja existenți: profA@user.com / pass (A=1..10)
+          li Studenti deja existenți: stud1@user.com / pass 
+          li Secretari deja existenți: sec1@user.com / pass 
+      li Profil - modificarea contului utilizatorilor existenți
+        ul
+          li Este permisa modificarea oricărei date din profilul creat la pasul "Înregistrare"
+      li Serii - adăugarea seriilor de studenți
+        ul
+          li Numele seriei va conține și anul de studiu
+      li Grupe - adăugarea grupelor de studenți
+        ul
+          li Pentru fiecare grupă se va alege un nume, apoi seria din care face parte, apoi numărul de persoane în grupă
+      li Materii - adăugarea materiilor
+        ul
+          li Pentru fiecare materie se va specifica numele
+      li Săli - adăugarea sălilor de curs / seminar / laborator
+        ul
+          li Pentru fiecare sală se va specifica numele, locația, capacitatea și dotările (proiector, tablă, etc)
+      li Cursuri - adăugarea cursurilor din planul de învățământ
+        ul
+          li Pentru fiecare curs se va specifica seria, materia, semestrul, profesorul, nr. de ore pe săptămana și dotările necesare (proiector, tablă, etc)
+      li Seminarii - adăugarea seminariilor / laboratoarelor din planul de învățământ
+        ul
+          li Pentru fiecare seminar se va specifica grupa, materia, semestrul, profesorul, nr. de ore pe săptămana și dotările necesare (proiector, tablă, etc)
+      li Ore - adăugarea orelor preferate de către profesori
+        ul
+          li Pentru fiecare intrare se va specifica profesorul, ziua săptămânii, ora de început și cea de sfârșit
+      li Generare - se va folosi pentru generarea rezervărilor în funcție de datele introduse
+        ul
+          li În funcție de volumul de date, acest pas poate dura câteva minute
+          li Există posibilitatea ca generarea să fie efectuată cu succes, sau nu, în funcție de numărul de restricții introdus
+          li La fiecare generare se va produce un raport care conține informații despre rezultatul generării
+      li Rezervări - permite adăugarea, editarea sau ștergerea rezervărilor generate
+        ul
+          li Se poate modifica orice dată a rezervării
+          li Se pot adăuga și șterge rezervări
+      li Verificare - detectează conflictele apărute după modificarea manuală a rezervărilor
+        ul
+          li La fiecare verificare se va produce un raport care conține informații despre rezultatul acesteia
+      li Orar - afișează orarul tuturor grupelor, pentru ambele semestre

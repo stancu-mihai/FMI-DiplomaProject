@@ -29,7 +29,21 @@ $(function () {
                                     autoload: true,
                                     pageSize: 10,
                                     pageButtonCount: 5,
-                                    deleteConfirm: "Do you really want to delete booking?",
+                                    pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
+                                    pagePrevText: "Anterioara",
+                                    pageNextText: "Urmatoarea",
+                                    pageFirstText: "Prima",
+                                    pageLastText: "Ultima",
+                                    searchModeButtonTooltip: "Comută la căutare", 
+                                    insertModeButtonTooltip: "Comută la inserare", 
+                                    editButtonTooltip: "Modifică",                      
+                                    deleteButtonTooltip: "Sterge",                  
+                                    searchButtonTooltip: "Caută",                  
+                                    clearFilterButtonTooltip: "Sterge filtru",       
+                                    insertButtonTooltip: "Inserează",                  
+                                    updateButtonTooltip: "Actualizează",                  
+                                    cancelEditButtonTooltip: "Anulează modificare", 
+                                    deleteConfirm: "Chiar doriți ștergerea rezervării?",
                                     controller: {
                                         loadData: function (filter) {
                                             return $.ajax({
@@ -61,29 +75,29 @@ $(function () {
                                         }
                                     },
                                     fields: [
-                                        { name: "semester", type: "number", title: "Semester" },
-                                        { name: "studentGroupId", type: "select", items: studentGroups, valueField: "_id", textField: "name", title: "Student group" },
-                                        { name: "subjectId", type: "select", items: subjects, valueField: "_id", textField: "name", title: "Subject" },
-                                        { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Professor" },
-                                        { name: "roomId", type: "select", items: rooms, valueField: "_id", textField: "name", title: "Room" },
+                                        { name: "semester", type: "number", title: "Semestru" },
+                                        { name: "studentGroupId", type: "select", items: studentGroups, valueField: "_id", textField: "name", title: "Grupă" },
+                                        { name: "subjectId", type: "select", items: subjects, valueField: "_id", textField: "name", title: "Materie" },
+                                        { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Profesor" },
+                                        { name: "roomId", type: "select", items: rooms, valueField: "_id", textField: "name", title: "Sală" },
                                         {
                                             name: "weekDay",
                                             type: "select",
                                             items: [
-                                                { Name: "Mon", Id: "0" },
-                                                { Name: "Tue", Id: "1" },
-                                                { Name: "Wed", Id: "2" },
-                                                { Name: "Thu", Id: "3" },
-                                                { Name: "Fri", Id: "4" },
-                                                { Name: "Sat", Id: "5" },
-                                                { Name: "Sun", Id: "6" }
+                                                { Name: "Luni", Id: "0" },
+                                                { Name: "Marți", Id: "1" },
+                                                { Name: "Miercuri", Id: "2" },
+                                                { Name: "Joi", Id: "3" },
+                                                { Name: "Vineri", Id: "4" },
+                                                { Name: "Sâmbătă", Id: "5" },
+                                                { Name: "Duminică", Id: "6" }
                                             ],
                                             valueField: "Id",
                                             textField: "Name",
-                                            title: "Weekday"
+                                            title: "Ziua"
                                         },
-                                        { name: "startHour", type: "number", title: "Start time" },
-                                        { name: "duration", type: "number", title: "Duration" },
+                                        { name: "startHour", type: "number", title: "Oră" },
+                                        { name: "duration", type: "number", title: "Durată" },
                                         { type: "control" }
                                     ]
                                 });
