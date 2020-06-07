@@ -10,7 +10,21 @@ $(function() {
         autoload: true,
         pageSize: 10,
         pageButtonCount: 5,
-        deleteConfirm: "Do you really want to delete room?",
+        pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
+        pagePrevText: "Anterioara",
+        pageNextText: "Urmatoarea",
+        pageFirstText: "Prima",
+        pageLastText: "Ultima",
+        searchModeButtonTooltip: "Comută la căutare", 
+        insertModeButtonTooltip: "Comută la inserare", 
+        editButtonTooltip: "Modifică",                      
+        deleteButtonTooltip: "Sterge",                  
+        searchButtonTooltip: "Caută",                  
+        clearFilterButtonTooltip: "Sterge filtru",       
+        insertButtonTooltip: "Inserează",                  
+        updateButtonTooltip: "Actualizează",                  
+        cancelEditButtonTooltip: "Anulează modificare", 
+        deleteConfirm: "Chiar doriți ștergerea sălii?",
         controller: {
           loadData: function(filter) {
             return $.ajax({
@@ -42,13 +56,13 @@ $(function() {
           }
         },
         fields: [
-            { name: "name", type: "text", title: "Name"},
-            { name: "location", type: "text", title: "Location"},
-            { name: "capacity", type: "number", title: "Capacity"},
-            { name: "projector", type: "checkbox", title: "Projector"},
-            { name: "blackboard", type: "checkbox", title: "Blackboard"},
-            { name: "smartboard", type: "checkbox", title: "Smartboard"},
-            { name: "computers", type: "checkbox", title: "Computers"},
+            { name: "name", type: "text", title: "Nume"},
+            { name: "location", type: "text", title: "Locație"},
+            { name: "capacity", type: "number", title: "Capacitate"},
+            { name: "projector", type: "checkbox", title: "Proiector"},
+            { name: "blackboard", type: "checkbox", title: "Tablă"},
+            { name: "smartboard", type: "checkbox", title: "Tablă smart"},
+            { name: "computers", type: "checkbox", title: "PC-uri"},
             { type: "control" }
         ]
     });

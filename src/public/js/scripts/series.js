@@ -10,7 +10,22 @@ $("#series").jsGrid({
     autoload: true,
     pageSize: 10,
     pageButtonCount: 5,
-    deleteConfirm: "Do you really want to delete series?",
+    pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
+    pagePrevText: "Anterioara",
+    pageNextText: "Urmatoarea",
+    pageFirstText: "Prima",
+    pageLastText: "Ultima",
+    searchModeButtonTooltip: "Comută la căutare", 
+    insertModeButtonTooltip: "Comută la inserare", 
+    editButtonTooltip: "Modifică",                      
+    deleteButtonTooltip: "Sterge",                  
+    searchButtonTooltip: "Caută",                  
+    clearFilterButtonTooltip: "Sterge filtru",       
+    insertButtonTooltip: "Inserează",                  
+    updateButtonTooltip: "Actualizează",                  
+    cancelEditButtonTooltip: "Anulează modificare",         
+    
+    deleteConfirm: "Chiar doriți ștergerea seriei?",
     controller: {
         loadData: function (filter) {
             return $.ajax({
@@ -42,7 +57,7 @@ $("#series").jsGrid({
         }
     },
     fields: [
-        { name: "name", type: "text", title: "Name" },
+        { name: "name", type: "text", title: "Nume" },
         { type: "control" }
     ]
 });

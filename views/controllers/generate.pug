@@ -2,12 +2,12 @@ extends ../layout
 
 block content
   .page-header
-    h2 Generate
+    h2 Generare
         if result
-            h5 No errors occured while generating. Access link below for result:
-            a.nav-link(href='/bookings') Bookings
-            h5 Log:
-            each entry in log
-              p #{entry}
+            h5 Fără erori în timpul generării. Accesați link-ul de mai jos pentru rezultat:
+            a.nav-link(href='/bookings') Rezervări
         else
-            h5 Errors occured. Check input data.
+            h5 Au fost întâlnite erori. Verificați datele de intrare.
+        h5 Raport:
+          each entry in log
+            p #{entry}
