@@ -15,7 +15,6 @@
 - npm run start
 
 ## Todo:
-- Bugfix: Press generate or verify twice has unexpected behaviour
 - Bugfix: Update an item in JQuery, then delete it => Crash due to .value.value
 
 ## Todo long term:
