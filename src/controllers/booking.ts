@@ -54,15 +54,21 @@ export class BookingController extends RESTController<Booking> {
   }
   
   // Load whole contents from all repos into class members
-  async loadDbsInMemory() {
+  async loadDbsInMemory(forVerification: boolean) {
+    this.users = [];
+    this.studentGroups = [];
+    this.rooms = [];
+    this.subjects = [];
+    this.bookings = [];
+    this.series = [];
+    this.prefHours = [];
+    this.courses = [];
+    this.seminars = [];
+
     // Load whole contents from all repos into class members
     const userRepo = db.repo<User>({ table: "User" });
     const usersRes = await userRepo.list(db.query().all());
     usersRes.forEach((user: User) => { this.users.push(user); });
-
-    const seriesRepo = db.repo<Series>({ table: "Series" });
-    const seriesRes = await seriesRepo.list(db.query().all());
-    seriesRes.forEach((serie: Series) => { this.series.push(serie); });
 
     const studentGroupRepo = db.repo<StudentGroup>({ table: "StudentGroup" });
     const studentGroupsRes = await studentGroupRepo.list(db.query().all());
@@ -76,29 +82,40 @@ export class BookingController extends RESTController<Booking> {
     const subjectsRes = await subjectRepo.list(db.query().all());
     subjectsRes.forEach((subject: Subject) => { this.subjects.push(subject); });
 
-    const prefHourRepo = db.repo<PrefHour>({ table: "PrefHour" });
-    const prefHoursRes = await prefHourRepo.list(db.query().all());
-    prefHoursRes.forEach((prefHour: PrefHour) => { this.prefHours.push(prefHour); });
+    if (forVerification) {
+      const bookingRepo = db.repo<Booking>({ table: "Booking" });
+      const bookingRes = await bookingRepo.list(db.query().all());
+      bookingRes.forEach((booking: Booking) => { this.bookings.push(booking); });
+    }
+    else {
+      const seriesRepo = db.repo<Series>({ table: "Series" });
+      const seriesRes = await seriesRepo.list(db.query().all());
+      seriesRes.forEach((serie: Series) => { this.series.push(serie); });
 
-    const courseRepo = db.repo<Course>({ table: "Course" });
-    const courseRes = await courseRepo.list(db.query().all());
-    courseRes.forEach((course: Course) => { 
-      const extCourse: ExtendedCourse = course;
-      extCourse.grade = +this.users.find(user => user._id.value == course.professorId.value).grade;
-      this.courses.push(extCourse); 
-    });
-    // Sorts courses by grade, descending
-    this.courses.sort((a,b) => {return b.grade - a.grade;});
+      const prefHourRepo = db.repo<PrefHour>({ table: "PrefHour" });
+      const prefHoursRes = await prefHourRepo.list(db.query().all());
+      prefHoursRes.forEach((prefHour: PrefHour) => { this.prefHours.push(prefHour); });
 
-    const seminarRepo = db.repo<Seminar>({ table: "Seminar" });
-    const seminarRes = await seminarRepo.list(db.query().all());
-    seminarRes.forEach((seminar: Seminar) => { 
-      const extCourse: ExtendedSeminar = seminar;
-      extCourse.grade = +this.users.find(user => user._id.value == seminar.professorId.value).grade;
-      this.seminars.push(extCourse); 
-    });
-    // Sorts seminars by grade, descending
-    this.seminars.sort((a,b) => {return b.grade - a.grade;});
+      const courseRepo = db.repo<Course>({ table: "Course" });
+      const courseRes = await courseRepo.list(db.query().all());
+      courseRes.forEach((course: Course) => { 
+        const extCourse: ExtendedCourse = course;
+        extCourse.grade = +this.users.find(user => user._id.value == course.professorId.value).grade;
+        this.courses.push(extCourse); 
+      });
+      // Sorts courses by grade, descending
+      this.courses.sort((a,b) => {return b.grade - a.grade;});
+
+      const seminarRepo = db.repo<Seminar>({ table: "Seminar" });
+      const seminarRes = await seminarRepo.list(db.query().all());
+      seminarRes.forEach((seminar: Seminar) => { 
+        const extCourse: ExtendedSeminar = seminar;
+        extCourse.grade = +this.users.find(user => user._id.value == seminar.professorId.value).grade;
+        this.seminars.push(extCourse); 
+      });
+      // Sorts seminars by grade, descending
+      this.seminars.sort((a,b) => {return b.grade - a.grade;});
+    }
   }
 
   async removeAllBookings() {
@@ -275,7 +292,7 @@ export class BookingController extends RESTController<Booking> {
 
   async getGenerate(req: Request, res: Response) {
     // Load relevant dbs to memory
-    await this.loadDbsInMemory();
+    await this.loadDbsInMemory(false);
     // Remove all existing bookings
     await this.removeAllBookings();
     // Array to mark all courses as unbooked
@@ -298,31 +315,7 @@ export class BookingController extends RESTController<Booking> {
   }
 
   async getVerify(req: Request, res: Response) {
-    this.bookings = [];
-    this.users = [];
-    this.subjects = [];
-    this.rooms = [];
-    this.studentGroups = [];
-    // Load booking db to memory
-    const bookingRepo = db.repo<Booking>({ table: "Booking" });
-    const bookingRes = await bookingRepo.list(db.query().all());
-    bookingRes.forEach((booking: Booking) => { this.bookings.push(booking); });
-    // Load user db to memory
-    const userRepo = db.repo<User>({ table: "User" });
-    const userRes = await userRepo.list(db.query().all());
-    userRes.forEach((user: User) => { this.users.push(user); });
-    // Load subject db to memory
-    const subjectRepo = db.repo<Subject>({ table: "Subject" });
-    const subjectRes = await subjectRepo.list(db.query().all());
-    subjectRes.forEach((subject: Subject) => { this.subjects.push(subject); });
-    // Load room db to memory
-    const roomRepo = db.repo<Room>({ table: "Room" });
-    const roomRes = await roomRepo.list(db.query().all());
-    roomRes.forEach((room: Room) => { this.rooms.push(room); });
-    // Load groups db to memory
-    const groupRepo = db.repo<StudentGroup>({ table: "StudentGroup" });
-    const groupRes = await groupRepo.list(db.query().all());
-    groupRes.forEach((group: StudentGroup) => { this.studentGroups.push(group); });
+    await this.loadDbsInMemory(true);
 
     let result = true;
 
