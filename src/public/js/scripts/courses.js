@@ -26,7 +26,7 @@ $(function () {
                             pageButtonCount: 5,
                             pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
                             pagePrevText: "Anterioara",
-                            pageNextText: "Urmatoarea",
+                            pageNextText: "Următoarea",
                             pageFirstText: "Prima",
                             pageLastText: "Ultima",
                             searchModeButtonTooltip: "Comută la căutare", 
@@ -76,8 +76,8 @@ $(function () {
                                 { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Profesor" },
                                 { name: "weeklyHours", type: "number", title: "Ore/săpt" },
                                 { name: "projector", type: "checkbox", title: "Proiector" },
-                                { name: "blackboard", type: "checkbox", title: "Tabla" },
-                                { name: "smartboard", type: "checkbox", title: "Tabla smart" },
+                                { name: "blackboard", type: "checkbox", title: "Tablă" },
+                                { name: "smartboard", type: "checkbox", title: "Tablă smart" },
                                 { name: "computers", type: "checkbox", title: "PC-uri" },
                                 { type: "control" }
                             ]

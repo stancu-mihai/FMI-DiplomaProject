@@ -31,7 +31,7 @@ $(function () {
                                     pageButtonCount: 5,
                                     pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
                                     pagePrevText: "Anterioara",
-                                    pageNextText: "Urmatoarea",
+                                    pageNextText: "Următoarea",
                                     pageFirstText: "Prima",
                                     pageLastText: "Ultima",
                                     searchModeButtonTooltip: "Comută la căutare", 

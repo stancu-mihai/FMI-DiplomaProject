@@ -47,8 +47,8 @@ export class UserController extends RESTController<User> {
   };
 
   public postLogin = (req: Request, res: Response, next: NextFunction) => {
-    check("email", "Email is not valid").isEmail();
-    check("password", "Password cannot be blank").not().isEmpty();
+    check("email", "Emailul nu este valid").isEmail();
+    check("password", "Parola nu poate fi nula").not().isEmpty();
     // eslint-disable-next-line @typescript-eslint/camelcase
     sanitize("email").normalizeEmail({ gmail_remove_dots: false });
 
@@ -67,7 +67,7 @@ export class UserController extends RESTController<User> {
       }
       req.logIn(user, (err) => {
         if (err) { return next(err); }
-        req.flash("success", { msg: "Success! You are logged in." });
+        req.flash("success", { msg: "Succes! Sunteti logat!" });
         res.redirect(req.session.returnTo || "/");
       });
     })(req, res, next);
@@ -88,9 +88,9 @@ export class UserController extends RESTController<User> {
   };
 
   public postSignup = async (req: Request, res: Response, next: NextFunction) => {
-    check("email", "Email is not valid").isEmail();
-    check("password", "Password must be at least 4 characters long").isLength({ min: 4 });
-    check("confirmPassword", "Passwords do not match").equals(req.body.password);
+    check("email", "Emailul nu este valid").isEmail();
+    check("password", "Parola trebuie sa aiba minim 4 caractere").isLength({ min: 4 });
+    check("confirmPassword", "Parolele nu se potrivesc").equals(req.body.password);
     // eslint-disable-next-line @typescript-eslint/camelcase
     sanitize("email").normalizeEmail({ gmail_remove_dots: false });
 
@@ -106,7 +106,7 @@ export class UserController extends RESTController<User> {
     const usersWithExactEmail = await this.repo.list(query);
 
     if (usersWithExactEmail.length > 0) {
-      req.flash("errors", { msg: "Account with that email address already exists." });
+      req.flash("errors", { msg: "Un cont cu acea adresa de email exista deja." });
       return res.redirect("/signup");
     }
 
@@ -144,7 +144,7 @@ export class UserController extends RESTController<User> {
   };
 
   public postUpdateProfile = async (req: UserRequest, res: Response, next: NextFunction) => {
-    check("email", "Please enter a valid email address.").isEmail();
+    check("email", "Va rugam introduceti o adresa de email valida.").isEmail();
     // eslint-disable-next-line @typescript-eslint/camelcase
     sanitize("email").normalizeEmail({ gmail_remove_dots: false });
 
