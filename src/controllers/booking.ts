@@ -139,8 +139,8 @@ export class BookingController extends RESTController<Booking> {
         roomId: new db.DbObjectId(roomId),
         subjectId: new db.DbObjectId(subjectId),
         duration: +duration,
-        startHour: +hour,
-        weekDay: +day,
+        startHour: JSON.stringify(hour),
+        weekDay: JSON.stringify(day),
         semester: +semester
       };
       this.bookings.push(booking);
@@ -160,8 +160,8 @@ export class BookingController extends RESTController<Booking> {
         booking.roomId.value == roomId &&
         booking.duration == +duration &&
         booking.subjectId.value == subjectId &&
-        booking.startHour == +hour &&
-        booking.weekDay == +day &&
+        booking.startHour == JSON.stringify(hour) &&
+        booking.weekDay == JSON.stringify(day) &&
         booking.semester == +semester);
 
       this.bookingLog.push("Rezervare ȘTEARSĂ pentru semestrul " + semester + "ziua " + day + " / ora " + hour + ":00 / " + groupToBook.name);
