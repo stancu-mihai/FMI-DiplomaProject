@@ -342,11 +342,11 @@ export class BookingController extends RESTController<Booking> {
     // Remove all existing bookings
     await this.removeAllBookings();
     // Array to mark all courses as unbooked
-    if(this.courseBookings.length == 0)
+    this.courseBookings = [];
     this.courses.forEach(() => this.courseBookings.push(false));
     // Array to mark all seminars as unbooked
-    if(this.seminarBookings.length == 0)
-      this.seminars.forEach(() => this.seminarBookings.push(false));
+    this.seminarBookings = [];
+    this.seminars.forEach(() => this.seminarBookings.push(false));
     // Generate the bookings for the timetable
     const result1 = this.solve(true);
     const result2 = this.solve(false);
