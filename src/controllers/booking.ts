@@ -122,172 +122,218 @@ export class BookingController extends RESTController<Booking> {
     await this.repo.remove(db.query().all());
   }
 
-  tryToBook(index: number, isCourse: boolean): boolean {
+  markBookingStatus(index: number, isCourse: boolean, status: boolean) {
+    if(isCourse)
+      this.courseBookings[index] = status;
+    else
+      this.seminarBookings[index] = status;
+  }
+
+  book(semester: number, day: number, hour: number, duration: number, groupsToBook: StudentGroup[], 
+    subjectId: string, professorId: string, roomId: string, index: number, isCourse: boolean) {
+    // book it for each group, return true
+    for (const groupToBook of groupsToBook) {
+      const booking: Booking = {
+        professorId: new db.DbObjectId(professorId),
+        studentGroupId: new db.DbObjectId(groupToBook._id.value),
+        roomId: new db.DbObjectId(roomId),
+        subjectId: new db.DbObjectId(subjectId),
+        duration: +duration,
+        startHour: +hour,
+        weekDay: +day,
+        semester: +semester
+      };
+      this.bookings.push(booking);
+      this.bookingLog.push("Rezervat pentru ziua " + day + " / ora " + hour + ":00 / " + groupToBook.name);
+      // Mark it as booked
+      this.markBookingStatus(index, isCourse, true);
+    }
+  }
+
+  deleteBook(semester: number, day: number, hour: number, duration: number, groupsToBook: StudentGroup[], 
+    subjectId: string, professorId: string, roomId: string, index: number, isCourse: boolean) {
+    // book it for each group, return true
+    for (const groupToBook of groupsToBook) {
+      this.bookings = this.bookings.filter(booking =>
+        booking.professorId.value == professorId &&
+        booking.studentGroupId.value == groupToBook._id.value &&
+        booking.roomId.value == roomId &&
+        booking.duration == +duration &&
+        booking.subjectId.value == subjectId &&
+        booking.startHour == +hour &&
+        booking.weekDay == +day &&
+        booking.semester == +semester);
+
+      this.bookingLog.push("Rezervare ȘTEARSĂ pentru semestrul " + semester + "ziua " + day + " / ora " + hour + ":00 / " + groupToBook.name);
+      // Mark it as un-booked
+      this.markBookingStatus(index, isCourse, false);
+    }
+  }
+
+  canWeBook(semester: number, day: number, hour: number, duration: number, groupsToBook: StudentGroup[], 
+    professorId: string, room: Room,  
+    blackboard: boolean, smartboard: boolean, projector: boolean, computers: boolean, capacity: number): boolean {
+      let logEntry = "Semestru " + semester + " ziua " + day + "  ora " + (hour>9 ? hour: "0" + hour) + ":00 ";
+      // First we check if this day and this hour is within the preferences of the professor assigned to this item
+      const profAgreesInterval = this.prefHours.find(prefHour =>
+        prefHour.professorId.value === professorId && // prof matches id
+        // Next we check if the desired interval is within the preferred ones
+        +day === +prefHour.weekDay && // same day of the week
+        +hour >= +prefHour.startHour && // our start hour is >= pref start Hour
+        +hour <= +prefHour.endHour &&   // our start hour is <= pref end Hour
+        +hour + +duration >= +prefHour.startHour && // our end hour is >= pref start Hour
+        +hour + +duration <= +prefHour.endHour);    // our end hour is <= pref end Hour
+      if (!profAgreesInterval) {
+        logEntry+=(" X");
+        this.bookingLog.push(logEntry);
+        return false;
+      }
+      else 
+        logEntry+=(" V");
+
+      // Secondly we check if the professor is already booked
+      const profIsBooked = this.bookings.find(booking =>
+        booking.professorId.value == professorId && // prof matches id
+        +semester === +booking.semester && // same semester
+        +day === +booking.weekDay && // same day of the week
+        // Count overlapping hours. If overlap, booking already exists.
+        Math.min(+hour + +duration - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
+      if (profIsBooked) {
+        logEntry+=(" X");
+        this.bookingLog.push(logEntry);
+        return false;
+      }
+      else
+        logEntry+=(" V");
+
+      let atLeastOneGroupBooked = false;
+      // Thirdly we check if the student group(s) is (are) already booked
+      for (const groupToBook of groupsToBook) {
+        const groupIsBooked = this.bookings.find(booking =>
+          booking.studentGroupId.value == groupToBook._id.value && // group matches id
+          +semester === +booking.semester && // same semester
+          +day === +booking.weekDay && // same day of the week
+          // Count overlapping hours. If overlap, booking already exists.
+          Math.min(+hour + +duration - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
+        if (groupIsBooked) {
+          logEntry+=(" X");
+          atLeastOneGroupBooked = true;
+          this.bookingLog.push(logEntry);
+          return false;
+        }
+      }
+      if (!atLeastOneGroupBooked)
+        logEntry+=(" V");
+
+      // Next we check if the room has required features or more
+      if (blackboard <= room.blackboard &&
+        smartboard <= room.smartboard &&
+        projector <= room.projector &&
+        computers <= room.computers &&
+        capacity <= +room.capacity) {
+          logEntry+=(" V");
+        }
+      else {
+        logEntry+=(" X");
+        this.bookingLog.push(logEntry);
+        return false;
+      }
+
+      // Next we check if the room is already booked
+      const roomIsBooked = this.bookings.find(booking =>
+        booking.roomId.value === room._id.value && // group matches id
+        +semester == +booking.semester && // same semester
+        +day === +booking.weekDay && // same day of the week
+        // Count overlapping hours. If overlap, booking already exists.
+        Math.min(+hour + +duration - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
+
+      if (!roomIsBooked) { 
+        logEntry+=(" V");
+      }
+      else{
+        logEntry+=(" X");
+        this.bookingLog.push(logEntry);
+        return false;
+      }
+
+      this.bookingLog.push(logEntry);
+      return true;
+  }
+
+  solve(isCourse: boolean): boolean {
+    let index = -1;
+    
+    // If a seminar or course is not booked and get its index
+    if (isCourse) {
+      for (let i = 0; i < this.courseBookings.length; i++) {
+        if (!this.courseBookings[i]) {
+          index = i;
+          break;
+        }
+      }
+    }
+    else {
+      for (let i = 0; i < this.seminarBookings.length; i++) {
+        if (!this.seminarBookings[i]) {
+          index = i;
+          break;
+        }
+      }
+    }
+
+    if(index == -1) {
+      this.bookingLog.push("Toate intrările sunt rezervate deja!");
+      return true;
+    }
+
     const courseToBook = this.courses[index];
     const seminarToBook = this.seminars[index];
     const item = isCourse ? courseToBook : seminarToBook;
-    const res = false;
 
-    // A good reflex would be to capture the availability before this loop
-    // But how to store the availability for a list of rooms?
+    // Find the list with the groups that we are trying to book for this item
+    let groupsToBook: StudentGroup[] = [];
+    if (isCourse)
+      groupsToBook = this.studentGroups.filter(studentGroup => studentGroup.seriesId.value == courseToBook.seriesId.value);
+    else
+      groupsToBook.push(this.studentGroups.find(studentGroup => studentGroup._id.value == seminarToBook.studentGroupId.value));
 
-    // For Monday to Friday
-    for (let day = 0; day < 5; day++) {
-      // For each hour
-      for (let hour = 8; hour < 18; hour++) {
-        this.bookingLog.push("   Încercare rezervare " + 
-        this.subjects.find(subj => subj._id.value === item.subjectId.value).name
-        + " / " + 
-        this.users.find(user => user._id.value === item.professorId.value).email
-        + " / grad " + item.grade
-        + " / ziua " + day + " / ora " + hour + ":00");
-        let exit = false;
-        // First we check if this day and this hour is within the preferences of the professor assigned to this item
-        const reqProfessorId = item.professorId;
-        const profAgreesInterval = this.prefHours.find(prefHour =>
-          prefHour.professorId.value === reqProfessorId.value && // prof matches id
-          // Next we check if the desired interval is within the preferred ones
-          +day === +prefHour.weekDay && // same day of the week
-          +hour >= +prefHour.startHour && // our start hour is >= pref start Hour
-          +hour <= +prefHour.endHour &&   // our start hour is <= pref end Hour
-          +hour +  +item.weeklyHours >= +prefHour.startHour && // our end hour is >= pref start Hour
-          +hour +  +item.weeklyHours <= +prefHour.endHour);    // our end hour is <= pref end Hour
-        if (!profAgreesInterval)
-        {
-          this.bookingLog.push("X  Intervalul nu este în lista profesorului de ore favorite");
-          continue;
-        }
-        else 
-          this.bookingLog.push("   Intervalul este în lista profesorului de ore favorite");
+    // Find the required capacity for the room (size of group for semester or size of series for course)
+    let capacity = 0;
+    for (const groupToBook of groupsToBook)
+      capacity += +groupToBook.count;
 
-        // Secondly we check if the professor is already booked
-        const profIsBooked = this.bookings.find(booking =>
-          booking.professorId.value == reqProfessorId.value && // prof matches id
-          +item.semester === +booking.semester && // same semester
-          +day === +booking.weekDay && // same day of the week
-          // Count overlapping hours. If overlap, booking already exists.
-          Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
-        if (profIsBooked)
-        {
-          this.bookingLog.push("X  Profesorul nu este disponibil în acest interval");
-          continue;
-        }
-        else
-          this.bookingLog.push("   Profesorul este disponibil în acest interval");
+    // We have all booking data except day, hour and room... so we try all combinations of them
+    // For each room
+    for (const room of this.rooms) {
 
-        // Find the list with the groups that we are trying to book for this item
-        let groupsToBook: StudentGroup[] = [];
-        if (isCourse)
-          groupsToBook = this.studentGroups.filter(studentGroup => studentGroup.seriesId.value == courseToBook.seriesId.value);
-        else
-          groupsToBook.push(this.studentGroups.find(studentGroup => studentGroup._id.value == seminarToBook.studentGroupId.value));
+      this.bookingLog.push("   Încercare rezervare: " + 
+      this.subjects.find(subj => subj._id.value === item.subjectId.value).name
+      + " / " + 
+      this.users.find(user => user._id.value === item.professorId.value).email
+      + " / Grad " + item.grade
+      + " / Sala: " + this.rooms.find(searchRoom => searchRoom._id.value === room._id.value).name);
 
-        let atLeastOneGroupBooked = false;
-        // Thirdly we check if the student group(s) is (are) already booked
-        for (const groupToBook of groupsToBook)
-        {
-          const groupIsBooked = this.bookings.find(booking =>
-            booking.studentGroupId.value == groupToBook._id.value && // group matches id
-            +item.semester === +booking.semester && // same semester
-            +day === +booking.weekDay && // same day of the week
-            // Count overlapping hours. If overlap, booking already exists.
-            Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
-          if (groupIsBooked)
-          {
-            this.bookingLog.push("X  Grupa " + groupToBook.name + " nu este disponibilă în acest interval");
-            atLeastOneGroupBooked = true;
-            break;
-          }
-          else
-            this.bookingLog.push("   Grupa " + groupToBook.name + " este disponibilă în acest interval");
-        }
-        if(atLeastOneGroupBooked)
-          continue;
-
-        // Find the required capacity for the room (size of group for semester or size of series for course)
-        let reqCapacity = 0;
-        for (const groupToBook of groupsToBook)
-          reqCapacity += +groupToBook.count;
-
-        // Now we get the list of suitable rooms
-        const suitableRooms = this.rooms.filter(room =>
-          // Return all rooms with at least the required features
-          item.blackboard <= room.blackboard &&
-          item.smartboard <= room.smartboard &&
-          item.projector <= room.projector &&
-          item.computers <= room.computers &&
-          reqCapacity <= +room.capacity);
-        
-        if (suitableRooms.length == 0)
-          this.bookingLog.push("X  Nu s-au gasit săli potrivite cu dotările necesare!");
-
-        // Next we find check each room if is already booked
-        for (const suitableRoom of suitableRooms) {
-          const roomIsBooked = this.bookings.find(booking =>
-            booking.roomId.value === suitableRoom._id.value && // group matches id
-            +item.semester == +booking.semester && // same semester
-            +day === +booking.weekDay && // same day of the week
-            // Count overlapping hours. If overlap, booking already exists.
-            Math.min(+hour + +item.weeklyHours - +booking.startHour, +booking.startHour + +booking.duration - +hour) >0 );
-
-          if (!roomIsBooked) { // found available suitable room
-            this.bookingLog.push("   Sala " + suitableRoom.name + " potrivită și disponibilă");
-            // book it for each group, return true
-            for (const groupToBook of groupsToBook) {
-              const booking: Booking = {
-                professorId: new db.DbObjectId(item.professorId.value),
-                studentGroupId: new db.DbObjectId(groupToBook._id.value),
-                roomId: new db.DbObjectId(suitableRoom._id.value),
-                duration: item.weeklyHours,
-                subjectId: new db.DbObjectId(item.subjectId.value),
-                startHour: JSON.stringify(hour),
-                weekDay: JSON.stringify(day),
-                semester: item.semester
-              };
-              this.bookings.push(booking);
-              this.bookingLog.push("Rezervat pentru ziua " + day + " / ora " + hour + ":00 / " + groupToBook.name);
+      // For Monday to Friday
+      for (let day = 0; day < 5; day++) {
+        // For each hour
+        for (let hour = 8; hour < 18; hour++) {
+          // If we can book
+          if(this.canWeBook(item.semester, day, hour, item.weeklyHours, groupsToBook, item.professorId.value, room, 
+            item.blackboard, item.smartboard, item.projector, item.computers, capacity)) {
+            // Then we book
+            this.book(item.semester, day, hour, item.weeklyHours, groupsToBook, item.subjectId.value, item.professorId.value, room._id.value, index, isCourse);
+            if(this.solve(isCourse)) { //backtrack
+              return true;
             }
-            exit = true;
+            else {
+              // Delete booking
+              this.deleteBook(item.semester, day, hour, item.weeklyHours, groupsToBook, item.subjectId.value, item.professorId.value, room._id.value, index, isCourse);
+            }
           }
-          else
-          {
-            this.bookingLog.push("X  Sala " + suitableRoom.name + " potrivită dar indisponibilă");
-          }
-          if (exit)
-            break; // exit suitableRoom foreach
-        }
-        if (exit) {
-          // Mark this index booked
-          if(isCourse)
-            this.courseBookings[index] = true;
-          else
-            this.seminarBookings[index] = true;
-          return true;
         }
       }
     }
-    return res;
-  }
-
-  generate(): boolean {
-    let result = true;
-    for (let i = 0; i < this.courseBookings.length; i++) {
-      // Find index of first unbooked course
-      const index = this.courseBookings.findIndex(elem => elem === false);
-      if (index != -1) 
-        result = result && this.tryToBook(index, true);
-    }
-    for (let i = 0; i < this.seminarBookings.length; i++) {
-      // Find index of first unbooked seminar
-      const index = this.seminarBookings.findIndex(elem => elem === false);
-      if (index != -1) {
-        result = result && this.tryToBook(index, false);
-      }
-      else {// If all seminars are booked, solution is found
-        return true;
-      }
-    }
-    return result;
+    return false; 
   }
 
   async getGenerate(req: Request, res: Response) {
@@ -302,14 +348,15 @@ export class BookingController extends RESTController<Booking> {
     if(this.seminarBookings.length == 0)
       this.seminars.forEach(() => this.seminarBookings.push(false));
     // Generate the bookings for the timetable
-    const result = this.generate();
+    const result1 = this.solve(true);
+    const result2 = this.solve(false);
     // Bookings are only in memory, must be written to db
     this.bookings.forEach(async booking => {
-      await this.repo.add(this.jsonToObject(booking));
+      await this.repo.add(booking);
     });
     res.render("controllers/generate", {
       title: "Generate",
-      result: result,
+      result: result1 && result2,
       log: this.bookingLog
     });
   }
