@@ -1,21 +1,21 @@
-{"_id":{"$oid":"5ea2ec72c7835e0023db1a4e"},"name":"Algebra I"}
-{"_id":{"$oid":"5ea2ec8fc7835e0023db1a4f"},"name":"Algebra II"}
+{"_id":{"$oid":"5ea2ec72c7835e0023db1a4e"},"name":"Algebră I"}
+{"_id":{"$oid":"5ea2ec8fc7835e0023db1a4f"},"name":"Algebră II"}
 {"_id":{"$oid":"5ea2ed4ac7835e0023db1a51"},"name":"Geometrie I"}
 {"_id":{"$oid":"5ea2edccc7835e0023db1a52"},"name":"Geometrie II"}
-{"_id":{"$oid":"5ea2ee24c7835e0023db1a53"},"name":"Analiza Matematica I"}
-{"_id":{"$oid":"5ea2ee4ec7835e0023db1a54"},"name":"Analiza Matematica II"}
-{"_id":{"$oid":"5ea2ee99c7835e0023db1a55"},"name":"Logica Matematica"}
-{"_id":{"$oid":"5ea2eec3c7835e0023db1a56"},"name":"Elemente Calcul Stiintific"}
+{"_id":{"$oid":"5ea2ee24c7835e0023db1a53"},"name":"Analiză Matematică I"}
+{"_id":{"$oid":"5ea2ee4ec7835e0023db1a54"},"name":"Analiză Matematică II"}
+{"_id":{"$oid":"5ea2ee99c7835e0023db1a55"},"name":"Logică Matematică"}
+{"_id":{"$oid":"5ea2eec3c7835e0023db1a56"},"name":"Elemente Calcul Științific"}
 {"_id":{"$oid":"5ea2ef73c7835e0023db1a57"},"name":"Tehnici Web"}
 {"_id":{"$oid":"5ea2f410c7835e0023db1a58"},"name":"Baze de Date"}
 {"_id":{"$oid":"5ea2f441c7835e0023db1a59"},"name":"Structuri de Date"}
 {"_id":{"$oid":"5ea2f4efc7835e0023db1a5a"},"name":"Matematici Speciale"}
 {"_id":{"$oid":"5ea2f509c7835e0023db1a5b"},"name":"Calcul Numeric"}
 {"_id":{"$oid":"5ea2f53bc7835e0023db1a5c"},"name":"Tehnici de Programare"}
-{"_id":{"$oid":"5ea2f5c3c7835e0023db1a5d"},"name":"Programare Logica"}
-{"_id":{"$oid":"5ea2f5e7c7835e0023db1a5e"},"name":"Retele de Calculatoare"}
-{"_id":{"$oid":"5ea2f659c7835e0023db1a5f"},"name":"Limbaje Form. si Aut."}
-{"_id":{"$oid":"5ea2f687c7835e0023db1a60"},"name":"Inteligenta Artificiala"}
+{"_id":{"$oid":"5ea2f5c3c7835e0023db1a5d"},"name":"Programare Logică"}
+{"_id":{"$oid":"5ea2f5e7c7835e0023db1a5e"},"name":"Rețele de Calculatoare"}
+{"_id":{"$oid":"5ea2f659c7835e0023db1a5f"},"name":"Limbaje Form. și Aut."}
+{"_id":{"$oid":"5ea2f687c7835e0023db1a60"},"name":"Inteligență Artificială"}
 {"_id":{"$oid":"5ea2f6c1c7835e0023db1a61"},"name":"Metode de Dezvoltare Software"}
 {"_id":{"$oid":"5ea2f702c7835e0023db1a62"},"name":"Tehnici de Compilare"}
 {"_id":{"$oid":"5ea2f745c7835e0023db1a63"},"name":"Blockchain"}
