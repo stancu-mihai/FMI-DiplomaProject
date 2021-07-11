@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   .page-header
-    h3 Profil
+    h3 Profile
     hr
 
   form.form-horizontal(action='/account/profile', method='POST')
@@ -12,80 +12,80 @@ block content
       .col-sm-7
         input.form-control(type='email', name='email', id='email', value=user.email)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Prenume
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') First name
       .col-sm-7
         input.form-control(type='text', name='firstName', id='firstName', value=user.profile.firstName)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Nume
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Last name
       .col-sm-7
         input.form-control(type='text', name='lastName', id='last_name', value=user.profile.lastName)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='city') Oraș
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='city') City
       .col-sm-7
         select.select.form-control.input-md(name='city', id='city')
-          option(value='0') -- Selectați --
-          option(value='1', selected= user.profile.city == 1) București
+          option(value='0') -- Select --
+          option(value='1', selected= user.profile.city == 1) Bucharest
           option(value='2', selected= user.profile.city == 2) Brașov
-          option(value='3', selected= user.profile.city == 1) Cluj
-          option(value='4', selected= user.profile.city == 2) Iași
-          option(value='5', selected= user.profile.city == 1) Timișoara
+          option(value='3', selected= user.profile.city == 3) Cluj
+          option(value='4', selected= user.profile.city == 4) Iași
+          option(value='5', selected= user.profile.city == 5) Timișoara
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='role') Rol
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='role') Role
       .col-sm-7
         select.select.form-control.input-md(name='role', id='role')
-          option(value='0') -- Selectați --
+          option(value='0') -- Select --
           option(value='1', selected= user.role == 1) Student
-          option(value='2', selected= user.role == 2) Profesor
-          option(value='3', selected= user.role == 3) Secretar
+          option(value='2', selected= user.role == 2) Professor
+          option(value='3', selected= user.role == 3) Secretary
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Nr. telefon
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='name') Phone no
       .col-sm-7
         input.form-control(type='text', name='phoneNo', id='phoneNo', value=user.profile.phoneNo)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='grade') Grad
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='grade') Grade
       .col-sm-7
         select.select.form-control.input-md(name='grade', id='grade')
-          option(value='0') -- Selectați --
-          option(value='1', selected= user.grade == 1) Asistent
+          option(value='0') -- Select --
+          option(value='1', selected= user.grade == 1) Assistent
           option(value='2', selected= user.grade == 2) Lector
-          option(value='3', selected= user.grade == 3) Conferențiar
-          option(value='4', selected= user.grade == 4) Profesor
+          option(value='3', selected= user.grade == 3) Conferentiary
+          option(value='4', selected= user.grade == 4) Professor
     .form-group.row.justify-content-md-center
       .col-sm-4
         button.btn.btn.btn-primary(type='submit', id='updateProfile')
           i.fa.fa-pencil
-          | Actualizare
+          | Update
 
   .page-header
-    h3 Schimbare parolă
+    h3 Change password
     hr
 
   form.form-horizontal(action='/account/password', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='password') Parolă nouă
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='password') New password
       .col-sm-7
         input.form-control(type='password', name='password', id='password')
     .form-group.row.justify-content-md-center
-      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='confirmPassword') Confirmare parolă
+      label.col-sm-3.col-form-label.text-right.font-weight-bold(for='confirmPassword') Confirm password
       .col-sm-7
         input.form-control(type='password', name='confirmPassword', id='confirmPassword')
     .form-group.row.justify-content-md-center
       .col-sm-4
         button.btn.btn-primary(type='submit')
           i.fa.fa-lock
-          | Schimbare parolă
+          | Change password
 
   .page-header
-    h3 Ștergere cont
+    h3 Delete account
         hr
     
   form.form-horizontal(action='/account/delete', method='POST')
     .form-group.row.justify-content-md-center
-      p.offset-sm-3.col-sm-7 Aceasta acțiune nu este reversibilă!
+      p.offset-sm-3.col-sm-7 This action is not reversible!
       input(type='hidden', name='_csrf', value=_csrf)
       .col-sm-4
         button.btn.btn-danger(type='submit')
           i.fa.fa-trash
-          | Ștergere cont
+          | Delete account
 

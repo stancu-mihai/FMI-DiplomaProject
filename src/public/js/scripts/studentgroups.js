@@ -20,21 +20,21 @@ $(function () {
                         autoload: true,
                         pageSize: 10,
                         pageButtonCount: 5,
-                        pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
-                        pagePrevText: "Anterioara",
-                        pageNextText: "Următoarea",
-                        pageFirstText: "Prima",
-                        pageLastText: "Ultima",
-                        searchModeButtonTooltip: "Comută la căutare", 
-                        insertModeButtonTooltip: "Comută la inserare", 
-                        editButtonTooltip: "Modifică",                      
-                        deleteButtonTooltip: "Sterge",                  
-                        searchButtonTooltip: "Caută",                  
-                        clearFilterButtonTooltip: "Sterge filtru",       
-                        insertButtonTooltip: "Inserează",                  
-                        updateButtonTooltip: "Actualizează",                  
-                        cancelEditButtonTooltip: "Anulează modificare", 
-                        deleteConfirm: "Chiar doriți ștergerea grupei?",
+                        pagerFormat: "Page: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+                        pagePrevText: "Prev",
+                        pageNextText: "Next",
+                        pageFirstText: "First",
+                        pageLastText: "Last",
+                        searchModeButtonTooltip: "Search mode", 
+                        insertModeButtonTooltip: "Insert mode", 
+                        editButtonTooltip: "Edit",                      
+                        deleteButtonTooltip: "Remove",                  
+                        searchButtonTooltip: "Search",                  
+                        clearFilterButtonTooltip: "Delete filter",       
+                        insertButtonTooltip: "Insert",                  
+                        updateButtonTooltip: "Update",                  
+                        cancelEditButtonTooltip: "Cancel edit", 
+                        deleteConfirm: "Are you sure you want to delete the group?",
                         controller: {
                             loadData: function (filter) {
                                 return $.ajax({
@@ -66,9 +66,9 @@ $(function () {
                             }
                         },
                         fields: [
-                            { name: "name", type: "text", title: "Nume" },
-                            { name: "seriesId", type: "select", items: series, valueField: "_id", textField: "name", title: "Serie" },
-                            { name: "count", type: "number", title: "Persoane" },
+                            { name: "name", type: "text", title: "Name" },
+                            { name: "seriesId", type: "select", items: series, valueField: "_id", textField: "name", title: "Series" },
+                            { name: "count", type: "number", title: "Count" },
                             { type: "control" }
                         ]
                     });

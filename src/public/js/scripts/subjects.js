@@ -10,21 +10,21 @@ $(function() {
         autoload: true,
         pageSize: 10,
         pageButtonCount: 5,
-        pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
-        pagePrevText: "Anterioara",
-        pageNextText: "Următoarea",
-        pageFirstText: "Prima",
-        pageLastText: "Ultima",
-        searchModeButtonTooltip: "Comută la căutare", 
-        insertModeButtonTooltip: "Comută la inserare", 
-        editButtonTooltip: "Modifică",                      
-        deleteButtonTooltip: "Sterge",                  
-        searchButtonTooltip: "Caută",                  
-        clearFilterButtonTooltip: "Sterge filtru",       
-        insertButtonTooltip: "Inserează",                  
-        updateButtonTooltip: "Actualizează",                  
-        cancelEditButtonTooltip: "Anulează modificare", 
-        deleteConfirm: "Chiar doriți ștergerea materiei?",
+        pagerFormat: "Page: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        pagePrevText: "Prev",
+        pageNextText: "Next",
+        pageFirstText: "First",
+        pageLastText: "Last",
+        searchModeButtonTooltip: "Search mode", 
+        insertModeButtonTooltip: "Insert mode", 
+        editButtonTooltip: "Edit",                      
+        deleteButtonTooltip: "Remove",                  
+        searchButtonTooltip: "Search",                  
+        clearFilterButtonTooltip: "Delete filter",       
+        insertButtonTooltip: "Insert",                  
+        updateButtonTooltip: "Update",                  
+        cancelEditButtonTooltip: "Cancel edit", 
+        deleteConfirm: "Are you sure you want to delete the subject?",
         controller: {
           loadData: function(filter) {
             return $.ajax({
@@ -56,7 +56,7 @@ $(function() {
           }
         },
         fields: [
-            { name: "name", type: "text", title: "Nume"},
+            { name: "name", type: "text", title: "Name"},
             { type: "control" }
         ]
     });

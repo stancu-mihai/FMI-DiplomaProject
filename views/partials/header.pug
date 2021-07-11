@@ -2,7 +2,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   .container
     a.navbar-brand(href='/')
       i.fa.fa-cube
-      | Acasă
+      | Home
     button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
       span.navbar-toggler-icon
 
@@ -13,39 +13,39 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
           case user.role
             when '1'
               li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
-                a.nav-link(href='/timetable?email=' + user.email) Orar
+                a.nav-link(href='/timetable?email=' + user.email) Timetable
             when '2'
               li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
-                a.nav-link(href='/timetable?email=' + user.email) Orar
+                a.nav-link(href='/timetable?email=' + user.email) Timetable
             when '3'
               li.nav-item(class=(title === 'Series') ? 'active' : undefined)
                 a.nav-link(href='/series') Serii
               li.nav-item(class=(title === 'Groups') ? 'active' : undefined)
-                a.nav-link(href='/studentgroups') Grupe
+                a.nav-link(href='/studentgroups') Groups
               li.nav-item(class=(title === 'Subjects') ? 'active' : undefined)
-                a.nav-link(href='/Subjects') Materii
+                a.nav-link(href='/Subjects') Subjects
               li.nav-item(class=(title === 'Rooms') ? 'active' : undefined)
-                a.nav-link(href='/rooms') Săli
+                a.nav-link(href='/rooms') Rooms
               li.nav-item(class=(title === 'Courses') ? 'active' : undefined)
-                a.nav-link(href='/courses') Cursuri
+                a.nav-link(href='/courses') Courses
               li.nav-item(class=(title === 'Seminars') ? 'active' : undefined)
-                a.nav-link(href='/seminars') Seminare
+                a.nav-link(href='/seminars') Seminars
               li.nav-item(class=(title === 'PrefHours') ? 'active' : undefined)
-                a.nav-link(href='/prefhours') Ore
+                a.nav-link(href='/prefhours') Hours
               li.nav-item(class=(title === 'Generate') ? 'active' : undefined)
-                a.nav-link(href='/generate') Generare
+                a.nav-link(href='/generate') Generate
               li.nav-item(class=(title === 'Bookings') ? 'active' : undefined)
-                a.nav-link(href='/bookings') Rezervări
+                a.nav-link(href='/bookings') Bookings
               li.nav-item(class=(title === 'Verify') ? 'active' : undefined)
-                a.nav-link(href='/verify') Verificare
+                a.nav-link(href='/verify') Verify
               li.nav-item(class=(title === 'Timetable') ? 'active' : undefined)
-                a.nav-link(href='/timetable') Orar
+                a.nav-link(href='/timetable') Timetable
       ul.nav.navbar-nav
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)
-            a.nav-link(href='/login') Logare
+            a.nav-link(href='/login') Login
           li.nav-item(class=(title === 'Create Account') ? 'active' : undefined)
-            a.nav-link(href='/signup') Înregistrare
+            a.nav-link(href='/signup') Sign up
         else
           li.nav-item.dropdown(class=(title === 'Account Management') ? 'active' : undefined)
             a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -53,15 +53,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
                 when '1'
                   span= (user.profile.firstName + ' ' + user.profile.lastName + '(Student)')
                 when '2'
-                  span= (user.profile.firstName + ' ' + user.profile.lastName + '(Profesor)')
+                  span= (user.profile.firstName + ' ' + user.profile.lastName + '(Professor)')
                 when '3'
-                  span= (user.profile.firstName + ' ' + user.profile.lastName + '(Secretar)')
+                  span= (user.profile.firstName + ' ' + user.profile.lastName + '(Secretary)')
                 default 
                   span= (user.profile.firstName + ' ' + user.profile.lastName)
               i.caret
             ul.dropdown-menu
               li.nav-item
-                a.nav-link(href='/account') Profil
+                a.nav-link(href='/account') Profile
               li.dropdown-divider
               li.nav-item
-                a.nav-link(href='/logout') Delogare
+                a.nav-link(href='/logout') Log out

@@ -2,24 +2,24 @@ extends ../layout
 
 block content
   .page-header
-    h3 Orar
+    h3 Timetable
     //- h5 #{JSON.stringify(timetable)}
     hr
     each contentGroup, nameGroup in timetable
       h4 #{nameGroup}
       each contentSemester, nameSemester in contentGroup
-        h5 Semestru #{+nameSemester}
+        h5 Semester #{+nameSemester}
         table.calendar.table.table-bordered
           thead
             tr
               th &nbsp
-              th Luni
-              th Marți
-              th Miercuri
-              th Joi
-              th Vineri
-              th Sâmbată
-              th Duminică
+              th Mon
+              th Tue
+              th Wed
+              th Thu
+              th Fri
+              th Sat
+              th Sun
           tbody
             each startHour in [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
               tr

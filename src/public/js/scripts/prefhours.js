@@ -14,21 +14,21 @@ $(function () {
             autoload: true,
             pageSize: 10,
             pageButtonCount: 5,
-            pagerFormat: "Pagini: {first} {prev} {pages} {next} {last}    {pageIndex} din {pageCount}",
-            pagePrevText: "Anterioara",
-            pageNextText: "Următoarea",
-            pageFirstText: "Prima",
-            pageLastText: "Ultima",
-            searchModeButtonTooltip: "Comută la căutare", 
-            insertModeButtonTooltip: "Comută la inserare", 
-            editButtonTooltip: "Modifică",                      
-            deleteButtonTooltip: "Sterge",                  
-            searchButtonTooltip: "Caută",                  
-            clearFilterButtonTooltip: "Sterge filtru",       
-            insertButtonTooltip: "Inserează",                  
-            updateButtonTooltip: "Actualizează",                  
-            cancelEditButtonTooltip: "Anulează modificare", 
-            deleteConfirm: "Chiar doriți ștergerea orei preferate?",
+            pagerFormat: "Page: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            searchModeButtonTooltip: "Search mode", 
+            insertModeButtonTooltip: "Insert mode", 
+            editButtonTooltip: "Edit",                      
+            deleteButtonTooltip: "Remove",                  
+            searchButtonTooltip: "Search",                  
+            clearFilterButtonTooltip: "Remove filter",       
+            insertButtonTooltip: "Insert",                  
+            updateButtonTooltip: "Update",                  
+            cancelEditButtonTooltip: "Cancel edit", 
+            deleteConfirm: "Are you sure you want to remove the preferred hour?",
             controller: {
                 loadData: function (filter) {
                     return $.ajax({
@@ -60,25 +60,25 @@ $(function () {
                 }
             },
             fields: [
-                { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Profesor" },
+                { name: "professorId", type: "select", items: professors, valueField: "_id", textField: "email", title: "Professor" },
                 {
                     name: "weekDay",
                     type: "select",
                     items: [
-                        { Name: "Luni", Id: "0" },
-                        { Name: "Marți", Id: "1" },
-                        { Name: "Miercuri", Id: "2" },
-                        { Name: "Joi", Id: "3" },
-                        { Name: "Vineri", Id: "4" },
-                        { Name: "Sâmbătă", Id: "5" },
-                        { Name: "Duminică", Id: "6" }
+                        { Name: "Mon", Id: "0" },
+                        { Name: "Tue", Id: "1" },
+                        { Name: "Wed", Id: "2" },
+                        { Name: "Thu", Id: "3" },
+                        { Name: "Fri", Id: "4" },
+                        { Name: "Sat", Id: "5" },
+                        { Name: "Sun", Id: "6" }
                     ],
                     valueField: "Id",
                     textField: "Name",
-                    title: "Ziua"
+                    title: "Day"
                 },
-                { name: "startHour", type: "number", title: "Oră început" },
-                { name: "endHour", type: "number", title: "Oră sfârșit" },
+                { name: "startHour", type: "number", title: "Start" },
+                { name: "endHour", type: "number", title: "End" },
                 { type: "control" }
             ]
         });

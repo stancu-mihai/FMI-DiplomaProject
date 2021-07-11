@@ -1,61 +1,61 @@
 extends layout
 
 block content
-  h2 Lucrare de licența
-  h4 Titlu 
-  h6 Utilizarea platformei cloud Heroku pentru optimizarea  orarului formațiunilor de studiu în învățământul superior.
-  h4 Absolvent
-  h6 Stancu Mihai, anul 3 FMI ID
-  h4 Descriere
-  h6 Aplicația cuprinde următoarele pagini:
+  h2 Diploma app
+  h4 Title 
+  h6 Using Heroku cloud platform for generating university timetables.
+  h4 Graduate
+  h6 Mihai Stancu, Faculty of Mathematics and Computer Science
+  h4 Description
+  h6 This app contains several pages:
     ul
-      li Înregistrare - înregistrarea noilor utilizatori
+      li Sign up - registers new users
         ul
-          li Noul utilizator va completa numele, orașul, rolul, nr. telefon, email, și parola
-          li Rolul poate fi: student, profesor, secretar
-          li În cazul profesorilor, se va completa și gradul acestuia
-      li Logare - logarea utilizatorilor existenți
+          li The new user will input name, city, role, phone number, email and password
+          li Role can be: student, professor, secretary
+          li Grade will be required for professors
+      li Login - for existing users
         ul
-          li Utilizatorul va folosi mail-ul și parola pentru logare
-          li Odată logat, numele utilizatorului va apărea în colțul din dreapta sus
-          li Paginile disponibile diferă in funcție de rolul utilizatorului
-          li Profesori deja existenți: profA@user.com / pass (A=1..10)
-          li Studenti deja existenți: stud1@user.com / pass 
-          li Secretari deja existenți: sec1@user.com / pass 
-      li Profil - modificarea contului utilizatorilor existenți
+          li Email and password are used for login
+          li Once logged in, username appears in top right corner
+          li Available pages are based on the role
+          li Professors: profA@user.com / pass (A=1..10)
+          li Students: stud1@user.com / pass 
+          li Secretaries: sec1@user.com / pass 
+      li Profile - edit profile for existing users
         ul
-          li Este permisa modificarea oricărei date din profilul creat la pasul "Înregistrare"
-      li Serii - adăugarea seriilor de studenți
+          li Any input from the sign up phase is editable here
+      li Series - add student series
         ul
-          li Numele seriei va conține și anul de studiu
-      li Grupe - adăugarea grupelor de studenți
+          li The name must contain the year of study
+      li Groups - add groups of students
         ul
-          li Pentru fiecare grupă se va alege un nume, apoi seria din care face parte, apoi numărul de persoane în grupă
-      li Materii - adăugarea materiilor
+          li For each group, pick a name then the series and the student count
+      li Subjects - add subjects
         ul
-          li Pentru fiecare materie se va specifica numele
-      li Săli - adăugarea sălilor de curs / seminar / laborator
+          li Name will be specified for each subject
+      li Rooms - add rooms for courses / seminars / labs
         ul
-          li Pentru fiecare sală se va specifica numele, locația, capacitatea și dotările (proiector, tablă, etc)
-      li Cursuri - adăugarea cursurilor din planul de învățământ
+          li For each room, there will be a name, location, capacity and features (projector, blackboard, etc)
+      li Courses - add courses from the curriculum
         ul
-          li Pentru fiecare curs se va specifica seria, materia, semestrul, profesorul, nr. de ore pe săptămana și dotările necesare (proiector, tablă, etc)
-      li Seminare - adăugarea seminarelor / laboratoarelor din planul de învățământ
+          li Each course will have a series, subject, semester, professor, hours / wk and necessary features (projector, blackboard, etc)
+      li Seminars - add seminars from the curriculum
         ul
-          li Pentru fiecare seminar se va specifica grupa, materia, semestrul, profesorul, nr. de ore pe săptămana și dotările necesare (proiector, tablă, etc)
-      li Ore - adăugarea orelor preferate de către profesori
+          li Each course will have a group, subject, semester, professor, hours / wk and necessary features (projector, blackboard, etc)
+      li Hours - add hours preferred by the professors
         ul
-          li Pentru fiecare intrare se va specifica profesorul, ziua săptămânii, ora de început și cea de sfârșit
-      li Generare - se va folosi pentru generarea rezervărilor în funcție de datele introduse
+          li For each entry specify professor, weekday, start and end hour
+      li Generate - generates bookings based on above input data
         ul
-          li În funcție de volumul de date, acest pas poate dura câteva minute
-          li Există posibilitatea ca generarea să fie efectuată cu succes, sau nu, în funcție de numărul de restricții introdus
-          li La fiecare generare se va produce un raport care conține informații despre rezultatul generării
-      li Rezervări - permite adăugarea, editarea sau ștergerea rezervărilor generate
+          li Can take several minutes based on number of inputs
+          li Based on the input restrictions, the generation may fail (eg: too many constraints)!
+          li A report containing the results of the generate command will be produced each time
+      li Bookings - allows adding, editing or removing generated bookings
         ul
-          li Se poate modifica orice dată a rezervării
-          li Se pot adăuga și șterge rezervări
-      li Verificare - detectează conflictele apărute după modificarea manuală a rezervărilor
+          li Can modify anything about a booking
+          li Can add or remove bookings
+      li Verify - detects conflicts appeared after manually editing bookings
         ul
-          li La fiecare verificare se va produce un raport care conține informații despre rezultatul acesteia
-      li Orar - afișează orarul tuturor grupelor, pentru ambele semestre
+          li For each booking, a report containing information about its result will be made
+      li Timetable - displays the timetable for each group, for both semesters

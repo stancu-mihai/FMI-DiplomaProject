@@ -144,7 +144,7 @@ export class BookingController extends RESTController<Booking> {
         semester: +semester
       };
       this.bookings.push(booking);
-      this.bookingLog.push("Rezervat pentru ziua " + day + " / ora " + hour + ":00 / " + groupToBook.name);
+      this.bookingLog.push("Booked for day " + day + " / hour " + hour + ":00 / " + groupToBook.name);
       // Mark it as booked
       this.markBookingStatus(index, isCourse, true);
     }
@@ -164,7 +164,7 @@ export class BookingController extends RESTController<Booking> {
         booking.weekDay == JSON.stringify(day) &&
         booking.semester == +semester);
 
-      this.bookingLog.push("Rezervare ȘTEARSĂ pentru semestrul " + semester + "ziua " + day + " / ora " + hour + ":00 / " + groupToBook.name);
+      this.bookingLog.push("Booking DELETED for semester " + semester + "day " + day + " / hour " + hour + ":00 / " + groupToBook.name);
       // Mark it as un-booked
       this.markBookingStatus(index, isCourse, false);
     }
@@ -173,7 +173,7 @@ export class BookingController extends RESTController<Booking> {
   canWeBook(semester: number, day: number, hour: number, duration: number, groupsToBook: StudentGroup[], 
     professorId: string, room: Room,  
     blackboard: boolean, smartboard: boolean, projector: boolean, computers: boolean, capacity: number): boolean {
-      let logEntry = "Semestru " + semester + " ziua " + day + "  ora " + (hour>9 ? hour: "0" + hour) + ":00 ";
+      let logEntry = "Semester " + semester + " day " + day + "  hour " + (hour>9 ? hour: "0" + hour) + ":00 ";
       // First we check if this day and this hour is within the preferences of the professor assigned to this item
       const profAgreesInterval = this.prefHours.find(prefHour =>
         prefHour.professorId.value === professorId && // prof matches id
@@ -282,7 +282,7 @@ export class BookingController extends RESTController<Booking> {
     }
 
     if(index == -1) {
-      this.bookingLog.push("Toate intrările sunt rezervate deja!");
+      this.bookingLog.push("All entries are already booked!");
       return true;
     }
 
@@ -306,12 +306,12 @@ export class BookingController extends RESTController<Booking> {
     // For each room
     for (const room of this.rooms) {
 
-      this.bookingLog.push("   Încercare rezervare: " + 
+      this.bookingLog.push("   Attempting to book: " + 
       this.subjects.find(subj => subj._id.value === item.subjectId.value).name
       + " / " + 
       this.users.find(user => user._id.value === item.professorId.value).email
-      + " / Grad " + item.grade
-      + " / Sala: " + this.rooms.find(searchRoom => searchRoom._id.value === room._id.value).name);
+      + " / Grade " + item.grade
+      + " / Room: " + this.rooms.find(searchRoom => searchRoom._id.value === room._id.value).name);
 
       // For Monday to Friday
       for (let day = 0; day < 5; day++) {
@@ -378,14 +378,14 @@ export class BookingController extends RESTController<Booking> {
         Math.min(+otherBooking.startHour + +otherBooking.duration - +booking.startHour, +booking.startHour + +booking.duration - +otherBooking.startHour) >0 );
         if (professorConflict.length > 0 ) {
           result = false;
-          this.verifyLog.push("Profesori cu rezervări suprapuse:");
+          this.verifyLog.push("Professors with overlapping bookings:");
           professorConflict.forEach( conflict => {
             const profEmail = this.users.find(user => user._id.value === conflict.professorId.value).email;
             const subjName = this.subjects.find(subj => subj._id.value === conflict.subjectId.value).name;
             const roomName = this.rooms.find(room => room._id.value === conflict.roomId.value).name;
             const groupName = this.studentGroups.find(group => group._id.value ===  conflict.studentGroupId.value).name;
             this.verifyLog.push(profEmail + " / " + subjName + " / " + roomName + " / " + groupName + " / sem " + conflict.semester + 
-            " / ziua " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
+            " / day " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
           });
         }
 
@@ -401,14 +401,14 @@ export class BookingController extends RESTController<Booking> {
         Math.min(+otherBooking.startHour + +otherBooking.duration - +booking.startHour, +booking.startHour + +booking.duration - +otherBooking.startHour) >0 );
         if (groupConflict.length > 0 ) {
           result = false;
-          this.verifyLog.push("Grupe cu rezervări suprapuse:");
+          this.verifyLog.push("Groups with overlapping bookings:");
           groupConflict.forEach( conflict => {
             const profEmail = this.users.find(user => user._id.value === conflict.professorId.value).email;
             const subjName = this.subjects.find(subj => subj._id.value === conflict.subjectId.value).name;
             const roomName = this.rooms.find(room => room._id.value === conflict.roomId.value).name;
             const groupName = this.studentGroups.find(group => group._id.value ===  conflict.studentGroupId.value).name;
             this.verifyLog.push(profEmail + " / " + subjName + " / " + roomName + " / " + groupName + " / sem " + conflict.semester + 
-            " / ziua " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
+            " / day " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
           });
         }
 
@@ -423,14 +423,14 @@ export class BookingController extends RESTController<Booking> {
         Math.min(+otherBooking.startHour + +otherBooking.duration - +booking.startHour, +booking.startHour + +booking.duration - +otherBooking.startHour) >0 );
         if (roomConflict.length > 0 ) {
           result = false;
-          this.verifyLog.push("Săli cu rezervări suprapuse:");
+          this.verifyLog.push("Rooms with overlapping bookings:");
           roomConflict.forEach( conflict => {
             const profEmail = this.users.find(user => user._id.value === conflict.professorId.value).email;
             const subjName = this.subjects.find(subj => subj._id.value === conflict.subjectId.value).name;
             const roomName = this.rooms.find(room => room._id.value === conflict.roomId.value).name;
             const groupName = this.studentGroups.find(group => group._id.value ===  conflict.studentGroupId.value).name;
             this.verifyLog.push(profEmail + " / " + subjName + " / " + roomName + " / " + groupName + " / sem " + conflict.semester + 
-            " / ziua " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
+            " / day " + conflict.weekDay + " / " + conflict.startHour + ":00 - " + (+conflict.startHour + +conflict.duration + ":00"));
           });
         }
     }

@@ -1,12 +1,12 @@
-{"_id":{"$oid":"5ea2c84ba0fca800237408fb"},"name":"Facultatea de Matematică Anul I Seria 1"}
-{"_id":{"$oid":"5ea2c86ba0fca800237408fc"},"name":"Facultatea de Matematică Anul I Seria 2"}
-{"_id":{"$oid":"5ea2c881a0fca800237408fd"},"name":"Facultatea de Matematică Anul II Seria 1"}
-{"_id":{"$oid":"5ea2c890a0fca800237408fe"},"name":"Facultatea de Matematică Anul II Seria 2"}
-{"_id":{"$oid":"5ea2c8a6a0fca800237408ff"},"name":"Facultatea de Matematică Anul III Seria 1"}
-{"_id":{"$oid":"5ea2c8baa0fca80023740900"},"name":"Facultatea de Matematică Anul III Seria 2"}
-{"_id":{"$oid":"5ea2c8d3a0fca80023740901"},"name":"Facultatea de Informatică Anul I Seria 1"}
-{"_id":{"$oid":"5ea2c8f1a0fca80023740902"},"name":"Facultatea de Informatică Anul I Seria 2"}
-{"_id":{"$oid":"5ea2c905a0fca80023740903"},"name":"Facultatea de Informatică Anul II Seria 1"}
-{"_id":{"$oid":"5ea2c92ea0fca80023740904"},"name":"Facultatea de Informatică Anul II Seria 2"}
-{"_id":{"$oid":"5ea2c948a0fca80023740905"},"name":"Facultatea de Informatică Anul III Seria 1"}
-{"_id":{"$oid":"5ea2c95ba0fca80023740906"},"name":"Facultatea de Informatică Anul III Seria 2"}
+{"_id":{"$oid":"5ea2c84ba0fca800237408fb"},"name":"Faculty of Mathematics Year I Series 1"}
+{"_id":{"$oid":"5ea2c86ba0fca800237408fc"},"name":"Faculty of Mathematics Year I Series 2"}
+{"_id":{"$oid":"5ea2c881a0fca800237408fd"},"name":"Faculty of Mathematics Year II Series 1"}
+{"_id":{"$oid":"5ea2c890a0fca800237408fe"},"name":"Faculty of Mathematics Year II Series 2"}
+{"_id":{"$oid":"5ea2c8a6a0fca800237408ff"},"name":"Faculty of Mathematics Year III Series 1"}
+{"_id":{"$oid":"5ea2c8baa0fca80023740900"},"name":"Faculty of Mathematics Year III Series 2"}
+{"_id":{"$oid":"5ea2c8d3a0fca80023740901"},"name":"Faculty of Computer Science Year I Series 1"}
+{"_id":{"$oid":"5ea2c8f1a0fca80023740902"},"name":"Faculty of Computer Science Year I Series 2"}
+{"_id":{"$oid":"5ea2c905a0fca80023740903"},"name":"Faculty of Computer Science Year II Series 1"}
+{"_id":{"$oid":"5ea2c92ea0fca80023740904"},"name":"Faculty of Computer Science Year II Series 2"}
+{"_id":{"$oid":"5ea2c948a0fca80023740905"},"name":"Faculty of Computer Science Year III Series 1"}
+{"_id":{"$oid":"5ea2c95ba0fca80023740906"},"name":"Faculty of Computer Science Year III Series 2"}
